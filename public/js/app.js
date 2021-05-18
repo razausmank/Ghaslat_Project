@@ -3802,6 +3802,12 @@ __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
 __webpack_require__(/*! alpinejs */ "./node_modules/alpinejs/dist/alpine.js");
 
+__webpack_require__(/*! ./config */ "./resources/js/config.js");
+
+__webpack_require__(/*! ./components_scripts */ "./resources/js/components_scripts.js");
+
+__webpack_require__(/*! ./page_specific */ "./resources/js/page_specific.js");
+
 /***/ }),
 
 /***/ "./resources/js/bootstrap.js":
@@ -3832,6 +3838,278 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 //     cluster: process.env.MIX_PUSHER_APP_CLUSTER,
 //     forceTLS: true
 // });
+
+/***/ }),
+
+/***/ "./resources/js/components_scripts.js":
+/*!********************************************!*\
+  !*** ./resources/js/components_scripts.js ***!
+  \********************************************/
+/***/ (() => {
+
+// page hierachy json
+$(document).ready(function () {
+  $('#page_hierarchy_js_tree_form_submit').on('click', function (e) {
+    e.preventDefault();
+    var data = JSON.stringify($('#kt_tree_5').jstree(true).get_json('#', {
+      flat: true
+    }));
+    $.ajax({
+      type: 'POST',
+      url: $('#page_hierarchy_form').attr('action'),
+      data: {
+        "_token": $('input[name="page_hierarchy_csrf_token"]').val(),
+        "data": data
+      },
+      success: function success(data) {
+        console.log(data);
+        location.reload();
+      }
+    }).fail(function (jqXHR, textStatus, error) {
+      console.log(jqXHR);
+      console.log(textStatus);
+      console.log(error);
+    });
+    ;
+  });
+  $('#page_hierarchy_js_tree_form_reset').on('click', function (e) {
+    $('#kt_tree_5').jstree(true).refresh();
+  });
+  var page_hierarchy_json = JSON.parse($('input[name="page_hierarchy_json"]').val());
+  $("#kt_tree_5").jstree({
+    "core": {
+      "themes": {
+        "responsive": false
+      },
+      // so that create works
+      "check_callback": true,
+      "data": page_hierarchy_json
+    },
+    "types": {
+      "default": {
+        "icon": "fa fa-folder text-success"
+      },
+      "file": {
+        "icon": "fa fa-file  text-success"
+      }
+    },
+    "state": {
+      "key": "demo2"
+    },
+    "plugins": ["dnd", "state", "types"]
+  });
+});
+
+/***/ }),
+
+/***/ "./resources/js/config.js":
+/*!********************************!*\
+  !*** ./resources/js/config.js ***!
+  \********************************/
+/***/ (() => {
+
+// window.setlocale = function getBaseUrl()
+// {
+//     var absolute_path = document.querySelector('input[name="absolute_path"]').value ;
+//     alert( absolute_path );
+//     return absolute_path;
+// }
+// function inputvalidation( fieldname )
+// {
+//     value = $(`input[name="${fieldname}"]`).val() ;
+//    if ( !hasWhiteSpace( value )  && isNotEmpty( value ) )
+//    {
+//     return true ;
+//    }
+//    alert("The username is either blank or has space ")
+//    return false ;
+// }
+// $('button').on('click', function(e){
+//     if (!inputvalidation('username')) {
+//         e.preventDefault();
+//     }
+// });
+// function hasWhiteSpace(s) {
+//     return s.indexOf(' ') >= 0;
+// }
+// function isNotEmpty(s) {
+//     return s.length > 0 ;
+// }
+
+/***/ }),
+
+/***/ "./resources/js/form_validation.js":
+/*!*****************************************!*\
+  !*** ./resources/js/form_validation.js ***!
+  \*****************************************/
+/***/ ((module) => {
+
+module.exports = {
+  /* Validate is the main Function, it takes 3 inputs one of which is optional
+  the first input is the form id
+  the second input takes an object which defines the fields to be validated and the type of validations each field will have with a custom message for each validation type
+  the third parameter is optional it has a few default plugins, it takes an object that defines the plugings to be used
+  */
+  validate: function validate(formID, form_data) {
+    var form_validation_plugin = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : this.form_validation_plugin;
+    var fields_data = this.make_form_data(form_data);
+    var form_id = document.getElementById(formID);
+    this.form_validation_function(form_id, fields_data, form_validation_plugin);
+  },
+  //this makes call to the validation library
+  form_validation_function: function form_validation_function(form_id, fields_data, form_validation_plugin) {
+    FormValidation.formValidation(form_id, {
+      fields: fields_data,
+      plugins: form_validation_plugin
+    });
+  },
+  //parses the input object into a valid object structure that the validation library requires
+  make_form_data: function make_form_data(form_data) {
+    var fields_with_validators = {};
+
+    for (var field_name in form_data) {
+      fields_with_validators[field_name] = {
+        validators: {}
+      };
+
+      for (var key in form_data[field_name]) {
+        fields_with_validators[field_name].validators[key] = form_data[field_name][key];
+      }
+    }
+
+    return fields_with_validators;
+  },
+  // default plugins to be used if plugins not explicitly mentioned
+  form_validation_plugin: {
+    trigger: new FormValidation.plugins.Trigger(),
+    // Bootstrap Framework Integration
+    bootstrap: new FormValidation.plugins.Bootstrap(),
+    // Validate fields when clicking the Submit button
+    submitButton: new FormValidation.plugins.SubmitButton(),
+    // Submit the form when all fields are valid
+    defaultSubmit: new FormValidation.plugins.DefaultSubmit()
+  }
+}; // pass in the form id
+// go through every field and filter out the inputs with attribute "data-validation='true' "
+// each input will have the types of validation mentioned in attribute which would be
+
+/***/ }),
+
+/***/ "./resources/js/page_specific.js":
+/*!***************************************!*\
+  !*** ./resources/js/page_specific.js ***!
+  \***************************************/
+/***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
+
+var FormValidator = __webpack_require__(/*! ./form_validation */ "./resources/js/form_validation.js"); // main master Component
+
+
+$('#logout_button').on('click', function (event) {
+  event.preventDefault();
+  $('#logout_form').submit();
+});
+var image_field = new KTImageInput('image_field'); // Create Product Category
+// Edit Product Category
+
+$(document).ready(function () {
+  $('#page_table').DataTable();
+  $('#product_categories_table').DataTable();
+  $('#products_table').DataTable();
+  $('#users_table').DataTable();
+  $('#usertypes_table').DataTable();
+  $('#customer_types_table').DataTable();
+  $('#customer_table').DataTable();
+  $('#stores_table').DataTable();
+  var groupColumn = 0;
+  var table = $('#product_stocks_table').DataTable({
+    "columnDefs": [{
+      "visible": false,
+      "targets": groupColumn
+    }],
+    "order": [[groupColumn, 'asc']],
+    "displayLength": 25,
+    "drawCallback": function drawCallback(settings) {
+      var api = this.api();
+      var rows = api.rows({
+        page: 'current'
+      }).nodes();
+      var last = null;
+      api.column(groupColumn, {
+        page: 'current'
+      }).data().each(function (group, i) {
+        if (last !== group) {
+          $(rows).eq(i).before('<tr class="group"><td colspan="7" ><div class="d-flex justify-content-between font-weight-bolder  font-size-lg">' + group + '</div></td></tr>');
+          last = group;
+        }
+      });
+    }
+  }); // Order by the grouping
+
+  $('#product_stocks_table tbody').on('click', 'tr.group', function () {
+    var currentOrder = table.order()[0];
+
+    if (currentOrder[0] === groupColumn && currentOrder[1] === 'asc') {
+      table.order([groupColumn, 'desc']).draw();
+    } else {
+      table.order([groupColumn, 'asc']).draw();
+    }
+  });
+}); // Product Create Image
+// Create page
+
+$(document).ready(function () {
+  FormValidator.validate("kt_form_1", {
+    "url": {
+      "stringLength": {
+        "min": "50",
+        "max": "100",
+        "message": 'Please enter a menu within text length range 50 and 100'
+      }
+    }
+  });
+}); // testing
+// Class definition
+
+var KTSelect2 = function () {
+  var demos = function demos() {
+    // basic
+    $('#user_create_usertype_select').select2({
+      placeholder: "Select a state"
+    }); // nested
+
+    $('#kt_select2_2').select2({
+      placeholder: "Select a state"
+    }); // multi select
+
+    $('#kt_select2_3_validate').select2({
+      placeholder: "Select a state"
+    });
+  }; // Public functions
+
+
+  return {
+    init: function init() {
+      demos();
+    }
+  };
+}(); // Initialization
+
+
+jQuery(document).ready(function () {
+  KTSelect2.init();
+}); // FormValidator.validate(
+//     "page_create_form" ,
+//     {
+//         "name" : {
+//             "notEmpty" : {"message" :"Name is required"} ,
+//             "emailAddress" :{ "message" : "The value is not a valid email address modified" }
+//         },
+//         "url" : {
+//             "notEmpty" : { "message" : "Url is required :)" } ,
+//             "uri" : {"message" :"this is mad" },
+//         },
+//     },
+// );
 
 /***/ }),
 
