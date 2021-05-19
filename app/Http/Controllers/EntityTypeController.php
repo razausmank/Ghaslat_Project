@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\EntityType;
+use Exception;
 use Illuminate\Http\Request;
 
 class EntityTypeController extends Controller

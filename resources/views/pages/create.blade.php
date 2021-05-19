@@ -32,10 +32,6 @@
                 <x-form.form_input type="text" name="description" placeholder="Enter Page Description" />
             </x-form.form_group>
 
-            <x-form.form_group label="Sort Order" error="sort_order">
-                <x-form.form_input type="number" name="sort_order" placeholder="Enter Page Sort Order" />
-            </x-form.form_group>
-
             <x-form.form_group label="Parent Page" error="parent_page_id">
                 <x-form.form_dropdown name="parent_page_id" id="create_page_parent_page_select" :model="$pages" dropdown_default_option="No Parent Page" />
             </x-form.form_group>

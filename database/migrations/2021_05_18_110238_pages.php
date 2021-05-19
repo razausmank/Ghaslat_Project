@@ -18,7 +18,8 @@ class Pages extends Migration
             $table->string('name');
             $table->string('url');
             $table->string('description')->nullable();
-            $table->integer('sort_order');
+            $table->integer('sort_order')->nullable();
+
 
             $table->foreignId('parent_page_id')->nullable()->constrained('pages');
 

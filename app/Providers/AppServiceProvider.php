@@ -10,6 +10,7 @@ use App\Models\ProductStock;
 use App\Models\Remark;
 use App\Models\User;
 use App\Observers\ModelObserver;
+use App\Observers\PageObserver;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 
@@ -35,6 +36,7 @@ class AppServiceProvider extends ServiceProvider
         // model observers
 
         Page::observe(ModelObserver::class) ;
+        Page::observe(PageObserver::class);
         User::observe(ModelObserver::class) ;
         ProductCategory::observe(ModelObserver::class);
         Product::observe(ModelObserver::class);

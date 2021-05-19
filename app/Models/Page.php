@@ -15,11 +15,11 @@ class Page extends Model
         'name',
         'url',
         'description',
-        'sort_order',
         'parent_page_id',
         'created_by',
         'updated_by',
         'deleted_by',
+        'sort_order'
 
     ];
 

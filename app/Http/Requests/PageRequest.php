@@ -28,7 +28,7 @@ class PageRequest extends FormRequest
         return [
             'name' => 'required',
             'url' => 'required',
-            'sort_order' => ['required', 'unique:pages,sort_order,'.$id.',id,deleted_at,NULL'],
+            // 'sort_order' => ['required', 'unique:pages,sort_order,'.$id.',id,deleted_at,NULL'],
             'parent_page_id' => ['nullable' , 'exists:pages,id'],
             'description' => 'nullable'
         ];
