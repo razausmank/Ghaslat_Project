@@ -1,6 +1,11 @@
 <?php
 
 use App\Http\Controllers\Admin\PageController;
+use App\Http\Controllers\EntityTypeController;
+use App\Http\Controllers\ProductCategoryController;
+use App\Http\Controllers\ProductController;
+use App\Http\Controllers\ProductStockController;
+use App\Http\Controllers\RemarkController;
 use App\Http\Controllers\testController;
 use Illuminate\Support\Facades\Route;
 
@@ -18,6 +23,22 @@ use Illuminate\Support\Facades\Route;
 Route::get('admin/page/page-hierarchy', [PageController::class,'pageHierarchy'] )->name('page.page_hierarchy');
 Route::post('admin/page/update-page-hierarchy', [PageController::class ,'updatePageHierarchy'] )->name('page.update_page_hierarchy');
 Route::resource('admin/page', PageController::class);
+
+
+//Product Category Routes
+Route::resource('productcategory', ProductCategoryController::class);
+
+//Product Category Routes
+Route::resource('product', ProductController::class);
+
+//Product Category Routes
+Route::resource('productstock', ProductStockController::class );
+
+//EntityType Routes
+Route::resource('entitytype', EntityTypeController::class);
+
+//Remark Routes
+Route::resource('remark', RemarkController::class);
 
 Route::get('/', function () {
     return view('welcome');
