@@ -1,2 +1,0 @@
-in the partials we commented out the pages 
-and when we do add the pages we might want to add the view::composer too 
