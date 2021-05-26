@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\PageController;
 use App\Http\Controllers\EntityTypeController;
+use App\Http\Controllers\PackageController;
 use App\Http\Controllers\ProductCategoryController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProductStockController;
@@ -39,6 +40,9 @@ Route::resource('entitytype', EntityTypeController::class);
 
 //Remark Routes
 Route::resource('remark', RemarkController::class);
+
+//Package Routes
+Route::resource('package', PackageController::class);
 
 Route::get('/', function () {
     return view('welcome');
