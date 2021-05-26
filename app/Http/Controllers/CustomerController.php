@@ -2,84 +2,67 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CustomerRequest;
 use App\Models\Customer;
+use Exception;
 use Illuminate\Http\Request;
 
 class CustomerController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
-        //
+        $customers = Customer::all();
+        return view('customers.index', compact('customers'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
-        //
+
+        return view('customers.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function store(CustomerRequest $request)
     {
-        //
+        $validated = $request->validated();
+
+        $image_address = $request->file('image')->store('public/customer');
+        unset($validated['image']);
+
+        Customer::create($validated + [
+            'image' => $image_address
+        ]);
+
+        return redirect(route('customer.index'))->with('success', 'Customer successfuly created');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Customer  $customer
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Customer $customer)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Customer  $customer
-     * @return \Illuminate\Http\Response
-     */
     public function edit(Customer $customer)
     {
-        //
+        return view('customers.edit', compact('customer'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Customer  $customer
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Customer $customer)
+    public function update(Customer $customer, CustomerRequest $request)
     {
-        //
+        $validated = $request->validated();
+        $image_address = NULL;
+        if ($request->file('image')) {
+            $image_address = $request->file('image')->store('public/customer');
+        }
+        unset($validated['image']);
+        $customer->update($validated  + [
+            'image' => $image_address
+        ]);
+
+        return redirect(route('customer.index'))->with('success', 'Customer successfuly updated');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Customer  $customer
-     * @return \Illuminate\Http\Response
-     */
     public function destroy(Customer $customer)
     {
-        //
+        try {
+            $customer->destroy($customer->id);
+        } catch (Exception $exception) {
+            return redirect(route('customer.index'))->with('failure', 'Customer Cannot be deleted');
+        }
+
+        return redirect(route('customer.index'))->with('success', 'Customer successfuly deleted');
     }
 }

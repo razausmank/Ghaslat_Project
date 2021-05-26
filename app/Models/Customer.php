@@ -15,14 +15,11 @@ class Customer extends Model
         'name',
         'email',
         'phone',
-        'fax',
+        'description',
         'address',
         'image',
-        'account_number',
-        'customer_type_id',
         'created_by',
         'updated_by',
         'deleted_by',
-
     ];
 }

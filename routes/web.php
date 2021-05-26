@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\PageController;
+use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\EntityTypeController;
 use App\Http\Controllers\PackageController;
 use App\Http\Controllers\ProductCategoryController;
@@ -34,6 +35,9 @@ Route::resource('product', ProductController::class);
 
 //Package Routes
 Route::resource('package', PackageController::class);
+
+//Customer Routes
+Route::resource('customer', CustomerController::class);
 
 Route::get('/', function () {
     return view('welcome');
