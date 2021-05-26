@@ -19,9 +19,7 @@ class CreateProductsTable extends Migration
             $table->string('name');
             $table->string('image')->nullable();
             $table->text('description')->nullable();
-            $table->string('barcode')->nullable();
             $table->decimal('price');
-            $table->integer('quantity')->nullable();
 
             $table->foreignId('product_category_id')->nullable()->constrained('product_categories');
 

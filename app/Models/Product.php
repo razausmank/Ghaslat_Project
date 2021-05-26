@@ -15,9 +15,7 @@ class Product extends Model
         'name',
         'description',
         'image',
-        'barcode',
         'price',
-        'quantity',
         'created_by',
         'updated_by',
         'deleted_by',
@@ -29,6 +27,6 @@ class Product extends Model
 
     public function product_category()
     {
-        return $this->belongsTo( ProductCategory::class );
+        return $this->belongsTo(ProductCategory::class);
     }
 }

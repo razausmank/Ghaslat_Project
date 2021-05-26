@@ -8,9 +8,7 @@
                 <tr>
                     <th>Name</th>
                     <th>Description</th>
-                    <th>Barcode</th>
                     <th>Price</th>
-                    <th>Quantity</th>
                     <th>Product Category</th>
                     <th>Created At</th>
                     <th>Actions</th>
@@ -21,9 +19,7 @@
                     <tr>
                         <td>{{ $product->name }}</td>
                         <td>{{ $product->description ? $product->description : '---' }}</td>
-                        <td>{{ $product->barcode ? $product->barcode : '---' }}</td>
                         <td>{{ $product->price  }}</td>
-                        <td>{{ $product->quantity ? $product->quantity : '---' }}</td>
                         <td>{{ $product->product_category->name }}</td>
 
 

@@ -21,8 +21,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 // Pade Module Routes
-Route::get('admin/page/page-hierarchy', [PageController::class,'pageHierarchy'] )->name('page.page_hierarchy');
-Route::post('admin/page/update-page-hierarchy', [PageController::class ,'updatePageHierarchy'] )->name('page.update_page_hierarchy');
+Route::get('admin/page/page-hierarchy', [PageController::class, 'pageHierarchy'])->name('page.page_hierarchy');
+Route::post('admin/page/update-page-hierarchy', [PageController::class, 'updatePageHierarchy'])->name('page.update_page_hierarchy');
 Route::resource('admin/page', PageController::class);
 
 
@@ -32,15 +32,6 @@ Route::resource('productcategory', ProductCategoryController::class);
 //Product Category Routes
 Route::resource('product', ProductController::class);
 
-//Product Category Routes
-Route::resource('productstock', ProductStockController::class );
-
-//EntityType Routes
-Route::resource('entitytype', EntityTypeController::class);
-
-//Remark Routes
-Route::resource('remark', RemarkController::class);
-
 //Package Routes
 Route::resource('package', PackageController::class);
 
@@ -48,7 +39,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/test' ,[testController::class , 'show'] );
+Route::get('/test', [testController::class, 'show']);
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return view('dashboard');
