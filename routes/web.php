@@ -33,9 +33,6 @@ Route::resource('productcategory', ProductCategoryController::class);
 //Product Category Routes
 Route::resource('product', ProductController::class);
 
-//Package Routes
-Route::resource('package', PackageController::class);
-
 //Customer Routes
 Route::resource('customer', CustomerController::class);
 

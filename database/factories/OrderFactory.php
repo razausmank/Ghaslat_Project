@@ -2,17 +2,17 @@
 
 namespace Database\Factories;
 
-use App\Models\Package;
+use App\Models\Order;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class PackageFactory extends Factory
+class OrderFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.
      *
      * @var string
      */
-    protected $model = Package::class;
+    protected $model = Order::class;
 
     /**
      * Define the model's default state.
