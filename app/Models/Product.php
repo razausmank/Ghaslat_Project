@@ -19,10 +19,23 @@ class Product extends Model
         'created_by',
         'updated_by',
         'deleted_by',
-        'product_category_id'
+        'product_category_id',
+        'is_package',
+        'is_active'
     ];
 
 
+    public function activateProduct()
+    {
+        $this->is_active = 1;
+        $this->save();
+    }
+
+    public function deactivateProduct()
+    {
+        $this->is_active = 0;
+        $this->save();
+    }
     // ORM relationships
 
     public function product_category()

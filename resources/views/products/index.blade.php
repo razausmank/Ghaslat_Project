@@ -28,7 +28,22 @@
                             <a href="{{ route('product.edit' , $product) }}" class="btn btn-sm btn-clean btn-icon" title="Edit">
                                 <i class="la la-edit"></i>
                             </a>
+                            @if(! $product->is_active )
+                            <form action="{{ route('product.activate', $product) }}" method="POST">
+                                @csrf
+                                <button type="submit" class="btn btn-sm btn-clean btn-icon" title="Activate">
+                                    <i class="la flaticon2-plus"></i>
+                                </button>
+                            </form>
+                            @else
 
+                            <form action="{{ route('product.deactivate', $product) }}" method="POST">
+                                @csrf
+                                <button type="submit" class="btn btn-sm btn-clean btn-icon" title="Deactivate">
+                                    <i class="la flaticon2-delete"></i>
+                                </button>
+                            </form>
+                            @endif
                             <form action="{{ route('product.destroy', $product) }}" method="POST">
                                 @csrf
                                 @method('DELETE')

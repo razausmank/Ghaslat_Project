@@ -20,6 +20,8 @@ class CreateProductsTable extends Migration
             $table->string('image')->nullable();
             $table->text('description')->nullable();
             $table->decimal('price');
+            $table->boolean('is_package');
+            $table->boolean('is_active')->default(true);
 
             $table->foreignId('product_category_id')->nullable()->constrained('product_categories');
 

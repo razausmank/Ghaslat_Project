@@ -63,6 +63,20 @@ class ProductController extends Controller
         return redirect(route('product.index'))->with('success', 'Productsuccessfuly updated');
     }
 
+    public function activateProduct(Product $product)
+    {
+        $product->activateProduct();
+
+        return redirect(route('product.index'))->with('success', 'Product successfuly activated');
+    }
+
+    public function deactivateProduct(Product $product)
+    {
+        $product->deactivateProduct();
+
+        return redirect(route('product.index'))->with('success', 'Product successfuly deactivated');
+    }
+
     public function destroy(Product $product)
     {
         try {

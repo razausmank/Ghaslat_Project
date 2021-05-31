@@ -32,6 +32,8 @@ Route::resource('productcategory', ProductCategoryController::class);
 
 //Product Category Routes
 Route::resource('product', ProductController::class);
+Route::post('product/activate/{product}', [ProductController::class, 'activateProduct'])->name('product.activate');
+Route::post('product/deactivate/{product}', [ProductController::class, 'deactivateProduct'])->name('product.deactivate');
 
 //Customer Routes
 Route::resource('customer', CustomerController::class);

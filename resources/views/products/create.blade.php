@@ -31,6 +31,26 @@
                 <x-form.form_image_input id="image_field" name="image" add_title="Add Product Image" remove_title="Remove Product Image" />
             </x-form.form_group>
 
+
+            {{-- refactor this into a component later  --}}
+            <x-form.form_group label="Is this is a Package?" error="is_package">
+                        <div class="checkbox-inline">
+                            <label class="checkbox checkbox-primary">
+                                <input type="radio" name="is_package" value="1"/>
+                                <span></span>
+                                Yes
+                            </label>
+                            <label class="checkbox checkbox-primary">
+                                <input type="radio" name="is_package" value="0" checked="checked" />
+                                <span></span>
+                                No
+                            </label>
+
+                        </div>
+                        <span class="form-text text-muted">Some help text goes here</span>
+            </x-form.form_group>
+
+
         </x-form.form>
 
     </x-cards.basic-card>
