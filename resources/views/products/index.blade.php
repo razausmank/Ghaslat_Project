@@ -10,6 +10,8 @@
                     <th>Description</th>
                     <th>Price</th>
                     <th>Product Category</th>
+                    <th>Package</th>
+                    <th>Active</th>
                     <th>Created At</th>
                     <th>Actions</th>
                 </tr>
@@ -22,6 +24,8 @@
                         <td>{{ $product->price  }}</td>
                         <td>{{ $product->product_category->name }}</td>
 
+                        <td>{{ $product->is_package ? "Yes" : "No" }}</td>
+                        <td>{{ $product->is_active ? "Yes" : "No" }}</td>
 
                         <td>{{ $product->created_at->diffForHumans() }}</td>
                         <td class="d-flex">
@@ -60,24 +64,7 @@
     </x-cards.basic-card>
 
 
-    <x-cards.basic-card title="User's Profile Details">
 
-        <x-form.form >
-            <x-slot name="form_tag">
-                <form action="#" method="POST">
-                    @csrf
-            </x-slot>
-
-            <x-form.form_group label="Name" error="name ">
-                <x-form.form_input type="date" />
-            </x-form.form_group>
-
-            <x-form.form_group label="Name" error="name ">
-                <x-form.form_image_input />
-            </x-form.form_group>
-        </x-form>
-
-    </x-cards.basic-card>
 
 </x-master>
 

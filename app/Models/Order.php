@@ -18,6 +18,5 @@ class Order extends Model
         'image',
         'created_by',
         'updated_by',
-        'deleted_by',
     ];
 }

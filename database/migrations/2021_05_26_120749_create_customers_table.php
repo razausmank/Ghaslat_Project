@@ -25,8 +25,6 @@ class CreateCustomersTable extends Migration
 
             $table->foreignId('created_by')->nullable()->constrained('users');
             $table->foreignId('updated_by')->nullable()->constrained('users');
-            $table->foreignId('deleted_by')->nullable()->constrained('users');
-            $table->softDeletes();
 
             $table->timestamps();
         });

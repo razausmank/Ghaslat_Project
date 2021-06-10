@@ -4,12 +4,10 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Page extends Model
 {
     use HasFactory;
-    use SoftDeletes ;
 
     protected $fillable = [
         'name',
@@ -18,7 +16,6 @@ class Page extends Model
         'parent_page_id',
         'created_by',
         'updated_by',
-        'deleted_by',
         'sort_order'
 
     ];
@@ -27,18 +24,19 @@ class Page extends Model
     // START FOR JS TREE
     protected $maps = ['text' => 'name', 'children' => 'sub_pages'];
 
-    protected $hidden = ['name', 'sub_pages'] ;
+    protected $hidden = ['name', 'sub_pages'];
 
 
-    protected $appends = [ 'text' ,'children'] ;
+    protected $appends = ['text', 'children'];
 
     public function getTextAttribute()
     {
         return $this->name;
     }
 
-    public function getChildrenAttribute(){
-        return $this->sub_pages ;
+    public function getChildrenAttribute()
+    {
+        return $this->sub_pages;
     }
     //END FOR JS TREE
 
@@ -58,6 +56,6 @@ class Page extends Model
 
     public function users()
     {
-        return $this->belongsToMany( User::class )->withTimestamps();
+        return $this->belongsToMany(User::class)->withTimestamps();
     }
 }
