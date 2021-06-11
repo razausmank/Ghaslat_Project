@@ -29,7 +29,6 @@ class CreateUsersTable extends Migration
             $table->foreignId('deleted_by')->nullable()->constrained('users');
 
             $table->softDeletes();
-
         });
     }
 

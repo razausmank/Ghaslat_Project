@@ -19,4 +19,14 @@ class Order extends Model
         'created_by',
         'updated_by',
     ];
+
+    public function products()
+    {
+        return $this->belongsToMany(Product::class)->withTimestamps();
+    }
+
+    public function syncProducts($product)
+    {
+        return $this->products()->sync($product);
+    }
 }

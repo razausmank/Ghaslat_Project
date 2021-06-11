@@ -8,7 +8,10 @@ use App\Http\Controllers\ProductCategoryController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProductStockController;
 use App\Http\Controllers\RemarkController;
+use App\Http\Controllers\RoleController;
 use App\Http\Controllers\testController;
+use App\Http\Controllers\UserController;
+use App\Models\User;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -26,6 +29,9 @@ Route::get('admin/page/page-hierarchy', [PageController::class, 'pageHierarchy']
 Route::post('admin/page/update-page-hierarchy', [PageController::class, 'updatePageHierarchy'])->name('page.update_page_hierarchy');
 Route::resource('admin/page', PageController::class);
 
+Route::resource('user', UserController::class);
+Route::get('/user/{user}/edit_user_roles', [UserController::class, 'edit_user_roles'])->name('user.edit_user_roles');
+Route::post('/user/{user}/update_user_roles', [UserController::class, 'update_user_roles'])->name('user.update_user_roles');
 
 //Product Category Routes
 Route::resource('productcategory', ProductCategoryController::class);
@@ -37,6 +43,10 @@ Route::post('product/deactivate/{product}', [ProductController::class, 'deactiva
 
 //Customer Routes
 Route::resource('customer', CustomerController::class);
+
+// roles
+Route::resource('role', RoleController::class);
+
 
 Route::get('/', function () {
     return view('welcome');

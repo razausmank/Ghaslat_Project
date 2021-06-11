@@ -52,6 +52,10 @@ License: You must have a valid license purchased only from themeforest(the above
 
         <!-- autocomplete css -->
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tarekraafat/autocomplete.js@7.2.0/dist/css/autoComplete.min.css">
+
+        <!-- custom or page specific stylesheets -->
+        {{ $styles ?? '' }}
+
 	</head>
 
 	<!--end::Head-->
@@ -173,6 +177,9 @@ License: You must have a valid license purchased only from themeforest(the above
 
         <!-- DataTables -->
         <script src="{{ asset('assets/plugins/custom/datatables/datatables.bundle.js?v=7.0.5') }}"></script>
+
+        <!-- Includable JS -->
+        {{ $scripts ?? '' }}
 
 	</body>
 

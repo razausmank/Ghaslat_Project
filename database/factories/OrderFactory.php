@@ -22,7 +22,9 @@ class OrderFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'address' => $this->faker->address,
+            'total_price' => $this->faker->randomFloat(),
+            'status' => 0
         ];
     }
 }

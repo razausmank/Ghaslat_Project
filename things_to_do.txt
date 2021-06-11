@@ -1,3 +1,6 @@
 when editing something with image, the image gets removed on updating
 cant create someting without including picture code blows up
 
+- make the "add new user" button functional
+
+- fix the kt datable grid

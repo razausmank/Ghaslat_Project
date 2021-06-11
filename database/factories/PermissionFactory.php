@@ -2,17 +2,17 @@
 
 namespace Database\Factories;
 
-use App\Models\ProductCategory;
+use App\Models\Permission;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class ProductCategoryFactory extends Factory
+class PermissionFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.
      *
      * @var string
      */
-    protected $model = ProductCategory::class;
+    protected $model = Permission::class;
 
     /**
      * Define the model's default state.
@@ -22,8 +22,8 @@ class ProductCategoryFactory extends Factory
     public function definition()
     {
         return [
-            'name' => $this->faker->randomElement(),
-            'description' => $this->faker->randomElement()
+            'name' => $this->faker->city,
+            'label' => $this->faker->country
         ];
     }
 }
