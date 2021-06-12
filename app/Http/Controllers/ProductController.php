@@ -35,13 +35,13 @@ class ProductController extends Controller
     {
         $validated = $request->validated();
 
-        $image_address = $request->file('image')->store('public/product_category');
-        unset($validated['image']);
 
+        if ($request->file('image')) {
+            $image_address = $request->file('image')->store('public/product');
+            $validated['image'] = $image_address;
+        }
 
-        $product = Product::create($validated + [
-            'image' => $image_address
-        ]);
+        $product = Product::create($validated);
 
 
         return redirect(route('product.index'))->with('success', 'Product successfuly created');
@@ -57,6 +57,11 @@ class ProductController extends Controller
     public function update(Product $product, ProductRequest $request)
     {
         $validated = $request->validated();
+
+        if ($request->file('image')) {
+            $image_address = $request->file('image')->store('public/product');
+            $validated['image'] = $image_address;
+        }
 
         $product->update($validated);
 

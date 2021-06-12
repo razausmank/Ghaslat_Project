@@ -25,12 +25,13 @@ class CustomerController extends Controller
     {
         $validated = $request->validated();
 
-        $image_address = $request->file('image')->store('public/customer');
-        unset($validated['image']);
 
-        Customer::create($validated + [
-            'image' => $image_address
-        ]);
+        if ($request->file('image')) {
+            $image_address = $request->file('image')->store('public/customer');
+            $validated['image'] = $image_address;
+        }
+
+        Customer::create($validated);
 
         return redirect(route('customer.index'))->with('success', 'Customer successfuly created');
     }
@@ -43,14 +44,13 @@ class CustomerController extends Controller
     public function update(Customer $customer, CustomerRequest $request)
     {
         $validated = $request->validated();
-        $image_address = NULL;
+
         if ($request->file('image')) {
             $image_address = $request->file('image')->store('public/customer');
+            $validated['image'] = $image_address;
         }
-        unset($validated['image']);
-        $customer->update($validated  + [
-            'image' => $image_address
-        ]);
+
+        $customer->update($validated);
 
         return redirect(route('customer.index'))->with('success', 'Customer successfuly updated');
     }
