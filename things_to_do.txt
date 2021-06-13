@@ -3,4 +3,10 @@ cant create someting without including picture code blows up  (fixed)
 
 - make the "add new user" button functional
 
-- fix the kt datable grid
+- fix the kt datable grid (fixed)
+
+- in the datatable the dom elements are displayed in block ( fixed )
+
+- change login page ( fixed )
+
+- change registration page

@@ -36,7 +36,7 @@
 		<!--begin::Topbar-->
 		<div class="topbar">
 
-			<!--begin::Search-->
+			{{-- <!--begin::Search-->
 			<div class="dropdown">
 
 				<!--begin::Toggle-->
@@ -210,7 +210,7 @@
 				<!--end::Dropdown-->
 			</div>
 
-			<!--end::Languages-->
+			<!--end::Languages--> --}}
 
 			<!--begin::User-->
 			<div class="dropdown">

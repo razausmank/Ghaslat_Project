@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\PageController;
+use App\Http\Controllers\BaseController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\EntityTypeController;
 use App\Http\Controllers\PackageController;
@@ -53,6 +54,8 @@ Route::get('/', function () {
 });
 
 Route::get('/test', [testController::class, 'show']);
+
+// Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', [BaseController::class, 'dashboard'])->name('dashboard');
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return view('dashboard');

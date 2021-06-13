@@ -22,6 +22,9 @@ License: You must have a valid license purchased only from themeforest(the above
 		<meta name="description" content="Updates and statistics" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 
+
+
+
 		<!--begin::Fonts-->
 		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" />
 
@@ -41,6 +44,10 @@ License: You must have a valid license purchased only from themeforest(the above
 		<link href="{{ asset('assets/css/style.bundle.css') }}" rel="stylesheet" type="text/css" />
 
 		<!--end::Global Theme Styles-->
+
+        <!-- compiled css app.css -->
+		<link href="{{ asset('css/app.css') }}" rel="stylesheet" type="text/css" />
+
 
 		<!--begin::Layout Themes(used by all pages)-->
 
@@ -71,7 +78,7 @@ License: You must have a valid license purchased only from themeforest(the above
 
 		@include("partials/_extras/scrolltop")
 
-		@include("partials/_extras/toolbar")
+		{{-- @include("partials/_extras/toolbar") --}}
 
 		{{-- @include("partials/_extras/offcanvas/demo-panel") --}}
 		<script>

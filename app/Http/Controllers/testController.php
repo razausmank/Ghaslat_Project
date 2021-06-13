@@ -6,7 +6,8 @@ use Illuminate\Http\Request;
 
 class testController extends Controller
 {
-    public function show(){
-        return view('testing');
+    public function show()
+    {
+        return view('login');
     }
 }

@@ -62,7 +62,7 @@
     </div>
     <div class="card-body">
         <!--begin: Datatable-->
-        <table class="table table-bordered table-hover table-checkable basic_datatable {{ $attributes['table_class']  }}" id="{{ $attributes['table_id'] }}" style="margin-top: 13px !important">
+        <table class="table table-bordered table-hover table-checkable basic_datatable {{ $attributes['table_class']  }}" id="{{ $attributes['table_id'] }}" >
             <thead>
                 <tr>
                     {{ $header }}
