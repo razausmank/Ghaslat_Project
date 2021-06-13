@@ -46,7 +46,6 @@ License: You must have a valid license purchased only from themeforest(the above
 		<!--end::Global Theme Styles-->
 
         <!-- compiled css app.css -->
-		<link href="{{ asset('css/app.css') }}" rel="stylesheet" type="text/css" />
 
 
 		<!--begin::Layout Themes(used by all pages)-->

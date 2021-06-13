@@ -8,6 +8,6 @@ class BaseController extends Controller
 {
     public function dashboard()
     {
-        return view('base.dashboard');
+        return view('dashboard');
     }
 }
