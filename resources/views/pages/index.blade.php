@@ -2,21 +2,20 @@
 
     <x-flash />
 
-    <x-cards.basic-card title="All Pages" subtitle="List of all pages" button_link="page.create" button_text="New Page">
-        <table  class="table table-bordered table-hover table-checkable dataTable dtr-inline" style="width:100%" id="page_table">
-            <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>Url</th>
-                    <th>Description</th>
-                    <th>Sort Order</th>
-                    <th>Parent Page Id</th>
-                    <th>Created At</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach ($pages as $page)
+    <x-datatable.basic title="All Pages" button_link="page.create" button_text="New Page" table_id="pages_list_datatable" >
+        <x-slot name="header">
+            <th>Name</th>
+            <th>Url</th>
+            <th>Description</th>
+            <th>Sort Order</th>
+            <th>Parent Page Id</th>
+            <th>Created At</th>
+            <th>Actions</th>
+        </x-slot>
+
+        <x-slot name="body">
+
+            @foreach ($pages as $page)
 
                     <tr>
                         <td>{{ $page->name }}</td>
@@ -41,14 +40,10 @@
 
                     </tr>
                 @endforeach
-            </tbody>
 
-        </table>
+        </x-slot>
+    </x-datatable.basic>
 
-
-
-
-    </x-cards.basic-card>
 
 </x-master>
 

@@ -22,7 +22,8 @@ class ProductCategoryFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'name' => $this->faker->randomElement(),
+            'description' => $this->faker->randomElement()
         ];
     }
 }

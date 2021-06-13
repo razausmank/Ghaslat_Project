@@ -16,7 +16,7 @@ class ProductController extends Controller
     {
         $products = Product::all();
 
-        return view('products.index', compact('products') );
+        return view('products.index', compact('products'));
     }
 
     public function show()
@@ -28,68 +28,68 @@ class ProductController extends Controller
     {
         $product_categories = ProductCategory::all();
 
-        return view('products.create', compact('product_categories') );
+        return view('products.create', compact('product_categories'));
     }
 
-    public function store( ProductRequest $request )
+    public function store(ProductRequest $request)
     {
         $validated = $request->validated();
 
-        $image_address = $request->file('image')->store('public/product_category');
-        unset($validated['image']);
+
+        if ($request->file('image')) {
+            $image_address = $request->file('image')->store('public/product');
+            $validated['image'] = $image_address;
+        }
+
+        $product = Product::create($validated);
 
 
-        $product = Product::create($validated + [
-            'image' => $image_address
-        ]);
-        ProductStock::create([
-            "product_id" => $product->id,
-            "quantity" => $product->quantity,
-            'remark_id' =>Remark::create([
-                'description' => "Product ( $product->name ) initialized with stock quantity of ( $product->quantity )" ,
-                'entity_id' => $product->id,
-                'entity_type_id' => 1
-            ])->id
-        ]);
-
-        return redirect( route('product.index') )->with('success', 'Product successfuly created');
-
+        return redirect(route('product.index'))->with('success', 'Product successfuly created');
     }
 
-    public function edit( Product $product )
+    public function edit(Product $product)
     {
         $product_categories = ProductCategory::all();
 
-        return view('products.edit', compact( 'product', 'product_categories') );
+        return view('products.edit', compact('product', 'product_categories'));
     }
 
-    public function update( Product $product, ProductRequest $request )
+    public function update(Product $product, ProductRequest $request)
     {
-        $validated = $request->validated() ;
+        $validated = $request->validated();
 
-        $product->update( $validated );
+        if ($request->file('image')) {
+            $image_address = $request->file('image')->store('public/product');
+            $validated['image'] = $image_address;
+        }
 
-        ProductStock::create([
-            "product_id" => $product->id,
-            "quantity" => $product->quantity,
-            'remark_id' =>Remark::create([
-                'description' => "Product ( $product->name ) updated with stock quantity of ( $product->quantity )" ,
-                'entity_id' => $product->id,
-                'entity_type_id' => 1
-            ])->id
-        ]);
+        $product->update($validated);
 
-        return redirect( route('product.index') )->with('success', 'Productsuccessfuly updated');
+        return redirect(route('product.index'))->with('success', 'Productsuccessfuly updated');
     }
 
-    public function destroy( Product $product )
+    public function activateProduct(Product $product)
     {
-        try{
+        $product->activateProduct();
+
+        return redirect(route('product.index'))->with('success', 'Product successfuly activated');
+    }
+
+    public function deactivateProduct(Product $product)
+    {
+        $product->deactivateProduct();
+
+        return redirect(route('product.index'))->with('success', 'Product successfuly deactivated');
+    }
+
+    public function destroy(Product $product)
+    {
+        try {
             $product->destroy($product->id);
-        } catch( Exception $exception ) {
+        } catch (Exception $exception) {
             return redirect(route('product.index'))->with('failure', 'Product Cannot be deleted');
         }
 
-        return redirect( route('product.index') )->with('success', 'Product successfuly deleted');
+        return redirect(route('product.index'))->with('success', 'Product successfuly deleted');
     }
 }

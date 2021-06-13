@@ -3808,6 +3808,12 @@ __webpack_require__(/*! ./components_scripts */ "./resources/js/components_scrip
 
 __webpack_require__(/*! ./page_specific */ "./resources/js/page_specific.js");
 
+__webpack_require__(/*! ./datatables */ "./resources/js/datatables.js");
+
+__webpack_require__(/*! ./dualListBox */ "./resources/js/dualListBox.js");
+
+__webpack_require__(/*! ./formRepeater */ "./resources/js/formRepeater.js");
+
 /***/ }),
 
 /***/ "./resources/js/bootstrap.js":
@@ -3935,6 +3941,151 @@ $(document).ready(function () {
 // function isNotEmpty(s) {
 //     return s.length > 0 ;
 // }
+
+/***/ }),
+
+/***/ "./resources/js/datatables.js":
+/*!************************************!*\
+  !*** ./resources/js/datatables.js ***!
+  \************************************/
+/***/ (() => {
+
+$(function () {
+  $('#' + $('.basic_datatable').attr('id')).DataTable({
+    dom: "<'row'<'col-sm-12 col-md-6'l><'col-sm-12 col-md-6'f>>" + "<'row'<'col-sm-12'tr>>" + "<'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7'p>>" + "<'row'<'col-sm-12'B>>",
+    scrollX: true,
+    buttons: [{
+      extend: 'copy',
+      className: 'hidebuttons'
+    }, {
+      extend: 'csv',
+      className: 'hidebuttons'
+    }, {
+      extend: 'excel',
+      className: 'hidebuttons'
+    }, {
+      extend: 'pdf',
+      className: 'hidebuttons'
+    }, {
+      extend: 'print',
+      className: 'hidebuttons'
+    }]
+  }); // Make sure there are not multiple datatables on one page
+
+  $('.datatable_copy_button').on('click', function () {
+    $('.buttons-copy').trigger("click");
+  });
+  $('.datatable_csv_button').on('click', function () {
+    $('.buttons-csv').trigger("click");
+  });
+  $('.datatable_excel_button').on('click', function () {
+    $('.buttons-excel').trigger("click");
+  });
+  $('.datatable_pdf_button').on('click', function () {
+    $('.buttons-pdf').trigger("click");
+  });
+  $('.datatable_print_button').on('click', function () {
+    $('.buttons-print').trigger("click");
+  });
+});
+
+/***/ }),
+
+/***/ "./resources/js/dualListBox.js":
+/*!*************************************!*\
+  !*** ./resources/js/dualListBox.js ***!
+  \*************************************/
+/***/ (() => {
+
+// generic dual list box
+// Class definition
+var dualListBoxClass = function () {
+  // Private functions
+  var Funct = function Funct() {
+    // Dual Listbox1
+    var $this = $('#' + $('.dual-listbox').attr('id'));
+    var leftTitle = $('.dual_listbox_unique').data('lefttitle');
+    var rightTitle = $('.dual_listbox_unique').data('righttitle'); // get options
+
+    var options = []; // $this.children('option').each(function () {
+    // var value = $(this).val();
+    // var label = $(this).text();
+    // options.push({
+    // text: label,
+    // value: value
+    // });
+    // });
+    // init dual listbox
+
+    var dualListBox = new DualListbox($this.get(0), {
+      addEvent: function addEvent(value) {
+        console.log(value);
+      },
+      removeEvent: function removeEvent(value) {
+        console.log(value);
+      },
+      availableTitle: leftTitle,
+      selectedTitle: rightTitle,
+      addButtonText: 'Add',
+      removeButtonText: 'Remove',
+      addAllButtonText: 'Add All',
+      removeAllButtonText: 'Remove All',
+      options: options
+    });
+  };
+
+  return {
+    // public functions
+    init: function init() {
+      Funct();
+    }
+  };
+}();
+
+$(function () {
+  dualListBoxClass.init();
+});
+
+/***/ }),
+
+/***/ "./resources/js/formRepeater.js":
+/*!**************************************!*\
+  !*** ./resources/js/formRepeater.js ***!
+  \**************************************/
+/***/ (() => {
+
+// Generic Form Repeater
+// Class definition
+var KTFormRepeater = function () {
+  // Private functions
+  var demo1 = function demo1() {
+    $('.form_repeater').each(function (i, obj) {
+      $('#' + $(this).attr('id')).repeater({
+        initEmpty: false,
+        defaultValues: {
+          'text-input': 'foo'
+        },
+        show: function show() {
+          $(this).slideDown();
+        },
+        hide: function hide(deleteElement) {
+          $(this).slideUp(deleteElement);
+        }
+      });
+    });
+  };
+
+  return {
+    // public functions
+    init: function init() {
+      demo1();
+    }
+  };
+}();
+
+jQuery(document).ready(function () {
+  KTFormRepeater.init();
+});
 
 /***/ }),
 

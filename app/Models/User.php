@@ -20,6 +20,8 @@ class User extends Authenticatable
     use Notifiable;
     use TwoFactorAuthenticatable;
 
+
+
     /**
      * The attributes that are mass assignable.
      *
@@ -58,4 +60,22 @@ class User extends Authenticatable
     protected $appends = [
         'profile_photo_url',
     ];
+
+    // User can have many roles
+    public function roles()
+    {
+        return $this->belongsToMany(Role::class)->withTimestamps();
+    }
+
+    // helper function to assign a role
+    public function syncRoles($roles)
+    {
+        $this->roles()->sync($roles);
+    }
+
+    // get all the permissions a user has
+    public function permissions()
+    {
+        return $this->roles->map->permissions->flatten()->pluck('name')->unique();
+    }
 }

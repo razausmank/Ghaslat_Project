@@ -22,6 +22,9 @@ License: You must have a valid license purchased only from themeforest(the above
 		<meta name="description" content="Updates and statistics" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 
+
+
+
 		<!--begin::Fonts-->
 		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" />
 
@@ -42,6 +45,10 @@ License: You must have a valid license purchased only from themeforest(the above
 
 		<!--end::Global Theme Styles-->
 
+        <!-- compiled css app.css -->
+		<link href="{{ asset('css/app.css') }}" rel="stylesheet" type="text/css" />
+
+
 		<!--begin::Layout Themes(used by all pages)-->
 
 		<!--end::Layout Themes-->
@@ -52,6 +59,10 @@ License: You must have a valid license purchased only from themeforest(the above
 
         <!-- autocomplete css -->
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tarekraafat/autocomplete.js@7.2.0/dist/css/autoComplete.min.css">
+
+        <!-- custom or page specific stylesheets -->
+        {{ $styles ?? '' }}
+
 	</head>
 
 	<!--end::Head-->
@@ -67,7 +78,7 @@ License: You must have a valid license purchased only from themeforest(the above
 
 		@include("partials/_extras/scrolltop")
 
-		@include("partials/_extras/toolbar")
+		{{-- @include("partials/_extras/toolbar") --}}
 
 		{{-- @include("partials/_extras/offcanvas/demo-panel") --}}
 		<script>
@@ -173,6 +184,9 @@ License: You must have a valid license purchased only from themeforest(the above
 
         <!-- DataTables -->
         <script src="{{ asset('assets/plugins/custom/datatables/datatables.bundle.js?v=7.0.5') }}"></script>
+
+        <!-- Includable JS -->
+        {{ $scripts ?? '' }}
 
 	</body>
 

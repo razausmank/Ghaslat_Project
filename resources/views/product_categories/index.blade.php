@@ -2,22 +2,17 @@
 
     <x-flash />
 
-    <x-cards.basic-card title="All Product Categories" subtitle="List of all product categories" button_link="productcategory.create" button_text="New Product Category">
+    <x-datatable.basic title="Product Categories" button_link="productcategory.create" button_text="New Product Category" table_id="product_categories_list_datatable" >
+        <x-slot name="header">
+            <th>Name</th>
+            <th>Description</th>
+            <th>No. of Products </th>
+            <th>Created At</th>
+            <th>Actions</th>
+        </x-slot>
 
-
-        <table  class="table table-bordered table-hover table-checkable dataTable dtr-inline" style="width:100%" id="product_categories_table" >
-            <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>Description</th>
-                    <th>No. of Products </th>
-                    <th>Created At</th>
-                    <th>Actions</th>
-
-                </tr>
-            </thead>
-            <tbody>
-                @foreach ($product_categories as $product_category)
+        <x-slot name="body">
+            @foreach ($product_categories as $product_category)
                     <tr>
                         <td><a href="{{ route('productcategory.show' , $product_category ) }}">{{ $product_category->name }}</a></td>
                         <td>{{ $product_category->description }}</td>
@@ -40,8 +35,9 @@
 
                     </tr>
                 @endforeach
-            </tbody>
-        </table>
-    </x-cards.basic-card>
+
+        </x-slot>
+    </x-datatable.basic>
+
 
 </x-master>

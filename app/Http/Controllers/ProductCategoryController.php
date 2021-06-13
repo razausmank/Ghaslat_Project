@@ -13,12 +13,12 @@ class ProductCategoryController extends Controller
     {
         $product_categories = ProductCategory::all();
 
-        return view('product_categories.index', compact('product_categories') );
+        return view('product_categories.index', compact('product_categories'));
     }
 
-    public function show( ProductCategory $productcategory )
+    public function show(ProductCategory $productcategory)
     {
-        return view('product_categories.show', compact('productcategory') );
+        return view('product_categories.show', compact('productcategory'));
     }
 
     public function create()
@@ -26,49 +26,48 @@ class ProductCategoryController extends Controller
         return view('product_categories.create');
     }
 
-    public function store( ProductCategoryRequest $request )
+    public function store(ProductCategoryRequest $request)
     {
         $validated = $request->validated();
-        $image_address = $request->file('image')->store('public/product_category');
-        unset($validated['image']);
 
-        ProductCategory::create($validated + [
-            'image' => $image_address
-        ]);
+        if ($request->file('image')) {
+            $image_address = $request->file('image')->store('public/product_category');
+            $validated['image'] = $image_address;
+        }
 
-        // ProductCategory::create($validated);
+        ProductCategory::create($validated);
 
-        return redirect( route('productcategory.index') )->with('success', 'Product Category successfuly created');
 
+        return redirect(route('productcategory.index'))->with('success', 'Product Category successfuly created');
     }
 
-    public function edit( ProductCategory $productcategory )
+    public function edit(ProductCategory $productcategory)
     {
-        return view('product_categories.edit', compact( 'productcategory') );
+        return view('product_categories.edit', compact('productcategory'));
     }
 
-    public function update( ProductCategory $productcategory, ProductCategoryRequest $request )
+    public function update(ProductCategory $productcategory, ProductCategoryRequest $request)
     {
-        $validated = $request->validated() ;
+        $validated = $request->validated();
 
-        $image_address = $request->file('image')->store('public/product_category');
-        unset($validated['image']);
+        if ($request->file('image')) {
+            $image_address = $request->file('image')->store('public/product_category');
+            $validated['image'] = $image_address;
+        }
 
-        $productcategory->update( $validated  + [
-            'image' => $image_address
-        ]);
+        $productcategory->update($validated);
 
-        return redirect( route('productcategory.index') )->with('success', 'Product Category successfuly updated');
+        return redirect(route('productcategory.index'))->with('success', 'Product Category successfuly updated');
     }
 
-    public function destroy( ProductCategory $productcategory )
+    public function destroy(ProductCategory $productcategory)
     {
-        try{
+        try {
             $productcategory->destroy($productcategory->id);
-        } catch( Exception $exception ) {
+        } catch (Exception $exception) {
             return redirect(route('productcategory.index'))->with('failure', 'Product Category Cannot be deleted, the Category has products');
         }
 
-        return redirect( route('productcategory.index') )->with('success', 'Product Category successfuly deleted');
+        return redirect(route('productcategory.index'))->with('success', 'Product Category successfuly deleted');
     }
 }

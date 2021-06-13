@@ -25,10 +25,7 @@ class Pages extends Migration
 
             $table->foreignId('created_by')->nullable()->constrained('users');
             $table->foreignId('updated_by')->nullable()->constrained('users');
-            $table->foreignId('deleted_by')->nullable()->constrained('users');
-            $table->softDeletes();
 
-            $table->unique(['sort_order', 'deleted_at']);
 
             $table->timestamps();
         });

@@ -1,0 +1,12 @@
+when editing something with image, the image gets removed on updating
+cant create someting without including picture code blows up  (fixed)
+
+- make the "add new user" button functional
+
+- fix the kt datable grid (fixed)
+
+- in the datatable the dom elements are displayed in block ( fixed )
+
+- change login page ( fixed )
+
+- change registration page

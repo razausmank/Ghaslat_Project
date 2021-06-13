@@ -19,16 +19,14 @@ class CreateProductsTable extends Migration
             $table->string('name');
             $table->string('image')->nullable();
             $table->text('description')->nullable();
-            $table->string('barcode')->nullable();
             $table->decimal('price');
-            $table->integer('quantity')->nullable();
+            $table->boolean('is_package');
+            $table->boolean('is_active')->default(true);
 
             $table->foreignId('product_category_id')->nullable()->constrained('product_categories');
 
             $table->foreignId('created_by')->nullable()->constrained('users');
             $table->foreignId('updated_by')->nullable()->constrained('users');
-            $table->foreignId('deleted_by')->nullable()->constrained('users');
-            $table->softDeletes();
 
             $table->timestamps();
         });
