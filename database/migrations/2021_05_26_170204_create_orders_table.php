@@ -14,10 +14,11 @@ class CreateOrdersTable extends Migration
     public function up()
     {
         Schema::create('orders', function (Blueprint $table) {
-            $table->bigIncrements("order_number");
+            $table->id();
             $table->string("address")->nullable();
-            $table->tinyInteger("status");
-            $table->decimal("total_price");
+            $table->tinyInteger("status")->default(0);
+            $table->decimal("total_price")->default(0);
+            $table->foreignId('customer_id')->nullable()->constrained('customers');
             $table->foreignId('created_by')->nullable()->constrained('users');
             $table->foreignId('updated_by')->nullable()->constrained('users');
             $table->timestamps();

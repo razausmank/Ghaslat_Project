@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\OrderRequest;
+use App\Models\Customer;
 use App\Models\Order;
+use App\Models\Product;
 use Illuminate\Http\Request;
 
 class OrderController extends Controller
@@ -14,7 +17,8 @@ class OrderController extends Controller
      */
     public function index()
     {
-        //
+        $orders = Order::all();
+        return view('orders.index', compact('orders'));
     }
 
     /**
@@ -24,7 +28,9 @@ class OrderController extends Controller
      */
     public function create()
     {
-        //
+        $customers = Customer::all();
+        $products = Product::all();
+        return view('orders.create', compact('customers', 'products'));
     }
 
     /**
@@ -33,9 +39,17 @@ class OrderController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(OrderRequest $request)
     {
-        //
+        $validated = $request->validated();
+
+        list($product_ids, $product_qunatities) = $this->destructureTwoDimArrayToSeperateArrays(request('items_list'), 'product_id', 'product_qty');
+        unset($validated['items_list']);
+        $order = Order::create($validated);
+
+        $order->syncProducts($product_ids, $product_qunatities);
+
+        return redirect(route('order.index'))->with('success', 'Order successfuly created');
     }
 
     /**

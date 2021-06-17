@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\PageController;
 use App\Http\Controllers\BaseController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\EntityTypeController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PackageController;
 use App\Http\Controllers\ProductCategoryController;
 use App\Http\Controllers\ProductController;
@@ -48,6 +49,8 @@ Route::resource('customer', CustomerController::class);
 // roles
 Route::resource('role', RoleController::class);
 
+// orders
+Route::resource('order', OrderController::class);
 
 Route::get('/', function () {
     return view('welcome');
