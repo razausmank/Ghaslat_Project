@@ -1,7 +1,5 @@
-when editing something with image, the image gets removed on updating
+- when editing something with image, the image gets removed on updating
 cant create someting without including picture code blows up  (fixed)
-
-- make the "add new user" button functional
 
 - fix the kt datable grid (fixed)
 
@@ -9,4 +7,18 @@ cant create someting without including picture code blows up  (fixed)
 
 - change login page ( fixed )
 
-- change registration page
+- change registration page (fixed )
+
+- make the "add new user" button functional ( fixed )
+
+- configure roles in new user and some thought about multiple roles ( fixed for now )
+
+- ask if the customers are also a user and will be having an account ?
+
+- change the root page
+
+- create order functionality
+
+- maybe add the customer details in that aswell
+
+

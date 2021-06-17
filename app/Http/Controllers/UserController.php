@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Laravel\Fortify\Contracts\CreatesNewUsers;
 
 class UserController extends Controller
 {
@@ -13,6 +14,20 @@ class UserController extends Controller
     {
         $users = User::all();
         return view('users.index', compact('users'));
+    }
+
+    public function create()
+    {
+        $roles = Role::all();
+        return view('users.create', compact('roles'));
+    }
+
+    public function store(Request $request, CreatesNewUsers $creator)
+    {
+
+        $user = $creator->create($request->all());
+
+        return redirect(route('user.index'))->with('success', 'User Created Successfully');
     }
 
     // get view to show all the roles a user has

@@ -6,6 +6,7 @@
         <x-slot name="header">
             <th>Name</th>
             <th>Email</th>
+            <th>roles</th>
             <th>Created At</th>
             <th>Updated At</th>
             <th>Actions</th>
@@ -15,10 +16,16 @@
             @foreach ($users as $user)
                 <tr role="row" class="odd">
                     <td class="dtr-control sorting_1" tabindex="0">{{ $user->name }}</td>
-                    <td tabindex="0">{{ $user->email }}</td>
-                    <td tabindex="0">{{ $user->created_at }}</td>
-                    <td tabindex="0">{{ $user->updated_at }}</td>
-                    <td nowrap="nowrap" tabindex="0">
+                    <td>{{ $user->email }}</td>
+                    <td>
+                        @foreach ($user->roles as $role)
+                            <span class="label label-primary  label-inline mr-2">{{ $role->name }}</span>
+                        @endforeach
+
+                    </td>
+                    <td>{{ $user->created_at }}</td>
+                    <td>{{ $user->updated_at }}</td>
+                    <td nowrap="nowrap">
                         <a href="{{ route('user.edit_user_roles', $user->id) }}" class="btn btn-primary ">Edit Roles</a>
                     </td>
                 </tr>
