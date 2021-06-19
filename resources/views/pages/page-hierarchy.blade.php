@@ -1,6 +1,6 @@
-<x-master>
+<x-master title="Pages" :breadcrumbs="[ 'Pages' => 'page.index', 'Page Hierarchy' => 'page.page_hierarchy'  ]">
 
-    <x-cards.basic-card title="Pages Hierarchy" subtitle="This is how pages are arranged etc .">
+    <x-cards.basic-card title="Pages Hierarchy" >
 
         <x-form.form submit_button_id="page_hierarchy_js_tree_form_submit" reset_button_id="page_hierarchy_js_tree_form_reset">
             <x-slot name="form_tag">

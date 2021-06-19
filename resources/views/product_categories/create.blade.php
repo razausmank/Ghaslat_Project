@@ -1,6 +1,6 @@
-<x-master>
+<x-master  title="Product Categories" :breadcrumbs="[ 'Product Categories' => 'productcategory.index', 'New Product Category' => 'productcategory.create'  ]">
 
-    <x-cards.basic-card title="New Product Category" subtitle="A new world order blah blah ">
+    <x-cards.basic-card title="New Product Category" >
 
         <x-form.form>
             <x-slot name="form_tag">

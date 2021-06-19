@@ -1,4 +1,4 @@
-<x-master >
+<x-master  title="Users" :breadcrumbs="[ 'Users' => 'user.index']">
 
     <x-flash />
 
@@ -19,7 +19,7 @@
                     <td>{{ $user->email }}</td>
                     <td>
                         @foreach ($user->roles as $role)
-                            <span class="label label-primary  label-inline mr-2">{{ $role->name }}</span>
+                            <span class="label label-primary  label-inline mr-2 mb-2">{{ $role->name }}</span>
                         @endforeach
 
                     </td>

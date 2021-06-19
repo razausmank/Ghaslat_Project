@@ -23,5 +23,7 @@ cant create someting without including picture code blows up  (fixed)
 
 - do we create customers in the system for walk in customers
 
+- fix menu hierarchy
+
 
 

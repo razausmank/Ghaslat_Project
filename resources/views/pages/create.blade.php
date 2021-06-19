@@ -1,6 +1,6 @@
-<x-master>
+<x-master title="Pages" :breadcrumbs="[ 'Pages' => 'page.index', 'New Page' => 'page.create'  ]">
 
-    <x-cards.basic-card title="New Page" subtitle="Yo man this was hard">
+    <x-cards.basic-card title="New Page" >
 
         <x-form.form >
             <x-slot name="form_tag">

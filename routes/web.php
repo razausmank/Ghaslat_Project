@@ -13,6 +13,7 @@ use App\Http\Controllers\RemarkController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\testController;
 use App\Http\Controllers\UserController;
+use App\Http\Middleware\Authenticate;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
 
@@ -26,40 +27,41 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-// Pade Module Routes
-Route::get('admin/page/page-hierarchy', [PageController::class, 'pageHierarchy'])->name('page.page_hierarchy');
-Route::post('admin/page/update-page-hierarchy', [PageController::class, 'updatePageHierarchy'])->name('page.update_page_hierarchy');
-Route::resource('admin/page', PageController::class);
 
-Route::resource('user', UserController::class);
-Route::get('/user/{user}/edit_user_roles', [UserController::class, 'edit_user_roles'])->name('user.edit_user_roles');
-Route::post('/user/{user}/update_user_roles', [UserController::class, 'update_user_roles'])->name('user.update_user_roles');
 
-//Product Category Routes
-Route::resource('productcategory', ProductCategoryController::class);
+Route::middleware([Authenticate::class])->group(function () {
+    //
+    // Pade Module Routes
+    Route::get('admin/page/page-hierarchy', [PageController::class, 'pageHierarchy'])->name('page.page_hierarchy');
+    Route::post('admin/page/update-page-hierarchy', [PageController::class, 'updatePageHierarchy'])->name('page.update_page_hierarchy');
+    Route::resource('admin/page', PageController::class);
 
-//Product Category Routes
-Route::resource('product', ProductController::class);
-Route::post('product/activate/{product}', [ProductController::class, 'activateProduct'])->name('product.activate');
-Route::post('product/deactivate/{product}', [ProductController::class, 'deactivateProduct'])->name('product.deactivate');
+    Route::resource('user', UserController::class);
+    Route::get('/user/{user}/edit_user_roles', [UserController::class, 'edit_user_roles'])->name('user.edit_user_roles');
+    Route::post('/user/{user}/update_user_roles', [UserController::class, 'update_user_roles'])->name('user.update_user_roles');
 
-//Customer Routes
-Route::resource('customer', CustomerController::class);
+    //Product Category Routes
+    Route::resource('productcategory', ProductCategoryController::class);
 
-// roles
-Route::resource('role', RoleController::class);
+    //Product Category Routes
+    Route::resource('product', ProductController::class);
+    Route::post('product/activate/{product}', [ProductController::class, 'activateProduct'])->name('product.activate');
+    Route::post('product/deactivate/{product}', [ProductController::class, 'deactivateProduct'])->name('product.deactivate');
 
-// orders
-Route::resource('order', OrderController::class);
+    //Customer Routes
+    Route::resource('customer', CustomerController::class);
 
-Route::get('/', function () {
-    return view('welcome');
+    // roles
+    Route::resource('role', RoleController::class);
+
+    // orders
+    Route::resource('order', OrderController::class);
+
+    Route::get('/test', [testController::class, 'show']);
 });
 
-Route::get('/test', [testController::class, 'show']);
+Route::middleware(['auth:sanctum', 'verified'])->get('/', [ProductController::class, 'index'])->name('dashboard');
 
-// Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', [BaseController::class, 'dashboard'])->name('dashboard');
-
-Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
-    return view('dashboard');
-})->name('dashboard');
+// Route::middleware(['auth:sanctum', 'verified'])->get('/productcategory', function () {
+//     return view('dashboard');
+// })->name('dashboard');

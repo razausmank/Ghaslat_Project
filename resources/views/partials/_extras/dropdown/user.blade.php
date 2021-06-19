@@ -4,14 +4,14 @@
 
 	<!--begin::Symbol-->
 	<div class="symbol symbol-md bg-light-primary mr-3 flex-shrink-0">
-		<img src="{{ asset('c/users/300_21.jpg') }}" alt="" />
+		<img src="{{ asset('assets/media/users/100_1.jpg') }}" alt="" />
 	</div>
 
 	<!--end::Symbol-->
 
 	<!--begin::Text-->
 	<div class="text-dark m-0 flex-grow-1 mr-3 font-size-h5">{{ auth()->user()->name }}</div>
-	<span class="label label-light-success label-lg font-weight-bold label-inline">3 messages</span>
+	{{-- <span class="label label-light-success label-lg font-weight-bold label-inline">3 messages</span> --}}
 
 	<!--end::Text-->
 </div>
@@ -42,7 +42,7 @@
 
 	<!--end::Item-->
 
-	<!--begin::Item-->
+	{{-- <!--begin::Item-->
 	<a href="custom/apps/user/profile-3.html" class="navi-item px-8">
 		<div class="navi-link">
 			<div class="navi-icon mr-2">
@@ -95,7 +95,7 @@
 				</div>
 			</div>
 		</div>
-	</a>
+	</a> --}}
 
 	<!--end::Item-->
 
@@ -109,7 +109,7 @@
         </form>
 
 
-		<a href="custom/user/login-v2.html" target="_self" class="btn btn-clean font-weight-bold">Upgrade Plan</a>
+		{{-- <a href="custom/user/login-v2.html" target="_self" class="btn btn-clean font-weight-bold">Upgrade Plan</a> --}}
 	</div>
 
 	<!--end::Footer-->

@@ -1,4 +1,4 @@
-<x-master >
+<x-master title="Users" :breadcrumbs="[ 'Users' => 'user.index', 'Edit User Roles' => '#'  ]">
 
     <x-flash />
 

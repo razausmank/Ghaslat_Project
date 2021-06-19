@@ -1,8 +1,8 @@
-<x-master>
+<x-master title="Products" :breadcrumbs="[ 'Products' => 'product.index' ]">
 
     <x-flash />
 
-    <x-datatable.basic title="Products" button_link="product.create" button_text="New Product" table_id="products_list_datatable" >
+    <x-datatable.basic title="List of Products" button_link="product.create" button_text="New Product" table_id="products_list_datatable" >
         <x-slot name="header">
             <th>Name</th>
             <th>Description</th>

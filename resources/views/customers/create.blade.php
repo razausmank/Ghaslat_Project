@@ -1,5 +1,5 @@
-<x-master>
-    <x-cards.basic-card title="New Customer" subtitle="Add a new Customer">
+<x-master  title="Customers" :breadcrumbs="[ 'Customers' => 'customer.index' , 'New Customer' => 'customer.create' ]">
+    <x-cards.basic-card title="New Customer" >
 
         <x-form.form>
             <x-slot name="form_tag">

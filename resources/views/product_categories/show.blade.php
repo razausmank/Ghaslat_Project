@@ -1,4 +1,4 @@
-<x-master>
+<x-master title="Product Categories" :breadcrumbs="[ 'Product Categories' => 'productcategory.index' ]">
 
 <div class="row">
 

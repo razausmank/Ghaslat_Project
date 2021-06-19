@@ -1,5 +1,5 @@
-<x-master>
-    <x-cards.basic-card title="Update Page" subtitle="Yo man this was hard">
+<x-master title="Pages" :breadcrumbs="[ 'Pages' => 'page.index', 'Edit Page' => '#'  ]">
+    <x-cards.basic-card title="Update Page" >
 
 
         <x-form.form >

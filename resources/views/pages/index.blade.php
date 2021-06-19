@@ -1,8 +1,8 @@
-<x-master >
+<x-master title="Pages" :breadcrumbs="[ 'Pages' => 'page.index' ]">
 
     <x-flash />
 
-    <x-datatable.basic title="All Pages" button_link="page.create" button_text="New Page" table_id="pages_list_datatable" >
+    <x-datatable.basic title="List of Pages" button_link="page.create" button_text="New Page" table_id="pages_list_datatable" >
         <x-slot name="header">
             <th>Name</th>
             <th>Url</th>

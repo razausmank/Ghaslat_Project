@@ -1,7 +1,7 @@
-<x-master>
+<x-master title="Orders" :breadcrumbs="[ 'Orders' => 'order.index'  ]">
 
     <x-flash />
-    <x-datatable.basic title="Orders"  button_link="order.create" button_text="New Order" table_id="orders_list_datatable" >
+    <x-datatable.basic title="List of Orders"  button_link="order.create" button_text="New Order" table_id="orders_list_datatable" >
         <x-slot name="header">
             <th>Address</th>
             <th>Status</th>

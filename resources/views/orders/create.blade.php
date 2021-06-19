@@ -1,5 +1,5 @@
-<x-master>
-    <x-cards.basic-card title="New Order" subtitle="Add a new Order">
+<x-master title="Orders" :breadcrumbs="[ 'Orders' => 'order.index' , 'New Order' => 'order.create' ]">
+    <x-cards.basic-card title="New Order" >
 
         <x-form.form>
             <x-slot name="form_tag">

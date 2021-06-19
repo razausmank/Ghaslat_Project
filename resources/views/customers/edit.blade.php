@@ -1,4 +1,4 @@
-<x-master>
+<x-master title="Customers" :breadcrumbs="[ 'Customers' => 'customer.index' , 'Edit Customer' => '#' ]">
     <x-cards.basic-card title="Edit Customer" >
 
         <x-form.form>
