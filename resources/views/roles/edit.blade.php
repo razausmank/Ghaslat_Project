@@ -1,4 +1,4 @@
-<x-master title="Roles" :breadcrumbs="[ 'Roles' => 'role.index', 'Edit Role' => 'role.edit'  ]">
+<x-master title="Roles" :breadcrumbs="[ 'Roles' => 'role.index', 'Edit Role' => '#'  ]">
 
     <x-flash />
 

@@ -11,11 +11,16 @@
 			<!--begin::Header Logo-->
 			<div class="header-logo">
 				<a href="#">
-					<img alt="Logo" src="{{ asset('assets/media/logos/logo-letter-9.png') }}" class="logo-default max-h-40px" />
-					<img alt="Logo" src="{{ asset('assets/media/logos/logo-letter-1.png') }}" class="logo-sticky max-h-40px" />
+					<img alt="Logo" src="{{ asset('assets/media/Ghaslat.png') }}" class="logo-default max-h-50px" />
+					<img alt="Logo" src="{{ asset('assets/media/Ghaslat.png') }}" class="logo-sticky max-h-50px" />
 				</a>
+                <h2 class="logo-default mx-2" style="color:#fff">Ghaslat</h2>
+                <h2 class="logo-sticky mx-2">Ghaslat</h2>
             </div>
+			<div class="header-logo">
 
+
+            </div>
             {{-- Custom Page Begin Here  --}}
 
             @include('partials/_pages_menu');

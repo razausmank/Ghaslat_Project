@@ -35,7 +35,7 @@
 						<!--begin::Login Header-->
 						<div class="d-flex flex-center mb-15">
 							<a href="#">
-								<img src="assets/media/logos/logo-letter-9.png" class="max-h-100px" alt="" />
+								<img src="{{ asset('assets/media/Ghaslat.png') }}" class="max-h-100px" alt="" />
 							</a>
 						</div>
 						<!--end::Login Header-->
@@ -74,10 +74,7 @@
 									<button id="kt_login_signin_submit" class="btn btn-pill btn-outline-white font-weight-bold opacity-90 px-15 py-3">Sign In</button>
 								</div>
 							</form>
-							<div class="mt-10">
-								<span class="opacity-70 mr-4">Don't have an account yet?</span>
-								<a href="{{ route('register')}}" id="kt_login_signup" class="text-white font-weight-bold">Sign Up</a>
-							</div>
+
 						</div>
 						<!--end::Login Sign in form-->
 

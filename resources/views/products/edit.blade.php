@@ -1,4 +1,4 @@
-<x-master title="Products" :breadcrumbs="[ 'Products' => 'product.index', 'Edit Product' => 'product.edit'  ]">
+<x-master title="Products" :breadcrumbs="[ 'Products' => 'product.index', 'Edit Product' => '#'  ]">
 
     <x-cards.basic-card title="Edit Product">
 
