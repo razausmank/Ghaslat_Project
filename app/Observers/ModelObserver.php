@@ -8,8 +8,7 @@ class ModelObserver
 {
     public function creating($model)
     {
-        if ( Helper::current_user() )
-        {
+        if (Helper::current_user()) {
             $model->created_by = Helper::current_user_id();
             $model->updated_by = Helper::current_user_id();
         }
@@ -21,9 +20,9 @@ class ModelObserver
         $model->updated_by = Helper::current_user_id();
     }
 
-    public function deleted( $model )
-    {
-        $model->deleted_by =  Helper::current_user_id();
-        $model->save();
-    }
+    // public function deleted($model)
+    // {
+    //     $model->deleted_by =  Helper::current_user_id();
+    //     $model->save();
+    // }
 }

@@ -12,13 +12,23 @@ class Role extends Model
 
     protected $guarded = [];
 
-    protected $touches = ['permissions'];
+    protected $touches = ['permissions', 'pagePermissions'];
 
 
     // A role can have many Permissions
     public function permissions()
     {
         return $this->belongsToMany(Permission::class)->withTimestamps();
+    }
+
+    public function pagePermissions()
+    {
+        return $this->belongsToMany(PagePermission::class)->withTimestamps();
+    }
+
+    public function syncPagePermissions($pagePermissions)
+    {
+        return $this->pagePermissions()->sync($pagePermissions);
     }
 
     // Allow a role to have a permission

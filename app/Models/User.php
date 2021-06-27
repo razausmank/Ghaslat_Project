@@ -78,4 +78,10 @@ class User extends Authenticatable
     {
         return $this->roles->map->permissions->flatten()->pluck('name')->unique();
     }
+
+    // get all the pages a user has access to
+    public function pages()
+    {
+        return $this->roles->map->pagePermissions->flatten()->pluck('name')->unique();
+    }
 }

@@ -4007,15 +4007,7 @@ var dualListBoxClass = function () {
     var leftTitle = $('.dual_listbox_unique').data('lefttitle');
     var rightTitle = $('.dual_listbox_unique').data('righttitle'); // get options
 
-    var options = []; // $this.children('option').each(function () {
-    // var value = $(this).val();
-    // var label = $(this).text();
-    // options.push({
-    // text: label,
-    // value: value
-    // });
-    // });
-    // init dual listbox
+    var options = []; // init dual listbox
 
     var dualListBox = new DualListbox($this.get(0), {
       addEvent: function addEvent(value) {

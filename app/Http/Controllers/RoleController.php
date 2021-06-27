@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\PagePermission;
 use App\Models\Permission;
 use App\Models\Role;
 use Illuminate\Http\Request;
@@ -18,7 +19,8 @@ class RoleController extends Controller
     public function create()
     {
         $permissions = Permission::all();
-        return view('roles.create', compact('permissions'));
+        $pages = PagePermission::all();
+        return view('roles.create', compact('permissions', 'pages'));
     }
 
     public function store()
@@ -33,6 +35,7 @@ class RoleController extends Controller
         ]);
 
         $role->syncPermissions(request('permissions'));
+        $role->syncPagePermissions(request('pages'));
 
         return redirect(route('role.index'))->with('success', 'Role Created Successfully');
     }
@@ -40,7 +43,9 @@ class RoleController extends Controller
     public function edit(Role $role)
     {
         $permissions = Permission::all();
-        return view('roles.edit', compact('role', 'permissions'));
+        $pages = PagePermission::all();
+
+        return view('roles.edit', compact('role', 'permissions', 'pages'));
     }
 
     public function update(Role $role)
@@ -55,6 +60,7 @@ class RoleController extends Controller
         ]);
 
         $role->syncPermissions(request('permissions'));
+        $role->syncPagePermissions(request('pages'));
 
         return redirect(route('role.index'))->with('success', 'Role Updated Successfully');
     }
@@ -62,5 +68,6 @@ class RoleController extends Controller
     public function destroy(Role $role)
     {
         $role->destroy($role->id);
+        return redirect(route('role.index'))->with('success', 'Role Deleted Successfully');
     }
 }

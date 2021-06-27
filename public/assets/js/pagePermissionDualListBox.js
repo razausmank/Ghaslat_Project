@@ -1,13 +1,13 @@
-// generic dual list box
+// specific dual list box
 // Class definition
-var dualListBoxClass = function() {
+var dualListBoxClass2 = function() {
     // Private functions
     var Funct = function () {
 // Dual Listbox1
-var $this = $('#' + $('.dual-listbox').attr('id'));
+var $this = $('#' + $('.dual-listbox2').attr('id'));
 
-var leftTitle =  $('.dual_listbox_unique').data('lefttitle');
-var rightTitle =  $('.dual_listbox_unique').data('righttitle');
+var leftTitle =  $('.dual_listbox_unique2').data('lefttitle');
+var rightTitle =  $('.dual_listbox_unique2').data('righttitle');
 // get options
 var options = [];
 
@@ -38,6 +38,6 @@ options: options,
 }();
 
 $(function() {
-    dualListBoxClass.init();
+    dualListBoxClass2.init();
 
 });

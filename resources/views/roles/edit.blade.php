@@ -20,31 +20,35 @@
             <hr />
             <br />
 
-            <select id="role_permissions" data-leftTitle="Available Permissions" data-rightTitle="Selected Permissions" name="permissions[]" class="dual-listbox dual_listbox_unique" multiple>
-                @foreach ($permissions as $permission)
-                    <option value="{{ $permission->id }}" {{ $role->permissions->pluck('id')->contains( $permission->id ) ? 'selected' : '' }}>{{ $permission->label }}</option>
-                @endforeach
+            <div class="row">
+                <div class="col-md-6 col-sm-6">
 
-            </select>
+                    <select id="role_permissions" data-leftTitle="Available Permissions" data-rightTitle="Selected Permissions" name="permissions[]" class="dual-listbox dual_listbox_unique" multiple>
+                        @foreach ($permissions as $permission)
+                            <option value="{{ $permission->id }}" {{ $role->permissions->pluck('id')->contains( $permission->id ) ? 'selected' : '' }}>{{ $permission->label }}</option>
+                        @endforeach
+
+                    </select>
+                </div>
+                <div class="col-md-6 col-sm-6">
+                    <select id="page_permissions" data-leftTitle="Available Pages" data-rightTitle="Selected Pages" name="pages[]" class="dual-listbox2 dual_listbox_unique2" multiple>
+                        @foreach ($pages as $page)
+                            <option value="{{ $page->id }}" {{ $role->pagePermissions->pluck('id')->contains( $page->id ) ? 'selected' : '' }}>{{ $page->label }}</option>
+                        @endforeach
+
+                    </select>
+                </div>
+            </div>
 
             <button type="submit" class=" btn btn-primary my-3 p-3 float-right btn-lg">Update Role</button>
         </form>
     </x-cards.basic-card>
 
-    {{-- Scripts Section --}}
-    <x-slot name="scripts">
-        {{-- vendors --}}
-         <script src="{{ asset('assets/plugins/custom/datatables/datatables.bundle.js') }}" type="text/javascript"></script>
+     {{-- Scripts Section --}}
+     <x-slot name="scripts">
 
-         {{-- page scripts --}}
-         <script src="{{ asset('assets/js/pages/crud/datatables/basic/basic.js') }}" type="text/javascript"></script>
-         <script src="{{ asset('assets/js/app.js') }}" type="text/javascript"></script>
-         <script src="{{ asset('assets/js/dualListBox.js') }}" type="text/javascript"></script>
-     </x-slot>
+        <script src="{{ asset('assets/js/pagePermissionDualListBox.js') }}" type="text/javascript"></script>
 
-     {{-- Styles Section --}}
-     <x-slot name="styles">
-         <link href="{{ asset('assets/plugins/custom/datatables/datatables.bundle.css') }}" rel="stylesheet" type="text/css"/>
-     </x-slot>
+    </x-slot>
 </x-master>
 
