@@ -39,10 +39,10 @@ class AppServiceProvider extends ServiceProvider
 
         Page::observe(ModelObserver::class);
         Page::observe(PageObserver::class);
-        User::observe(ModelObserver::class);
+        // User::observe(ModelObserver::class);
         ProductCategory::observe(ModelObserver::class);
         Product::observe(ModelObserver::class);
-        Customer::observe(ModelObserver::class);
+        // Customer::observe(ModelObserver::class);
         Order::observe(ModelObserver::class);
         Role::observe(ModelObserver::class);
         Permission::observe(ModelObserver::class);
