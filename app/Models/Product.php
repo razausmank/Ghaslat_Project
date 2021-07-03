@@ -28,6 +28,7 @@ class Product extends Model
         $this->save();
     }
 
+
     public function deactivateProduct()
     {
         $this->is_active = 0;

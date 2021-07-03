@@ -3,9 +3,6 @@
     <div class="card card-custom gutter-b card-stretch">
         <!--begin::Body-->
         <div class="card-body pt-4">
-            <div class="d-flex justify-content-end">
-                <span class="label label-lg font-weight-bold  label-light-{{ $item->is_package ? 'primary' : 'danger' }} label-inline">{{ $item->is_package ? 'Package' : 'Product' }}</span>
-            </div>
             <!--begin::User-->
             <div class="d-flex align-items-end mb-7">
                 <!--begin::Pic-->
@@ -22,7 +19,7 @@
                     <!--end::Pic-->
                     <!--begin::Title-->
                     <div class="d-flex flex-column">
-                        <a href="{{ route('product.show', $item->id) }}" class="text-dark font-weight-bold text-hover-primary font-size-h4 mb-0">{{ $item->name }}</a>
+                        <a href="{{ route('productcategory.show', $item->id) }}" class="text-dark font-weight-bold text-hover-primary font-size-h4 mb-0">{{ $item->name }}</a>
                         {{-- <span class="text-muted font-weight-bold">Head of Development</span> --}}
                     </div>
                     <!--end::Title-->
@@ -36,16 +33,20 @@
             <!--begin::Info-->
             <div class="mb-7">
                 <div class="d-flex justify-content-between align-items-center">
-                    <span class="text-dark-75 font-weight-bolder mr-2">Price:</span>
-                    <a href="#" class="text-muted text-hover-primary">{{ $item->price }}</a>
+                    <span class="text-dark-75 font-weight-bolder mr-2">Number of Products:</span>
+                    <a href="#" class="text-muted text-hover-primary">{{ $item->products->where('is_package', 0)->count() }}</a>
                 </div>
                 <div class="d-flex justify-content-between align-items-cente my-1">
-                    <span class="text-dark-75 font-weight-bolder mr-2">Active:</span>
-                    <a href="#" class="text-muted text-hover-primary">{{ $item->is_active ? 'Yes' : 'No'}}</a>
+                    <span class="text-dark-75 font-weight-bolder mr-2">Number of Packages:</span>
+                    <a href="#" class="text-muted text-hover-primary">{{ $item->products->where('is_package', 1)->count() }}</a>
                 </div>
                 <div class="d-flex justify-content-between align-items-center">
-                    <span class="text-dark-75 font-weight-bolder mr-2">Orders:</span>
-                    <span class="text-muted font-weight-bold">{{ $item->orders->count() }}</span>
+                    <span class="text-dark-75 font-weight-bolder mr-2">Active Products:</span>
+                    <span class="text-muted font-weight-bold">{{ $item->products->where('is_package', 0)->where('is_active' , 1)->count() }}</span>
+                </div>
+                <div class="d-flex justify-content-between align-items-center">
+                    <span class="text-dark-75 font-weight-bolder mr-2">Active Packages:</span>
+                    <span class="text-muted font-weight-bold">{{ $item->products->where('is_package', 1)->where('is_active' , 1)->count() }}</span>
                 </div>
             </div>
             <!--end::Info-->
@@ -58,4 +59,3 @@
     </div>
     <!--end::Card-->
 </div>
-

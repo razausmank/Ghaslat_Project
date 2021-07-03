@@ -5,6 +5,7 @@ namespace App\Providers;
 use App\Http\Controllers\CustomerController;
 use App\Models\Customer;
 use App\Models\Order;
+use App\Models\OrderProduct;
 use App\Models\Page;
 use App\Models\Permission;
 use App\Models\Product;
@@ -12,6 +13,7 @@ use App\Models\ProductCategory;
 use App\Models\Role;
 use App\Models\User;
 use App\Observers\ModelObserver;
+use App\Observers\OrderProductObserver;
 use App\Observers\PageObserver;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
@@ -46,6 +48,7 @@ class AppServiceProvider extends ServiceProvider
         Order::observe(ModelObserver::class);
         Role::observe(ModelObserver::class);
         Permission::observe(ModelObserver::class);
+        OrderProduct::observe(OrderProductObserver::class);
 
         //partials._pages_menu
         View::composer('partials._pages_menu', function ($view) {

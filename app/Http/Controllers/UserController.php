@@ -13,7 +13,7 @@ class UserController extends Controller
     // List all the users with a bunch of avaialble actions
     public function index()
     {
-        $users = User::all();
+        $users = User::whereNull('customer_id')->get();
         return view('users.index', compact('users'));
     }
 

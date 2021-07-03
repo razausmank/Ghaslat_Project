@@ -8,9 +8,13 @@ use Illuminate\Http\Request;
 
 class PackageController extends Controller
 {
-    public function index($limit = Null, $page = Null)
+    public function index()
     {
-        $packages = Product::where('is_package', 1)->where('is_active', 1)->get();
+        $limit = request('limit') ?? Null;
+        $page = request('page') ?? Null;
+        $packages = Product::where('is_package', 1)->where('is_active', 1)->when($limit !== Null && $page !== Null, function ($query) use ($limit, $page) {
+            return $query->skip(($page - 1) * $limit)->take($limit);
+        })->get();
 
         return $packages;
     }

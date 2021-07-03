@@ -15,7 +15,10 @@ class CustomerAuthController extends Controller
         $fields = $request->validate([
             'name' => 'required|string',
             'email' => 'required|string|unique:users,email',
-            'password' => 'required|string|confirmed'
+            'password' => 'required|string|confirmed',
+            'description' => 'nullable',
+            'phone' => 'nullable',
+            'address' => 'nullable'
         ]);
 
         $user = User::create([
@@ -24,13 +27,7 @@ class CustomerAuthController extends Controller
             'password' => bcrypt($fields['password'])
         ]);
 
-        $customer = Customer::create([
-            'name' => $fields['name'],
-            'email' => $fields['email'],
-            'description' => $fields['description'],
-            'phone' => $fields['phone'],
-            'address' => $fields['address']
-        ]);
+        $customer = Customer::create($fields);
 
         $user->update(['customer_id' => $customer->id]);
 

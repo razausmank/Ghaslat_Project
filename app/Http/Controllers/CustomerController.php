@@ -15,54 +15,54 @@ class CustomerController extends Controller
         return view('customers.index', compact('customers'));
     }
 
-    public function create()
-    {
+    // // public function create()
+    // // {
 
-        return view('customers.create');
-    }
+    // //     return view('customers.create');
+    // // }
 
-    public function store(CustomerRequest $request)
-    {
-        $validated = $request->validated();
+    // // public function store(CustomerRequest $request)
+    // // {
+    // //     $validated = $request->validated();
 
 
-        if ($request->file('image')) {
-            $image_address = $request->file('image')->store('public/customer');
-            $validated['image'] = $image_address;
-        }
+    // //     if ($request->file('image')) {
+    // //         $image_address = $request->file('image')->store('public/customer');
+    // //         $validated['image'] = $image_address;
+    // //     }
 
-        Customer::create($validated);
+    // //     Customer::create($validated);
 
-        return redirect(route('customer.index'))->with('success', 'Customer successfuly created');
-    }
+    // //     return redirect(route('customer.index'))->with('success', 'Customer successfuly created');
+    // // }
 
-    public function edit(Customer $customer)
-    {
-        return view('customers.edit', compact('customer'));
-    }
+    // // public function edit(Customer $customer)
+    // // {
+    // //     return view('customers.edit', compact('customer'));
+    // // }
 
-    public function update(Customer $customer, CustomerRequest $request)
-    {
-        $validated = $request->validated();
+    // // public function update(Customer $customer, CustomerRequest $request)
+    // // {
+    // //     $validated = $request->validated();
 
-        if ($request->file('image')) {
-            $image_address = $request->file('image')->store('public/customer');
-            $validated['image'] = $image_address;
-        }
+    // //     if ($request->file('image')) {
+    // //         $image_address = $request->file('image')->store('public/customer');
+    // //         $validated['image'] = $image_address;
+    // //     }
 
-        $customer->update($validated);
+    // //     $customer->update($validated);
 
-        return redirect(route('customer.index'))->with('success', 'Customer successfuly updated');
-    }
+    // //     return redirect(route('customer.index'))->with('success', 'Customer successfuly updated');
+    // // }
 
-    public function destroy(Customer $customer)
-    {
-        try {
-            $customer->destroy($customer->id);
-        } catch (Exception $exception) {
-            return redirect(route('customer.index'))->with('failure', 'Customer Cannot be deleted');
-        }
+    // public function destroy(Customer $customer)
+    // {
+    //     try {
+    //         $customer->destroy($customer->id);
+    //     } catch (Exception $exception) {
+    //         return redirect(route('customer.index'))->with('failure', 'Customer Cannot be deleted');
+    //     }
 
-        return redirect(route('customer.index'))->with('success', 'Customer successfuly deleted');
-    }
+    //     return redirect(route('customer.index'))->with('success', 'Customer successfuly deleted');
+    // }
 }

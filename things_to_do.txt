@@ -1,29 +1,23 @@
-- when editing something with image, the image gets removed on updating
-cant create someting without including picture code blows up  (fixed)
-
-- fix the kt datable grid (fixed)
-
-- in the datatable the dom elements are displayed in block ( fixed )
-
-- change login page ( fixed )
-
-- change registration page (fixed )
-
-- make the "add new user" button functional ( fixed )
-
-- configure roles in new user and some thought about multiple roles ( fixed for now )
-
-- ask if the customers are also a user and will be having an account ?
-
 - change the root page
-
-- create order functionality
-
-- maybe add the customer details in that aswell
-
-- do we create customers in the system for walk in customers
 
 - fix menu hierarchy
 
+
+
+- remove customer creation or customer edit ( fixed ) 
+
+- fix  product categories display, make it blocks instead list , try and see if blocks are available in datatable
+
+- fix  products  display, make it blocks instead list , try and see if blocks are available in datatable
+
+- make an admin users screen to show only users not customers ( fixed ) 
+
+- fix the api, pagination etc and other stuff. 	( fixed ) 
+
+- fix the order schema and make an order screen. ( fixed partially ) 
+
+- create api documentation ( created ) 
+
+https://documenter.getpostman.com/view/16496374/Tzm2HxhP
 
 

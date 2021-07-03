@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\OrderRequest;
 use App\Models\Order;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class OrderController extends Controller
 {
@@ -32,6 +33,7 @@ class OrderController extends Controller
             'items_list' => 'required',
         ]);
 
+
         list($product_ids, $product_qunatities) = $this->destructureTwoDimArrayToSeperateArrays(request('items_list'), 'product_id', 'product_qty');
 
         unset($validated['items_list']);
@@ -53,7 +55,11 @@ class OrderController extends Controller
 
     public function index()
     {
-        $orders = Order::where('customer_id', auth()->user()->customer_id)->get();
+        $limit = request('limit') ?? Null;
+        $page = request('page') ?? Null;
+        $orders = Order::where('customer_id', auth()->user()->customer_id)->when($limit !== Null && $page !== Null, function ($query) use ($limit, $page) {
+            return $query->skip(($page - 1) * $limit)->take($limit);
+        })->get();
         return $orders;
     }
 }

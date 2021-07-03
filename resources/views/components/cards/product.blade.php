@@ -23,7 +23,7 @@
                     <!--begin::Title-->
                     <div class="d-flex flex-column">
                         <a href="{{ route('product.show', $item->id) }}" class="text-dark font-weight-bold text-hover-primary font-size-h4 mb-0">{{ $item->name }}</a>
-                        {{-- <span class="text-muted font-weight-bold">Head of Development</span> --}}
+                        <span class="text-muted font-weight-bold">{{ $item->product_category->name }}</span>
                     </div>
                     <!--end::Title-->
                 </div>
