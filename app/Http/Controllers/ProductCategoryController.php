@@ -13,7 +13,7 @@ class ProductCategoryController extends Controller
     {
         $product_categories = ProductCategory::all();
 
-        return view('product_categories.index_tiles', compact('product_categories'));
+        return view('product_categories.index', compact('product_categories'));
     }
 
     public function show(ProductCategory $productcategory)

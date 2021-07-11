@@ -50,8 +50,14 @@
             </div>
             <!--end::Info-->
             <div class="row d-flex justify-content-end">
-                <a href="#" class="btn  btn-sm btn-light-primary font-weight-bolder text-uppercase mr-4">  <i class="la la-edit"></i> Edit</a>
-                <a href="#" class="btn  btn-sm btn-light-danger font-weight-bolder text-uppercase ">  <i class="la la-trash"></i>Delete</a>
+                <a href="{{ route('product.edit', $item->id) }}" class="btn  btn-sm btn-light-primary font-weight-bolder text-uppercase mr-4">  <i class="la la-edit"></i> Edit</a>
+                <form action="{{ route('product.destroy', $item) }}" method="POST">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="btn  btn-sm btn-light-danger font-weight-bolder text-uppercase " title="Delete">
+                        <i class="la la-trash"></i> Delete
+                    </button>
+                </form>
             </div>
         </div>
         <!--end::Body-->

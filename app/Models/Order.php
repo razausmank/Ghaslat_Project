@@ -13,7 +13,7 @@ class Order extends Model
 
     public function products()
     {
-        return $this->belongsToMany(Product::class)->using(OrderProduct::class)->withTimestamps();
+        return $this->belongsToMany(Product::class)->withTimestamps();
     }
 
     public function customer()
@@ -21,12 +21,8 @@ class Order extends Model
         return $this->belongsTo(Customer::class);
     }
 
-    public function syncProducts($products, $quantities)
+    public function syncProducts($products)
     {
-        foreach ($products as $index => $product) {
-            $product_quantity_array[$product] = ['quantity' => $quantities[$index]];
-        }
-
-        return $this->products()->sync($product_quantity_array);
+        return $this->products()->sync($products);
     }
 }

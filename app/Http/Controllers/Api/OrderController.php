@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\OrderRequest;
 use App\Models\Order;
+use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
@@ -34,15 +35,24 @@ class OrderController extends Controller
         ]);
 
 
-        list($product_ids, $product_qunatities) = $this->destructureTwoDimArrayToSeperateArrays(request('items_list'), 'product_id', 'product_qty');
+        $items_array = [];
+        foreach (request('items_list') as $item_list) {
 
+            $item = Product::find($item_list['product_id']);
+
+            $items_array[$item->id] = [
+                'quantity' => $item_list['product_qty'],
+                'price' => $item->price,
+            ];
+        }
         unset($validated['items_list']);
+
 
         $validated['customer_id'] = auth()->user()->customer_id;
 
         $order = Order::create($validated);
 
-        $order->syncProducts($product_ids, $product_qunatities);
+        $order->syncProducts($items_array);
 
         return $order;
     }

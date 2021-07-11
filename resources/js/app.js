@@ -11,3 +11,5 @@ require('./page_specific');
 require('./datatables');
 require('./dualListBox');
 require('./formRepeater');
+
+require('./switch');

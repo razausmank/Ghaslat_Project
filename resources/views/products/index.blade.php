@@ -1,6 +1,14 @@
 <x-master title="Products" :breadcrumbs="[ 'Products' => 'product.index' ]">
 
+    <x-slot name="custom_sub_header">
+
+        <input data-switch="true" type="checkbox" checked="checked" data-on-text="List" data-handle-width="50" data-off-text="Tiles" data-on-color="success" data-off-color="primary"/>
+
+    </x-slot>
+
     <x-flash />
+
+    <div id="list_datatable_grid" class="switch_list">
 
     <x-datatable.basic title="List of Products" button_link="product.create" button_text="New Product" table_id="products_list_datatable" >
         <x-slot name="header">
@@ -60,6 +68,39 @@
 
         </x-slot>
     </x-datatable.basic>
+    </div>
 
+
+    <div  class="switch_tiles d-none">
+
+        <div class="card card-custom gutter-b ">
+            <div class="card-header">
+                <div class="card-title ">
+                    <h3 class="card-label">
+                        Products
+                    </h3>
+                </div>
+                <div class="card-title">
+
+                        <a href="{{ route('product.create') }}" class="btn btn-primary mr-2"> New Product</a>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="card card-custom bg-transparent gutter-b  ">
+
+            <div class="row mt-4">
+
+                @foreach ($products as $product)
+
+                <x-cards.product  :item="$product" />
+
+                @endforeach
+
+
+            </div>
+        </div>
+        </div>
 </x-master>
 

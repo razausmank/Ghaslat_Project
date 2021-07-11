@@ -48,7 +48,6 @@ class AppServiceProvider extends ServiceProvider
         Order::observe(ModelObserver::class);
         Role::observe(ModelObserver::class);
         Permission::observe(ModelObserver::class);
-        OrderProduct::observe(OrderProductObserver::class);
 
         //partials._pages_menu
         View::composer('partials._pages_menu', function ($view) {

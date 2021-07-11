@@ -3814,6 +3814,8 @@ __webpack_require__(/*! ./dualListBox */ "./resources/js/dualListBox.js");
 
 __webpack_require__(/*! ./formRepeater */ "./resources/js/formRepeater.js");
 
+__webpack_require__(/*! ./switch */ "./resources/js/switch.js");
+
 /***/ }),
 
 /***/ "./resources/js/bootstrap.js":
@@ -4253,6 +4255,47 @@ jQuery(document).ready(function () {
 //         },
 //     },
 // );
+
+/***/ }),
+
+/***/ "./resources/js/switch.js":
+/*!********************************!*\
+  !*** ./resources/js/switch.js ***!
+  \********************************/
+/***/ (() => {
+
+// Class definition
+var KTBootstrapSwitch = function () {
+  // Private functions
+  var demos = function demos() {
+    // minimum setup
+    $('[data-switch="true"]').bootstrapSwitch();
+  };
+
+  return {
+    // public functions
+    init: function init() {
+      demos();
+    }
+  };
+}();
+
+jQuery(document).ready(function () {
+  KTBootstrapSwitch.init();
+  $('[data-switch="true"]').on('switchChange.bootstrapSwitch', function (e, data) {
+    var state = $(this).bootstrapSwitch('state'); //returns true or false
+
+    if (state) {
+      $(".switch_list").removeClass('d-none');
+      $(".switch_tiles").removeClass('d-none');
+      $(".switch_tiles").addClass('d-none');
+    } else {
+      $(".switch_tiles").removeClass('d-none');
+      $(".switch_list").removeClass('d-none');
+      $(".switch_list").addClass('d-none');
+    }
+  });
+});
 
 /***/ }),
 

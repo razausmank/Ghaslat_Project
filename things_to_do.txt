@@ -4,20 +4,26 @@
 
 
 
-- remove customer creation or customer edit ( fixed ) 
+- remove customer creation or customer edit ( fixed )
 
 - fix  product categories display, make it blocks instead list , try and see if blocks are available in datatable
 
 - fix  products  display, make it blocks instead list , try and see if blocks are available in datatable
 
-- make an admin users screen to show only users not customers ( fixed ) 
+- make an admin users screen to show only users not customers ( fixed )
 
-- fix the api, pagination etc and other stuff. 	( fixed ) 
+- fix the api, pagination etc and other stuff. 	( fixed )
 
-- fix the order schema and make an order screen. ( fixed partially ) 
+- fix the order schema and make an order screen. ( fixed partially )
 
-- create api documentation ( created ) 
+- create api documentation ( created )
 
 https://documenter.getpostman.com/view/16496374/Tzm2HxhP
+
+change the order screen page maybe
+
+some logic refactor in the api as well of order
+
+give a switch to switch from block and list
 
 

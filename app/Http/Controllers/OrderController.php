@@ -42,12 +42,20 @@ class OrderController extends Controller
     public function store(OrderRequest $request)
     {
         $validated = $request->validated();
+        $items_array = [];
+        foreach (request('items_list') as $item_list) {
 
-        list($product_ids, $product_qunatities) = $this->destructureTwoDimArrayToSeperateArrays(request('items_list'), 'product_id', 'product_qty');
+            $item = Product::find($item_list['product_id']);
+
+            $items_array[$item->id] = [
+                'quantity' => $item_list['product_qty'],
+                'price' => $item->price,
+            ];
+        }
         unset($validated['items_list']);
         $order = Order::create($validated);
 
-        $order->syncProducts($product_ids, $product_qunatities);
+        $order->syncProducts($items_array);
 
         return redirect(route('order.index'))->with('success', 'Order successfuly created');
     }
