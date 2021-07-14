@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller;
 use App\Models\Customer;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -52,9 +51,9 @@ class CustomerAuthController extends Controller
         $user = User::where('email', $fields['email'])->first();
 
         if (!$user || !Hash::check($fields['password'], $user->password) || !$user->customer_id) {
-            return [
+            return response([
                 'message' => 'Invalid Credentials'
-            ];
+            ], 401);
         }
 
         $token = $user->createToken('userToken')->plainTextToken;
@@ -71,8 +70,8 @@ class CustomerAuthController extends Controller
     {
         auth()->user()->tokens()->delete();
 
-        return [
+        return response([
             'message' => 'Logged Out'
-        ];
+        ], 200);
     }
 }

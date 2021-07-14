@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller;
 use App\Http\Requests\OrderRequest;
 use App\Models\Order;
 use App\Models\Product;
@@ -54,13 +53,13 @@ class OrderController extends Controller
 
         $order->syncProducts($items_array);
 
-        return $order;
+        return response($order, 201);
     }
 
     public function show($id)
     {
         $order = Order::where('customer_id', auth()->user()->customer_id)->where('id', $id)->get();
-        return $order;
+        return response($order, 200);
     }
 
     public function index()
@@ -70,6 +69,6 @@ class OrderController extends Controller
         $orders = Order::where('customer_id', auth()->user()->customer_id)->when($limit !== Null && $page !== Null, function ($query) use ($limit, $page) {
             return $query->skip(($page - 1) * $limit)->take($limit);
         })->get();
-        return $orders;
+        return response($orders, 200);
     }
 }

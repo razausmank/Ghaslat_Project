@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Admin\Controller;
 use App\Models\Role;
 use App\Models\User;
 use Illuminate\Auth\Events\Registered;

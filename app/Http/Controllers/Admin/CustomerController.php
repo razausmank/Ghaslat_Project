@@ -1,11 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
-use App\Http\Requests\CustomerRequest;
+use App\Http\Controllers\Admin\Controller;
 use App\Models\Customer;
-use Exception;
-use Illuminate\Http\Request;
 
 class CustomerController extends Controller
 {
