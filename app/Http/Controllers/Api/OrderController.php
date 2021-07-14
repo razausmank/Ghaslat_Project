@@ -5,7 +5,9 @@ namespace App\Http\Controllers\Api;
 use App\Http\Requests\OrderRequest;
 use App\Models\Order;
 use App\Models\Product;
+use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
 class OrderController extends Controller
@@ -17,12 +19,12 @@ class OrderController extends Controller
     // "customer_id" => "2"
     // "items_list" => array:2 [
     //     0 => array:2 [
-    //     "product_id" => "1"
-    //     "product_qty" => "1"
+    //     "item_id" => "1"
+    //     "item_qty" => "1"
     //     ]
     //     1 => array:2 [
-    //     "product_id" => "15"
-    //     "product_qty" => "2"
+    //     "item_id" => "15"
+    //     "item_qty" => "2"
     //     ]
     // ]
 
@@ -32,26 +34,34 @@ class OrderController extends Controller
             'address' => 'required',
             'items_list' => 'required',
         ]);
+        DB::beginTransaction();
+        try {
 
 
-        $items_array = [];
-        foreach (request('items_list') as $item_list) {
 
-            $item = Product::find($item_list['product_id']);
+            $items_array = [];
+            foreach (request('items_list') as $item_list) {
 
-            $items_array[$item->id] = [
-                'quantity' => $item_list['product_qty'],
-                'price' => $item->price,
-            ];
+                $item = Product::find($item_list['item_id']);
+
+                $items_array[$item->id] = [
+                    'quantity' => $item_list['item_qty'],
+                    'price' => $item->price,
+                ];
+            }
+            unset($validated['items_list']);
+
+
+            $validated['customer_id'] = auth()->user()->customer_id;
+
+            $order = Order::create($validated);
+
+            $order->syncProducts($items_array);
+            DB::commit();
+        } catch (Exception $e) {
+            return response(['message' => 'Invalid Data'], 422);
+            DB::rollBack();
         }
-        unset($validated['items_list']);
-
-
-        $validated['customer_id'] = auth()->user()->customer_id;
-
-        $order = Order::create($validated);
-
-        $order->syncProducts($items_array);
 
         return response($order, 201);
     }

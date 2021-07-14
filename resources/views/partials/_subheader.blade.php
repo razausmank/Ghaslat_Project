@@ -1,4 +1,5 @@
 
+@if( $attributes['title']  )
 <!--begin::Subheader-->
 <div class="subheader min-h-lg-175px pt-5 pb-7  subheader-transparent " id="kt_subheader">
 	<div class=" container  d-flex align-items-center justify-content-between flex-wrap flex-sm-nowrap">
@@ -14,6 +15,7 @@
 					{{$attributes['title'] ?? ''}} </h2>
 
 				<!--end::Title-->
+                    @if (isset($breadcrumbs))
 
 				<!--begin::Breadcrumb-->
 				<div class="d-flex align-items-center font-weight-bold my-2">
@@ -36,6 +38,7 @@
 
 
 				</div>
+                @endif
 
 				<!--end::Breadcrumb-->
 			</div>
@@ -55,5 +58,5 @@
 		<!--end::Toolbar-->
 	</div>
 </div>
-
+@endif
 <!--end::Subheader-->

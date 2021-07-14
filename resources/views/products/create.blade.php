@@ -47,7 +47,6 @@
                             </label>
 
                         </div>
-                        <span class="form-text text-muted">Some help text goes here</span>
             </x-form.form_group>
 
 
