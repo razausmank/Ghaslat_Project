@@ -19,6 +19,7 @@ class CreateOrdersTable extends Migration
             $table->string("status")->default('New Order');
             $table->string('discount_type')->nullable();
             $table->decimal('discount_amount')->nullable();
+            $table->decimal('vat')->nullable();
             $table->string('payment_option')->nullable();
             $table->foreignId('customer_id')->nullable()->constrained('customers');
             $table->foreignId('created_by')->nullable()->constrained('users');

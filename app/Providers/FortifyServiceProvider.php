@@ -52,6 +52,7 @@ class FortifyServiceProvider extends ServiceProvider
                 $user &&
                 Hash::check($request->password, $user->password)
                 && !$user->customer_id
+                && !$user->roles->contains('id', 3)
             ) {
                 return $user;
             }

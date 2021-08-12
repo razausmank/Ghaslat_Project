@@ -5,7 +5,8 @@
     <x-cards.basic-card title="Create User">
         <x-form.form>
             <x-slot name="form_tag">
-                <form action="{{ route('user.store') }}" method="POST" id="user_create_form" enctype="multipart/form-data">
+                <form action="{{ route('user.store') }}" method="POST" id="user_create_form"
+                    enctype="multipart/form-data">
                     @csrf
                     @method('POST')
             </x-slot>
@@ -30,9 +31,10 @@
             <h4>Roles</h4>
             <hr />
             <br />
-            <select id="user_roles" data-leftTitle="Available Permissions" data-rightTitle="Selected Permissions" name="roles[]" class="dual-listbox dual_listbox_unique" multiple>
+            <select id="user_roles" data-leftTitle="Available Roles" data-rightTitle="Selected Roles" name="roles[]"
+                class="dual-listbox dual_listbox_unique" multiple>
                 @foreach ($roles as $role)
-                    <option value="{{ $role->id }}" >{{ $role->label }}</option>
+                    <option value="{{ $role->id }}">{{ $role->label }}</option>
                 @endforeach
             </select>
 
@@ -40,4 +42,3 @@
     </x-cards.basic-card>
 
 </x-master>
-

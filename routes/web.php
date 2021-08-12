@@ -7,7 +7,10 @@ use App\Http\Controllers\admin\ProductCategoryController;
 use App\Http\Controllers\admin\ProductController;
 use App\Http\Controllers\admin\RoleController;
 use App\Http\Controllers\admin\UserController;
+use App\Http\Controllers\POS\AuthController;
+use App\Http\Controllers\POS\OrderController as POSOrderController;
 use App\Http\Middleware\Authenticate;
+use App\Http\Middleware\RedirectIfAuthenticated;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -60,3 +63,11 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/', [ProductController::cl
 Route::get('/symlink', function () {
     symlink('/home4/rhassank/public_html/ghaslat/Ghaslat_project/storage/app/public', '/home4/rhassank/public_html/ghaslat/Ghaslat_project/public/storage');
 });
+
+Route::middleware([RedirectIfAuthenticated::class])->group(function () {
+    Route::get('pos/login', [AuthController::class, 'login_view'])->name('pos.login_view');
+    Route::post('pos/login', [AuthController::class, 'login'])->name('pos.login');
+});
+
+Route::get('pos/order/create', [POSOrderController::class, 'create'])->name('pos.order.create');
+Route::post('pos/order/store', [POSOrderController::class, 'store'])->name('pos.order.store');
