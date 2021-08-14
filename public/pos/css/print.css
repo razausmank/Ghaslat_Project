@@ -1,0 +1,10 @@
+
+@media print {
+
+
+    #printable_div{
+        width: 80mm;
+        height: 100%;
+    }
+    /* etc */
+  }

@@ -71,3 +71,4 @@ Route::middleware([RedirectIfAuthenticated::class])->group(function () {
 
 Route::get('pos/order/create', [POSOrderController::class, 'create'])->name('pos.order.create');
 Route::post('pos/order/store', [POSOrderController::class, 'store'])->name('pos.order.store');
+Route::get('pos/order/show/{order}', [POSOrderController::class, 'show'])->name('pos.order.show');

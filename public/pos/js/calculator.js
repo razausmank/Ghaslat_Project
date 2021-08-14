@@ -17,18 +17,18 @@ $('[data-switch="true"]').on('switchChange.bootstrapSwitch', function (e, data) 
 });
 
 
-// clear button 
+// clear button
 $('.clear_button').click(function () {
     $("input[name='discount_value']").val('');
 })
 
-// percentage and value buttons 
+// percentage and value buttons
 $('.percentage_buttons').click(function () {
 
     $("input[name='discount_value']").val($(this).attr('value'));
 })
 
-// numbers button clicks 
+// numbers button clicks
 
 $('.number_buttons').click(function () {
 
@@ -47,14 +47,14 @@ $('.number_buttons').click(function () {
 $('.enter_button , #add_discount_info').click(function () {
 
     if ($(".bill-info  input[name='discount_type']").length == 0) {
-        // discount not present add the element 
+        // discount not present add the element
 
         state = $('[data-switch="true"]').bootstrapSwitch('state');
         discount_type = state ? 'percent' : 'money';
         discount_value = $('input[name="discount_value"]').val();
         element = `
-        <hr class="m-2">
-        <div class="d-flex justify-content-between  my-2">
+        <hr class="m-2" id="discount_div_hr" >
+        <div class="d-flex justify-content-between  my-2" id="discount_div" >
             <span class="bill-info-text">Discount</span>
             <span class="bill-info-text discount_in_money">AED 0.00</span>
             <input type="number" name="discount_amount" value="${discount_value}" hidden>

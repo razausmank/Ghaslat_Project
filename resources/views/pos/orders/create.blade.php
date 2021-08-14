@@ -3,8 +3,6 @@
 
 <head>
     <meta charset="UTF-8">
-    {{-- <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge"> --}}
     <title>Document</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
@@ -15,6 +13,7 @@
         href="https://cdn.jsdelivr.net/npm/@ttskch/select2-bootstrap4-theme@x.x.x/dist/select2-bootstrap4.min.css">
     <link href="{{ asset('assets/plugins/global/plugins.bundle.css') }}" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" href="https://printjs-4de6.kxcdn.com/print.min.css">
+    <link rel="stylesheet" href="{{ asset('pos/css/custom.css') }}" type="text/css">
 
 
 </head>
@@ -61,7 +60,7 @@
                                 <a class=" d-flex flex-column justify-content-center item border border-dark py-3">
                                     <div class="symbol symbol-150 symbol-lg-150 m-auto">
                                         <img alt="product_image" class=""
-                                            src="{{ isset($product->image) ? asset(Storage::url($product->image)) : asset('assets/media/users/blank.png') }}">
+                                            src="{{ $product->image ? asset(Storage::url($product->image)) : asset('assets/media/svg/icons/shopping/cart2.svg') }}">
                                     </div>
 
                                     <p class="clothes-titles m-0">{{ $product->name }}</p>
@@ -74,7 +73,27 @@
                         @endforeach
                     </div>
                 </div>
-                <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab"></div>
+                <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                    <div class="row m-0 bg-white px-5 py-7">
+
+                        @foreach ($orders as $order)
+
+                            <div class="col-3 my-3">
+                                <a href="{{ route('pos.order.show', $order) }}" data-target="#orderModal"
+                                    data-toggle="modal"
+                                    class=" d-flex flex-column justify-content-center order border border-dark py-3">
+                                    <div class="symbol symbol-150 symbol-lg-150 m-auto">
+                                        <img alt="order_image" class=""
+                                            src="{{ asset('assets/media/svg/icons/shopping/cart2.svg') }}">
+                                    </div>
+
+                                    <p class="clothes-titles m-0">{{ $order->status }}</p>
+                                </a>
+                            </div>
+
+                        @endforeach
+                    </div>
+                </div>
             </div>
 
         </div>
@@ -161,9 +180,9 @@
                 <div class="payment_method_div">
 
                     <select name="payment_option" class="payment_method_select p-3 m-3" required>
-                        <option value="pay later">Pay Later</option>
-                        <option value="pay by cash">Pay By Cash</option>
-                        <option value="pay by card">Pay By Card</option>
+                        <option value="Pay Later">Pay Later</option>
+                        <option value="Pay By Cash">Pay By Cash</option>
+                        <option value="Pay By Card">Pay By Card</option>
                     </select>
                 </div>
                 <button type="submit"
@@ -383,7 +402,177 @@
         </div>
     </div>
 
+    {{-- Order Modal --}}
+    <div class="modal fade" id="orderModal" tabindex="-1" aria-labelledby="orderModal" aria-hidden="true"
+        style="display: none;">
+        <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Order Details</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <i aria-hidden="true" class="ki ki-close"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="spinner_over_screen" style="display: none "></div>
+                    <div class="card-body p-0">
+                        <div class="row justify-content-center px-8  px-md-0">
+                            <div class="col-md-10">
+                                <div class="d-flex justify-content-between pt-6">
+                                    <div class="d-flex flex-column flex-root">
+                                        <span class="font-weight-bolder mb-2">ORDER DATE</span>
+                                        <span class="opacity-70" id="modal_order_date">Jan 07, 2020</span>
+                                    </div>
+                                    <div class="d-flex flex-column flex-root">
+                                        <span class="font-weight-bolder mb-2">ORDER STATUS</span>
+                                        <span class="opacity-70" id="modal_order_status">64616-103</span>
+                                    </div>
+                                    <div class="d-flex flex-column flex-root">
+                                        <span class="font-weight-bolder mb-2">Customer Name</span>
+                                        <span class="opacity-70" id="modal_customer_name">Iris Watson</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row justify-content-center py-8 px-8 py-md-10 px-md-0">
+                            <div class="col-md-10">
+                                <div class="table-responsive">
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th class="pl-0 font-weight-bold text-muted text-uppercase">Ordered
+                                                    Items</th>
+                                                <th class="text-right font-weight-bold text-muted text-uppercase">Qty
+                                                </th>
+                                                <th class="text-right font-weight-bold text-muted text-uppercase">Unit
+                                                    Price</th>
+                                                <th class="text-right pr-0 font-weight-bold text-muted text-uppercase">
+                                                    Amount</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="modal_items_list">
 
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row justify-content-center bg-gray-100  px-8  px-md-0 mx-0">
+                            <div class="col-md-10">
+                                <div class="table-responsive">
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th class="font-weight-bold text-muted text-uppercase">PAYMENT TYPE</th>
+                                                <th class="font-weight-bold text-muted text-uppercase">DISCOUNT
+                                                </th>
+                                                <th class="font-weight-bold text-muted text-uppercase">VAT</th>
+                                                <th class="font-weight-bold text-muted text-uppercase text-right">TOTAL
+                                                    AMOUNT</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr class="font-weight-bolder">
+                                                <td id='modal_payment_type'>Credit Card</td>
+                                                <td id='modal_discount_amount'>Success</td>
+                                                <td id='modal_vat_amount'>Jan 07, 2020</td>
+                                                <td id='modal_total_amount'
+                                                    class="text-primary font-size-h3 font-weight-boldest text-right">
+                                                    $789.00</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    {{-- print modal --}}
+
+    <div class="modal fade " id="printModal" tabindex="-1" role="dialog" aria-labelledby="printModal"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Order Details</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <i aria-hidden="true" class="ki ki-close"></i>
+                    </button>
+                </div>
+                <div class="modal-body" id="printable_div">
+                    <div class="d-flex justify-content-between flex-root mb-2">
+                        <span class="font-weight-bolder ">ORDER DATE</span>
+                        <span id="print_modal_order_date">Jan 07, 2020</span>
+                    </div>
+                    <div class="d-flex justify-content-between  flex-root">
+                        <span class="font-weight-bolder ">Customer Name</span>
+                        <span id="print_modal_customer_name">Iris Watson</span>
+                    </div>
+                    <hr />
+                    <div id="print_modal_item_list">
+
+
+                    </div>
+
+                    <hr />
+                    <div>
+                        <div class="d-flex flex-root justify-content-between">
+                            <span class="">SubTotal</span>
+                            <span id="print_modal_subtotal">Jan 07, 2020</span>
+                        </div>
+                        <div class="d-flex flex-root justify-content-between">
+                            <span class=" ">VAT</span>
+                            <span id="print_modal_vat">Jan 07, 2020</span>
+                        </div>
+                        <div class="d-flex flex-root justify-content-between" id="print_modal_discount">
+
+                        </div>
+                    </div>
+
+                    <hr />
+                    <div>
+                        <div class="d-flex flex-root justify-content-between">
+                            <span class="font-weight-bolder h4">Total</span>
+                            <span class=" font-weight-bolder h4" id="print_modal_total">Jan 07, 2020</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light-primary font-weight-bold"
+                        data-dismiss="modal">Close</button>
+                    <button type="button" id="test" class="btn btn-primary font-weight-bold">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        var asset_url = '{{ asset('') }}';
+        let session_message, session_message_type = null;
+        let validation_errors = [];
+
+        @if ($errors->any())
+            @foreach ($errors->all() as $error)
+                validation_errors.push('{{ $error }}' ) ;
+            @endforeach
+        @endif
+        @if (Session::has('success'))
+            session_message = '{{ Session::get('success') }}' ;
+            session_message_type = 'success' ;
+        @endif
+
+        @if (Session::has('failure'))
+            session_message = '{{ Session::get('failure') }}' ;
+            session_message_type = 'failure' ;
+        @endif
+    </script>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
@@ -404,6 +593,12 @@
     <script src="{{ asset('pos/js/calculator.js') }}"></script>
     <script src="{{ asset('pos/js/switch.js') }}"></script>
     <script src="{{ asset('pos/js/print_order.js') }}"></script>
+    <script src="{{ asset('pos/js/order.js') }}"></script>
+
+    {{-- printing --}}
+
+    <script src="https://printjs-4de6.kxcdn.com/print.min.js"></script>
+    <script src="https://printjs-4de6.kxcdn.com/print.min.css"></script>
 
 
 </body>

@@ -4,11 +4,36 @@ jQuery(document).ready(function () {
     });
 
     $("#order_form").submit(function () {
-        if ($("#cart input[name='id[]']").length <= 0) {
-            Swal.fire("Uh Oh!", "Please Add some products before creating an Order!");
-            return false
-        }
+
     });
+
+    if (session_message_type == 'success') {
+        Swal.fire({
+            icon: 'success',
+            title: "Thanks!",
+            text: session_message,
+            confirmButtonColor: '#60BA62'
+        });
+    } else if (session_message_type == 'failure') {
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: session_message,
+            confirmButtonColor: '#60BA62'
+        });
+    }
+
+    if (validation_errors.length) {
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: validation_errors,
+            confirmButtonColor: '#60BA62'
+        });
+    }
+
+
+
 
 });
 
@@ -194,15 +219,27 @@ function calculate_everything() {
 }
 
 
-function remove_item() {
-    // check if the item exists in bill-info
-    // if yes then
+
+function clear_items() {
+    $('#cart').empty();
+
+    $('.subtotal').text("AED 0.00");
+    $('.vat_in_money').text("AED 0.00");
+
+    $('#discount_div_hr').remove();
+    $('#discount_div').remove();
+
+    $('.total_in_money').text('AED 0.00');
 }
 
 
 $("#order_form").submit(function (e) {
 
     e.preventDefault(); // avoid to execute the actual submit of the form.
+    if ($("#cart input[name='id[]']").length <= 0) {
+        Swal.fire("Uh Oh!", "Please Add some products before creating an Order!");
+        return false
+    }
 
     var form = $(this);
     var url = form.attr('action');
@@ -212,16 +249,39 @@ $("#order_form").submit(function (e) {
         url: url,
         data: form.serialize(), // serializes the form's elements.
         success: function (response) {
-            console.log(response);
+            populatePrintDiV();
             Swal.fire({
                 icon: 'success',
                 title: "Thanks!",
                 text: response,
-                confirmButtonColor: '#60BA62'
+                confirmButtonColor: '#60BA62',
+                showCancelButton: true,
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Print Order!'
+            }).then((result) => {
+                if (result.value) {
+
+                    printJS({
+                        printable: 'printable_div',
+                        type: 'html',
+
+                        css: [asset_url + "assets/css/style.bundle.css",
+                        asset_url + "pos/css/print.css"
+                        ]
+                    });
+                } else {
+                    $('#order_form ').each(function () {
+                        this.reset();
+                    });
+                    clear_items();
+                }
+            }).then(() => {
+                $('#order_form ').each(function () {
+                    this.reset();
+                });
+                clear_items();
             });
-            $('#order_form').each(function () {
-                this.reset();
-            });;
+
         },
         error: function (response) {
             console.log(response);
@@ -232,8 +292,49 @@ $("#order_form").submit(function (e) {
                 text: 'Something went wrong!',
                 confirmButtonColor: '#60BA62'
             });
+
+            $('#order_form ').each(function () {
+                this.reset();
+            });
+            clear_items();
         }
     });
 
 
 });
+
+function populatePrintDiV() {
+    $('#print_modal_order_date').text(moment().format('MMM D, YYYY'));
+    $('#print_modal_customer_name').text($("#select2 option:selected").text());
+    $('#print_modal_subtotal').text($('.subtotal').text());
+    $('#print_modal_vat').text($('.vat_in_money').text());
+
+    $('#print_modal_total').text($('.total_in_money').text());
+
+    if ($('.discount_in_money').length) {
+        $('#print_modal_discount').empty();
+        $('#print_modal_discount').append(`
+        <span class=" ">Discount</span>
+        <span>${$('.discount_in_money').text()}</span>
+        `);
+    }
+    console.log($('input[name="id[]"]').length);
+    if ($('input[name="id[]"]').length) {
+        console.log($('input[name="id[]"]').length);
+
+        $('#print_modal_item_list').empty();
+        console.log($('input[name="id[]"]').length);
+        for (i = 0; i < $('input[name="id[]"]').length; i++) {
+            $('#print_modal_item_list').append(`
+            <div class="d-flex flex-root justify-content-between">
+                <span class="font-weight-bolder ">${$('input[name="name[]"]')[i].attributes.value.value}</span>
+                <span class="">${$('input[name="quantity[]"]')[i].attributes.value.value}</span>
+                <span class=" ">AED ${$('input[name="price[]"]')[i].attributes.value.value}</span>
+                <span class="font-weight-bolder">AED ${Number(Number($('input[name="price[]"]')[i].attributes.value.value) * Number($('input[name="quantity[]"]')[i].attributes.value.value), 2)}</span>
+            </div>`
+            );
+        }
+    }
+
+
+}

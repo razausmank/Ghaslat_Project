@@ -65,7 +65,7 @@ class ProductController extends Controller
 
         $product->update($validated);
 
-        return redirect(route('product.index'))->with('success', 'Productsuccessfuly updated');
+        return redirect(route('product.index'))->with('success', 'Product successfuly updated');
     }
 
     public function activateProduct(Product $product)
