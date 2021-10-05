@@ -14,7 +14,7 @@
     <link href="{{ asset('assets/plugins/global/plugins.bundle.css') }}" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" href="https://printjs-4de6.kxcdn.com/print.min.css">
     <link rel="stylesheet" href="{{ asset('pos/css/custom.css') }}" type="text/css">
-
+    <meta name="csrf-token" content="{{ csrf_token() }}" />
 
 </head>
 
@@ -30,11 +30,11 @@
                         style="    border-bottom: 1px solid #0cc579">
                         <li class="nav-item" role="presentation">
                             <button class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab"
-                                aria-controls="home" aria-selected="true">Home</button>
+                                aria-controls="home" aria-selected="true">Product</button>
                         </li>
                         <li class="nav-item" role="presentation">
                             <button class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab"
-                                aria-controls="profile" aria-selected="false">Profile</button>
+                                aria-controls="profile" aria-selected="false">Orders</button>
                         </li>
 
                     </ul>
@@ -52,7 +52,7 @@
         <div class="col-8  special  m-0 p-0 ">
             <div class="tab-content" id="myTabContent">
                 <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-                    <div class="row m-0 bg-white px-5 py-7">
+                    <div class="row m-0 bg-white px-5 py-7" id="products_tab">
 
                         @foreach ($products as $product)
 
@@ -60,7 +60,7 @@
                                 <a class=" d-flex flex-column justify-content-center item border border-dark py-3">
                                     <div class="symbol symbol-150 symbol-lg-150 m-auto">
                                         <img alt="product_image" class=""
-                                            src="{{ $product->image ? asset(Storage::url($product->image)) : asset('assets/media/svg/icons/shopping/cart2.svg') }}">
+                                            src="{{ $product->image ? asset(Storage::url($product->image)) : asset('assets/media/svg/icons/Clothes/Hanger.svg') }}">
                                     </div>
 
                                     <p class="clothes-titles m-0">{{ $product->name }}</p>
@@ -74,20 +74,24 @@
                     </div>
                 </div>
                 <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-                    <div class="row m-0 bg-white px-5 py-7">
+                    <div class="row m-0 bg-white px-5 py-7" id="orders_tab_orders_list">
+                        <div class="spinner_over_screen" style="display: none "></div>
 
                         @foreach ($orders as $order)
 
                             <div class="col-3 my-3">
                                 <a href="{{ route('pos.order.show', $order) }}" data-target="#orderModal"
                                     data-toggle="modal"
-                                    class=" d-flex flex-column justify-content-center order border border-dark py-3">
-                                    <div class="symbol symbol-150 symbol-lg-150 m-auto">
-                                        <img alt="order_image" class=""
-                                            src="{{ asset('assets/media/svg/icons/shopping/cart2.svg') }}">
-                                    </div>
+                                    class=" d-flex flex-column justify-content-between order border border-success pt-3 pb-0">
+                                    <div class="d-flex flex-column align-items-center my-5">
+                                        <span
+                                            class="font-weight-bolder text-dark h4 mb-2">{{ Helper::generateRandomString(8) }}</span>
+                                        <span class="h5 text-muted"> AED 27.40 </span>
 
-                                    <p class="clothes-titles m-0">{{ $order->status }}</p>
+                                    </div>
+                                    <span
+                                        class="h5 text-center text-white bg-success m-0">{{ $order->customer->name }}</span>
+
                                 </a>
                             </div>
 
@@ -108,8 +112,8 @@
                         </div>
                         <select name="customer_id" id="select2" placeholder="Select a Customer"
                             class="form-control select2-hidden-accessible" required>
-                            @foreach ($products as $product)
-                                <option value="{{ $product->id }}"> {{ $product->name }}</option>
+                            @foreach ($customers as $customer)
+                                <option value="{{ $customer->id }}"> {{ $customer->name }}</option>
                             @endforeach
                         </select>
                         <div class="input-group-append ">
@@ -177,8 +181,12 @@
 
 
                 </div>
-                <div class="payment_method_div">
-
+                <div class="d-flex justify-content-between align-items-center">
+                    <div class="form-control">
+                        <label class="checkbox checkbox-square">
+                            <input type="checkbox" name="payment_received">
+                            <span style="border: 1px solid"></span>Payment Received</label>
+                    </div>
                     <select name="payment_option" class="payment_method_select p-3 m-3" required>
                         <option value="Pay Later">Pay Later</option>
                         <option value="Pay By Cash">Pay By Cash</option>
@@ -193,8 +201,6 @@
 
             </form>
         </div>
-
-
     </div>
 
 
@@ -419,18 +425,53 @@
                         <div class="row justify-content-center px-8  px-md-0">
                             <div class="col-md-10">
                                 <div class="d-flex justify-content-between pt-6">
-                                    <div class="d-flex flex-column flex-root">
+                                    <div class="d-flex flex-column ">
                                         <span class="font-weight-bolder mb-2">ORDER DATE</span>
-                                        <span class="opacity-70" id="modal_order_date">Jan 07, 2020</span>
+                                        <span class="opacity-70 pr-5" id="modal_order_date">Jan 07, 2020</span>
                                     </div>
-                                    <div class="d-flex flex-column flex-root">
-                                        <span class="font-weight-bolder mb-2">ORDER STATUS</span>
-                                        <span class="opacity-70" id="modal_order_status">64616-103</span>
+                                    <div class="d-flex flex-column ">
+                                        <span class="font-weight-bolder mb-2">ORDER Number</span>
+                                        <span class="opacity-70 pr-40" id="modal_order_number">1200XHEQ</span>
+
                                     </div>
-                                    <div class="d-flex flex-column flex-root">
+                                    <div class="d-flex flex-column ">
                                         <span class="font-weight-bolder mb-2">Customer Name</span>
-                                        <span class="opacity-70" id="modal_customer_name">Iris Watson</span>
+                                        <span class="opacity-70 pl-5" id="modal_customer_name">Iris Watson</span>
                                     </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row justify-content-center px-8  px-md-0">
+                            <div class="col-md-10">
+                                <div class="d-flex justify-content-between pt-6">
+                                    <div class="d-flex flex-column ">
+                                        <span class="font-weight-bolder mb-2">Payment Type</span>
+                                        <select class="form-control py-0" name='payment_type' id="modal_payment_type">
+                                            <option value="Pay Later">Pay Later</option>
+                                            <option value="Pay By Cash">Pay By Cash</option>
+                                            <option value="Pay By Card">Pay By Card</option>
+                                        </select>
+                                    </div>
+                                    <div class="d-flex flex-column ">
+                                        <span class="font-weight-bolder mb-2">ORDER STATUS</span>
+                                        <select class="form-control py-0" name="status" id="modal_order_status">
+                                            <option value="New Order">New Order</option>
+                                            <option value="In Progress">In Progress</option>
+                                            <option value="Delivered">Delivered</option>
+                                            <option value="Waiting For Pickup">Waiting For Pickup</option>
+                                            <option value="Waiting For Delivery">Waiting For Delivery</option>
+                                            <option value="Cancelled">Cancelled</option>
+                                        </select>
+                                    </div>
+                                    <div class="d-flex flex-column ">
+                                        <span class="font-weight-bolder mb-2">Payment Received</span>
+                                        <select class="form-control py-0" name="payment_received"
+                                            id="modal_payment_received">
+                                            <option value="1">Yes</option>
+                                            <option value="0">No</option>
+                                        </select>
+                                    </div>
+                                    <input type="text" hidden name="modal_order_id" id="modal_order_id">
                                 </div>
                             </div>
                         </div>
@@ -442,9 +483,11 @@
                                             <tr>
                                                 <th class="pl-0 font-weight-bold text-muted text-uppercase">Ordered
                                                     Items</th>
-                                                <th class="text-right font-weight-bold text-muted text-uppercase">Qty
+                                                <th class="text-right font-weight-bold text-muted text-uppercase">
+                                                    Qty
                                                 </th>
-                                                <th class="text-right font-weight-bold text-muted text-uppercase">Unit
+                                                <th class="text-right font-weight-bold text-muted text-uppercase">
+                                                    Unit
                                                     Price</th>
                                                 <th class="text-right pr-0 font-weight-bold text-muted text-uppercase">
                                                     Amount</th>
@@ -463,17 +506,18 @@
                                     <table class="table">
                                         <thead>
                                             <tr>
-                                                <th class="font-weight-bold text-muted text-uppercase">PAYMENT TYPE</th>
+                                                <th class="font-weight-bold text-muted text-uppercase">SUBTOTAL</th>
                                                 <th class="font-weight-bold text-muted text-uppercase">DISCOUNT
                                                 </th>
                                                 <th class="font-weight-bold text-muted text-uppercase">VAT</th>
-                                                <th class="font-weight-bold text-muted text-uppercase text-right">TOTAL
+                                                <th class="font-weight-bold text-muted text-uppercase text-right">
+                                                    TOTAL
                                                     AMOUNT</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <tr class="font-weight-bolder">
-                                                <td id='modal_payment_type'>Credit Card</td>
+                                                <td id='modal_sub_total'>AED 0.00</td>
                                                 <td id='modal_discount_amount'>Success</td>
                                                 <td id='modal_vat_amount'>Jan 07, 2020</td>
                                                 <td id='modal_total_amount'
@@ -489,7 +533,14 @@
                     </div>
 
                 </div>
-
+                <div class="modal-footer">
+                    <a type="button" class="btn btn-light-primary font-weight-bold"
+                        id="order_print_via_order_modal">Print Receipt</a>
+                    <button type="button" class="btn btn-light-primary font-weight-bold"
+                        data-dismiss="modal">Close</button>
+                    <button type="button" id="update_order" class="btn btn-primary font-weight-bold">Update
+                        Order</button>
+                </div>
             </div>
         </div>
     </div>
@@ -516,11 +567,22 @@
                         <span id="print_modal_customer_name">Iris Watson</span>
                     </div>
                     <hr />
-                    <div id="print_modal_item_list">
+                    <div>
 
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Item</th>
+                                    <th scope="col">Qty</th>
+                                    <th scope="col">Price</th>
+                                    <th scope="col">Total</th>
+                                </tr>
+                            </thead>
+                            <tbody id="print_modal_item_list">
 
+                            </tbody>
+                        </table>
                     </div>
-
                     <hr />
                     <div>
                         <div class="d-flex flex-root justify-content-between">
@@ -542,6 +604,32 @@
                             <span class="font-weight-bolder h4">Total</span>
                             <span class=" font-weight-bolder h4" id="print_modal_total">Jan 07, 2020</span>
                         </div>
+                    </div>
+                    <hr />
+                    <div>
+                        <span class="font-weight-bolder h4">Terms and conditions</span>
+                        <ul class="p-2">
+                            <li>Any Laundry received until 12 noon will be delivered same day by 06:00 pm</li>
+
+                            <li>Any Laundry received after 12 noon will be delivered next at at 06:00 pm</li>
+
+                            <li>Any Laundry received returned 4 hours at 100% surcharge</li>
+
+                            <li>Not applicable for Dry cleaning services.</li>
+
+                            <li>Please list your count of each article in the applicable column. Unless we have your
+                                count,
+                                the
+                                management count is valid.</li>
+
+                            <li>The laundry cannot be held responsible for any shrinkage or colour change.</li>
+
+                            <li>In case of loss or damage by the laundry, the management will not be liable for more
+                                than 5
+                                time
+                                the cost of cleaning of the lost/damaged article</li>
+                        </ul>
+
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -587,18 +675,15 @@
 
     <script src="https://printjs-4de6.kxcdn.com/print.min.js"></script>
     <script src="{{ asset('assets/plugins/global/plugins.bundle.js') }}"></script>
+    <script src="{{ asset('pos/js/order.js') }}"></script>
 
     <script src="{{ asset('pos/js/create_order.js') }}"></script>
     <script src="{{ asset('pos/js/select2.js') }}"></script>
     <script src="{{ asset('pos/js/calculator.js') }}"></script>
     <script src="{{ asset('pos/js/switch.js') }}"></script>
     <script src="{{ asset('pos/js/print_order.js') }}"></script>
-    <script src="{{ asset('pos/js/order.js') }}"></script>
 
-    {{-- printing --}}
 
-    <script src="https://printjs-4de6.kxcdn.com/print.min.js"></script>
-    <script src="https://printjs-4de6.kxcdn.com/print.min.css"></script>
 
 
 </body>

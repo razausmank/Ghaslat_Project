@@ -35,7 +35,7 @@ class OrderController extends Controller
             'items_list' => 'required',
         ]);
         DB::beginTransaction();
-        try {
+        try {   
 
 
 
@@ -53,6 +53,7 @@ class OrderController extends Controller
 
 
             $validated['customer_id'] = auth()->user()->customer_id;
+            $validated['order_mode'] = "mobile_app";
 
             $order = Order::create($validated);
 

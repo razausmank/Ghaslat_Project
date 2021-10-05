@@ -230,14 +230,21 @@ function clear_items() {
     $('#discount_div').remove();
 
     $('.total_in_money').text('AED 0.00');
+    $('#no_of_items_in_cart').text('0');
 }
 
 
 $("#order_form").submit(function (e) {
 
     e.preventDefault(); // avoid to execute the actual submit of the form.
+    // if cart is empty
     if ($("#cart input[name='id[]']").length <= 0) {
         Swal.fire("Uh Oh!", "Please Add some products before creating an Order!");
+        return false
+    }
+    // if total is in minus  "data-123".replace('data-','');
+    if (Number($('.total_in_money').text().replace('AED ', '')) < 0) {
+        Swal.fire("Uh Oh!", "The Total cannot be negative!");
         return false
     }
 
@@ -249,6 +256,7 @@ $("#order_form").submit(function (e) {
         url: url,
         data: form.serialize(), // serializes the form's elements.
         success: function (response) {
+            console.log(response);
             populatePrintDiV();
             Swal.fire({
                 icon: 'success',
@@ -259,6 +267,7 @@ $("#order_form").submit(function (e) {
                 cancelButtonColor: '#d33',
                 confirmButtonText: 'Print Order!'
             }).then((result) => {
+                loadOrders();
                 if (result.value) {
 
                     printJS({
@@ -326,15 +335,90 @@ function populatePrintDiV() {
         console.log($('input[name="id[]"]').length);
         for (i = 0; i < $('input[name="id[]"]').length; i++) {
             $('#print_modal_item_list').append(`
-            <div class="d-flex flex-root justify-content-between">
-                <span class="font-weight-bolder ">${$('input[name="name[]"]')[i].attributes.value.value}</span>
-                <span class="">${$('input[name="quantity[]"]')[i].attributes.value.value}</span>
-                <span class=" ">AED ${$('input[name="price[]"]')[i].attributes.value.value}</span>
-                <span class="font-weight-bolder">AED ${Number(Number($('input[name="price[]"]')[i].attributes.value.value) * Number($('input[name="quantity[]"]')[i].attributes.value.value), 2)}</span>
-            </div>`
+            <tr>
+                <th scope="row">${$('input[name="name[]"]')[i].attributes.value.value}</th>
+                <td>${$('input[name="quantity[]"]')[i].attributes.value.value}</td>
+                <td> ${$('input[name="price[]"]')[i].attributes.value.value}</td>
+                <th scope="row"> ${(Number($('input[name="price[]"]')[i].attributes.value.value) * Number($('input[name="quantity[]"]')[i].attributes.value.value)).toFixed(2)}</th>
+            </tr>
+            `
             );
         }
     }
 
-
 }
+
+$('#order_print_via_order_modal').on('click', function (e) {
+    e.preventDefault();
+    $('.spinner_over_screen').show();
+    $.ajax({
+        url: $(this).attr('href'),
+        type: "GET",
+        success: function (data) {
+            console.log(data);
+
+            $('#print_modal_order_date').text(moment(data.created_at).format('DD MMMM YYYY'));
+            $('#print_modal_customer_name').text(data.customer.name);
+
+
+            subtotal = 0;
+            if (data.products.length) {
+                $('#print_modal_item_list').empty();
+
+                for (i = 0; i < data.products.length; i++) {
+                    subtotal += Number(data.products[i].pivot.quantity * data.products[i].pivot.price, 2);
+                    $('#print_modal_item_list').append(`
+                    <tr>
+                        <th scope="row"> ${data.products[i].name}</th>
+                        <td>${Number(data.products[i].pivot.quantity, 2)}</td>
+                        <td> ${Number(data.products[i].pivot.price, 2)}</td>
+                        <th scope="row">  ${(Number(data.products[i].pivot.quantity) * Number(data.products[i].pivot.price)).toFixed(2)}</th>
+                    </tr>
+                    `
+                    );
+                }
+            }
+            discount_in_money = 0;
+            if (data.discount_type == 'percent') {
+                discount_in_money = ((Number(subtotal) / 100) * Number(data.discount_amount)).toFixed(2);
+            } else if (data.discount_type == 'money') {
+                discount_in_money = Number(data.discount_amount)
+            }
+
+            if (discount_in_money) {
+                $('#print_modal_discount').empty();
+                $('#print_modal_discount').append(`
+                <span class=" ">Discount</span>
+                <span>${discount_in_money}</span>
+                `);
+            }
+
+            vat_in_money = (((Number(subtotal) - Number(discount_in_money)) / 100) * Number(data.vat)).toFixed(2);
+
+
+            total_amount = Number(subtotal) + Number(vat_in_money) - Number(discount_in_money);
+
+            $('#print_modal_subtotal').text(parseFloat(subtotal, 2).toFixed(2));
+            $('#print_modal_vat').text(parseFloat(vat_in_money, 2).toFixed(2));
+
+            $('#print_modal_total').text(parseFloat(total_amount, 2).toFixed(2));
+
+            printJS({
+                printable: 'printable_div',
+                type: 'html',
+
+                css: [asset_url + "assets/css/style.bundle.css",
+                asset_url + "pos/css/print.css"
+                ]
+            });
+
+        },
+        complete: function () {
+            $('.spinner_over_screen').hide();
+        },
+        error: function (xhr) {
+            console.log(xhr);
+            $('.spinner_over_screen').hide();
+        }
+    });
+});

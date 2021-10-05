@@ -62,6 +62,7 @@ return [
     */
 
     'home' => RouteServiceProvider::HOME,
+    'pos' => RouteServiceProvider::POS,
 
     /*
     |--------------------------------------------------------------------------

@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\Role;
 use App\Providers\RouteServiceProvider;
 use Closure;
 use Illuminate\Http\Request;
@@ -20,10 +21,16 @@ class RedirectIfAuthenticated
     public function handle(Request $request, Closure $next, ...$guards)
     {
         $guards = empty($guards) ? [null] : $guards;
+        $role = Role::where('label', 'pos_user')->first();
 
         foreach ($guards as $guard) {
             if (Auth::guard($guard)->check()) {
-                return redirect(RouteServiceProvider::HOME);
+                if (auth()->user()->roles->contains('id', $role->id)) {
+                    return redirect(RouteServiceProvider::POS);
+
+                }else {
+                    return redirect(RouteServiceProvider::HOME);
+                }
             }
         }
 
