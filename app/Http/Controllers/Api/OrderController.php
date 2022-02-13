@@ -61,6 +61,7 @@ class OrderController extends Controller
 
             $validated['customer_id'] = auth()->user()->customer_id;
             $validated['order_mode'] = "mobile_app";
+            $validated['vat'] = 5.0;
 
             $order = Order::create($validated);
 

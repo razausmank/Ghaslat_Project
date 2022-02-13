@@ -50,6 +50,8 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
         Route::post('/credit_card_details', [CustomerCreditCardInfoController::class , 'storeCreditCardDetails']);
         Route::get('/credit_card_details', [CustomerCreditCardInfoController::class , 'getCreditCardDetails']);
+
+        Route::post('/update-profile', [CustomerInfoController::class , 'updateCustomerInfo']);
     });
 
     Route::post('/verify_otp', [CustomerAuthController::class, 'verifyOtp']);

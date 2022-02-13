@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Helpers\Helper;
+use App\Models\Customer;
 use App\Models\CustomerInfo;
 use Exception;
 use Illuminate\Http\Request;
@@ -57,5 +58,30 @@ class CustomerInfoController extends Controller
 
         return Helper::customResponse(400,'Customer is not within service area', false , false);
 
+    }
+
+    public function updateCustomerInfo( Request $request ) {
+        $validated = $request->validate([
+            'name' => 'nullable',
+            'description' => 'nullable',
+            'address' => 'nullable',
+            'apartment' => 'nullable',
+            'address_line_1' => 'nullable',
+            'address_line_2' => 'nullable',
+        ]);
+
+        try{
+
+            $customer = Customer::find( auth()->user()->customer_id );
+
+            $customer->update($validated);
+
+            return Helper::customResponse(200,'Customer info updated successfully', $customer , true);
+
+        } catch ( Exception $e )
+        {
+            return Helper::customResponse(400,'Something went wrong', null , false);
+
+        }
     }
 }

@@ -61,6 +61,9 @@ class User extends Authenticatable
         'profile_photo_url',
     ];
 
+
+    protected $with = [ 'customer' ] ;
+
     // User can have many roles
     public function roles()
     {
@@ -83,6 +86,10 @@ class User extends Authenticatable
     public function pages()
     {
         return $this->roles->map->pagePermissions->flatten()->pluck('name')->unique();
+    }
+
+    public function customer() {
+        return $this->belongsTo(Customer::class);
     }
 
     // get last generated code

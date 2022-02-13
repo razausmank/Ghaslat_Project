@@ -40,36 +40,50 @@
             </div>
         </div>
 
-        <div class="d-flex justify-content-between mx-5">
+        <div class="d-flex justify-content-around mx-5">
 
             <div class="card card-custom gutter-b bg-primary d-flex">
                 <div class="card-body">
-                    <span class="svg-icon svg-icon-3x svg-icon-success">
-                        <!--begin::Svg Icon | path:/metronic/theme/html/demo2/dist/assets/media/svg/icons/Communication/Group..svg-->
-                        <img src="{{ asset('assets/media/svg/icons/Communication/Clipboard-list.svg') }}" width="34px"
-                            height="34px">
+                    <div class="d-flex">
+                        <div class="d-flex align-items-center mr-4">
+                            <span class="svg-icon svg-icon-3x svg-icon-success">
+                                <!--begin::Svg Icon | path:/metronic/theme/html/demo2/dist/assets/media/svg/icons/Communication/Group..svg-->
+                                <img src="{{ asset('assets/media/svg/icons/Communication/Clipboard-list.svg') }}" width="34px"
+                                    height="34px">
 
-                    </span>
-                    <div class="text-dark font-weight-bolder font-size-h2 mt-3" id="new_customers_count">8,600</div>
-                    <a href="#" class="text-white text-hover-primary font-weight-bold font-size-lg mt-1">New
-                        Customers</a>
+                            </span>
+                        </div>
+                        <div>
+                            <div class="text-dark font-weight-bolder font-size-h2 mt-3" id="new_customers_count">8,600</div>
+                            <a href="#" class="text-white text-hover-primary font-weight-bold font-size-lg mt-1">New
+                                Customers</a>
+                        </div>
+                    </div>
+
                     <hr />
-                    <div class="text-dark font-weight-bolder  ">10 walk in</div>
-                    <div class="text-dark font-weight-bolder  ">40 mobile app</div>
+                    <div class="text-dark font-weight-bolder  " id="verified_customers_count">10 walk in</div>
+                    <div class="text-dark font-weight-bolder  " id="non_verified_customers_count">40 mobile app</div>
                 </div>
 
             </div>
             <div class="card card-custom  bg-warning gutter-b d-flex">
                 <div class="card-body">
-                    <span class="svg-icon svg-icon-3x svg-icon-success">
-                        <!--begin::Svg Icon | path:/metronic/theme/html/demo2/dist/assets/media/svg/icons/Communication/Group..svg-->
-                        <img src="{{ asset('assets/media/svg/icons/Communication/Group.svg') }}" width="34px"
-                            height="34px">
+                    <div class="d-flex">
+                        <div class="d-flex align-items-center mr-4">
+                            <span class="svg-icon svg-icon-3x svg-icon-success">
+                                <!--begin::Svg Icon | path:/metronic/theme/html/demo2/dist/assets/media/svg/icons/Communication/Group..svg-->
+                                <img src="{{ asset('assets/media/svg/icons/Communication/Group.svg') }}" width="34px"
+                                    height="34px">
 
-                    </span>
-                    <div class="text-dark font-weight-bolder font-size-h2 mt-3" id="total_orders_count">8,600</div>
-                    <a href="#" class="text-white text-hover-primary font-weight-bold font-size-lg mt-1">Total
-                        Orders</a>
+                            </span>
+                        </div>
+                        <div>
+                            <div class="text-dark font-weight-bolder font-size-h2 mt-3" id="total_orders_count">8,600</div>
+                            <a href="#" class="text-white text-hover-primary font-weight-bold font-size-lg mt-1">Total
+                                Orders</a>
+                        </div>
+                    </div>
+
                     <hr />
                     <div class="text-dark font-weight-bolder  " id="total_orders_count_walk_in">10 walk in</div>
                     <div class="text-dark font-weight-bolder  " id="total_orders_count_mobile">40 mobile app</div>
@@ -78,15 +92,22 @@
             </div>
             <div class="card card-custom gutter-b bg-success d-flex">
                 <div class="card-body">
-                    <span class="svg-icon svg-icon-3x svg-icon-success">
-                        <!--begin::Svg Icon | path:/metronic/theme/html/demo2/dist/assets/media/svg/icons/Communication/Group..svg-->
-                        <img src="{{ asset('assets/media/svg/icons/Shopping/Dollar.svg') }}" width="34px"
-                            height="34px">
+                    <div class="d-flex">
+                        <div class="d-flex align-items-center mr-4">
+                            <span class="svg-icon svg-icon-3x svg-icon-success">
+                                <!--begin::Svg Icon | path:/metronic/theme/html/demo2/dist/assets/media/svg/icons/Communication/Group..svg-->
+                                <img src="{{ asset('assets/media/svg/icons/Shopping/Dollar.svg') }}" width="34px"
+                                    height="34px">
 
-                    </span>
-                    <div class="text-dark font-weight-bolder font-size-h2 mt-3" id="total_orders_revenue">8,600</div>
-                    <a href="#" class="text-white text-hover-primary font-weight-bold font-size-lg mt-1">Total
-                        Revenue</a>
+                            </span>
+                        </div>
+                        <div>
+                            <div class="text-dark font-weight-bolder font-size-h2 mt-3" id="total_orders_revenue">8,600</div>
+                            <a href="#" class="text-white text-hover-primary font-weight-bold font-size-lg mt-1">Total
+                                Revenue</a>
+                        </div>
+                    </div>
+
                     <hr />
                     <div class="text-dark font-weight-bolder  " id="total_orders_revenue_walk_in">10 walk in</div>
                     <div class="text-dark font-weight-bolder  " id="total_orders_revenue_mobile">40 mobile app</div>
@@ -95,39 +116,28 @@
             </div>
             <div class="card card-custom gutter-b bg-danger d-flex">
                 <div class="card-body">
-                    <span class="svg-icon svg-icon-3x svg-icon-success">
-                        <!--begin::Svg Icon | path:/metronic/theme/html/demo2/dist/assets/media/svg/icons/Communication/Group..svg-->
-                        <img src="{{ asset('assets/media/svg/icons/Electric/Washer.svg') }}" width="34px"
-                            height="34px">
+                    <div class="d-flex">
+                        <div class="d-flex align-items-center mr-4">
+                            <span class="svg-icon svg-icon-3x svg-icon-success">
+                                <!--begin::Svg Icon | path:/metronic/theme/html/demo2/dist/assets/media/svg/icons/Communication/Group..svg-->
+                                <img src="{{ asset('assets/media/svg/icons/Electric/Washer.svg') }}" width="34px"
+                                    height="34px">
 
-                    </span>
-                    <div class="text-dark font-weight-bolder font-size-h2 mt-3">8,600</div>
-                    <a href="#" class="text-white text-hover-primary font-weight-bold font-size-lg mt-1">New
-                        Customers</a>
+                            </span>
+                        </div>
+                        <div>
+                            <div class="text-dark font-weight-bolder font-size-h2 mt-3" id="completed_orders">8,600</div>
+                            <a href="#" class="text-white text-hover-primary font-weight-bold font-size-lg mt-1">Completed Orders</a>
+                        </div>
+                    </div>
+
+
                     <hr />
-                    <div class="text-dark font-weight-bolder  ">10 walk in</div>
-                    <div class="text-dark font-weight-bolder  ">40 mobile app</div>
+                    <div class="text-dark font-weight-bolder  " id="orders_in_progress">10 walk in</div>
+                    <div class="text-dark font-weight-bolder  " id="orders_new_order">40 mobile app</div>
                 </div>
 
             </div>
-            <div class="card card-custom gutter-b bg-info d-flex">
-                <div class="card-body">
-                    <span class="svg-icon svg-icon-3x svg-icon-success">
-                        <!--begin::Svg Icon | path:/metronic/theme/html/demo2/dist/assets/media/svg/icons/Communication/Group..svg-->
-                        <img src="{{ asset('assets/media/svg/icons/Code/Warning-2.svg') }}" width="34px"
-                            height="34px">
-
-                    </span>
-                    <div class="text-dark font-weight-bolder font-size-h2 mt-3">8,600</div>
-                    <a href="#" class="text-white text-hover-primary font-weight-bold font-size-lg mt-1">New
-                        Customers</a>
-                    <hr />
-                    <div class="text-dark font-weight-bolder  ">10 walk in</div>
-                    <div class="text-dark font-weight-bolder  ">40 mobile app</div>
-                </div>
-
-            </div>
-
 
 
         </div>
@@ -157,9 +167,9 @@
                         <table id="order_table" class="display  table-bordered table-striped" style="width:100%">
                             <thead>
                                 <tr>
-                                    <th>Order Id </th>
+                                    <th>Order Number </th>
                                     <th>Status</th>
-                                    <th>Delay</th>
+                                    <th>Order Mode</th>
                                 </tr>
                             </thead>
 
@@ -184,13 +194,13 @@
                         "data": getMonthYear,
                     },
                     "columns": [{
-                            "data": "id"
+                            "data": "order_number"
                         },
                         {
                             "data": "status"
                         },
                         {
-                            "data": "payment_option"
+                            "data": "order_mode"
                         }
                     ]
                 });
@@ -249,12 +259,17 @@
                     success: function(data) {
                         console.log(data);
                         $('#new_customers_count').text(data.new_customers_count);
+                        $('#verified_customers_count').text(`${data.verified_customers} verified`);
+                        $('#non_verified_customers_count').text(`${data.non_verified_customers} non-verified`);
                         $('#total_orders_count').text(data.total_orders_count);
                         $('#total_orders_count_walk_in').text(`${data.total_orders_count_walk_in} walk in`);
                         $('#total_orders_count_mobile').text(`${data.total_orders_count_mobile} mobile`);
                         $('#total_orders_revenue').text(data.total_orders_revenue);
                         $('#total_orders_revenue_walk_in').text(`${data.total_orders_revenue_walk_in} walk in`);
                         $('#total_orders_revenue_mobile').text(`${data.total_orders_revenue_mobile} mobile`);
+                        $('#completed_orders').text(`${data.total_orders_delivered_orders}`);
+                        $('#orders_in_progress').text(`${data.total_orders_in_progress_orders} In Progress`);
+                        $('#orders_new_order').text(`${data.total_orders_pending_orders} New Orders`);
 
                     },
                     complete: function() {

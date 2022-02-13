@@ -19,7 +19,10 @@ class Customer extends Model
         'email',
         'phone',
         'address',
-        'credit_card_last_digits'
+        'credit_card_last_digits',
+        'apartment',
+        'address_line_1',
+        'address_line_2'
     ];
 
     public function orders() {
@@ -32,6 +35,10 @@ class Customer extends Model
 
     public function getTotalOrdersAttribute() {
         return $this->orders->count();
+    }
+
+    public function user() {
+        return $this->hasOne(User::class) ;
     }
 
 

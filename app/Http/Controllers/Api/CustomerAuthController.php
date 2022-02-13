@@ -23,7 +23,10 @@ class CustomerAuthController extends Controller
             'password' => 'required|string|confirmed',
             'description' => 'nullable',
             'phone' => 'required',
-            'address' => 'nullable'
+            'address' => 'nullable',
+            'apartment' => 'nullable',
+            'address_line_1' => 'nullable',
+            'address_line_2' => 'nullable',
         ]);
 
         // check if email is unique
