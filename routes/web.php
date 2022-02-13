@@ -1,5 +1,6 @@
 <?php
 
+use App\Classes\Twillio;
 use App\Http\Controllers\Admin\ContactUsController;
 use App\Http\Controllers\Admin\PageController;
 use App\Http\Controllers\Admin\CustomerController;
@@ -14,6 +15,9 @@ use App\Http\Controllers\Pos\AuthController;
 use App\Http\Controllers\Pos\OrderController as POSOrderController;
 use App\Http\Middleware\Authenticate;
 use App\Http\Middleware\RedirectIfAuthenticated;
+use App\Mail\TestEmail;
+use Faker\Provider\Lorem;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -31,8 +35,8 @@ use Illuminate\Support\Facades\Route;
 Route::middleware([Authenticate::class])->group(function () {
     //
     // Pade Module Routes
-    Route::get('admin/page/page-hierarchy', [PageController::class, 'pageHierarchy'])->name('page.page_hierarchy');
-    Route::post('admin/page/update-page-hierarchy', [PageController::class, 'updatePageHierarchy'])->name('page.update_page_hierarchy');
+    // Route::get('admin/page/page-hierarchy', [PageController::class, 'pageHierarchy'])->name('page.page_hierarchy');
+    // Route::post('admin/page/update-page-hierarchy', [PageController::class, 'updatePageHierarchy'])->name('page.update_page_hierarchy');
     Route::resource('admin/page', PageController::class);
 
     Route::resource('admin/user', UserController::class);
@@ -70,16 +74,13 @@ Route::middleware([Authenticate::class])->group(function () {
     Route::get('admin/contact_us', [ContactUsController::class, 'index'])->name('contactus.index');
     Route::delete('admin/contact_us/{message}', [ContactUsController::class, 'destroy'])->name('contactus.destroy');
 
-
-});
-
-Route::middleware(['isPosUser', 'authPosUser'])->group(function () {
     // pos
     Route::get('pos/order/create', [POSOrderController::class, 'create'])->name('pos.order.create');
     Route::post('pos/order/store', [POSOrderController::class, 'store'])->name('pos.order.store');
     Route::get('pos/order/show/{order}', [POSOrderController::class, 'show'])->name('pos.order.show');
     Route::get('pos/order/get_basic_data', [POSOrderController::class, 'getBasicPosData'])->name('pos.order.get_basic_data');
     Route::post('pos/order/update', [POSOrderController::class, 'orderUpdate'])->name('pos.order.update');
+    Route::post('pos/order/search', [POSOrderController::class, 'searchOrder'])->name('pos.order.search');
 
 });
 
@@ -120,3 +121,9 @@ Route::post('admin/contact_us', [ContactUsController::class, 'store'])->name('co
 Route::get('/ajax-content/include-mobile-layout',  [MainController::class, 'include_mobile_layout']);
 Route::get('/ajax-content/mainslider-desktop',  [MainController::class, 'mainslider_desktop']);
 Route::get('/ajax-content/mainslider-mobile',  [MainController::class, 'mainslider_mobile']);
+
+
+Route::get('/test' , function() {
+    Mail::to('razausmankhan97@gmail.com')->send(new TestEmail("this is just some dummy content thtat is goign to fill the void in the black hole piece of shit moron", 'testing template'));
+    // Twillio::sendSms('+923212421713', "testing message");
+});

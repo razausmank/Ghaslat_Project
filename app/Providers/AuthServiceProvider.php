@@ -5,6 +5,7 @@ namespace App\Providers;
 use App\Models\Team;
 use App\Policies\TeamPolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
+use Illuminate\Support\Facades\Gate;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -26,6 +27,9 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        //
+        // Gate::before(function($user, $page){
+        // return $user->pages()->contains($page);
+        // });
+
     }
 }

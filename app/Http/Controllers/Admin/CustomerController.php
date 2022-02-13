@@ -7,6 +7,12 @@ use App\Models\Customer;
 
 class CustomerController extends Controller
 {
+
+    // public function __construct()
+    // {
+    //     $this->middleware("can:Customers List")->only('index');
+    // }
+
     public function index()
     {
         $customers = Customer::all();

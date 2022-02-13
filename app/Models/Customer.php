@@ -18,7 +18,8 @@ class Customer extends Model
         'description',
         'email',
         'phone',
-        'address'
+        'address',
+        'credit_card_last_digits'
     ];
 
     public function orders() {

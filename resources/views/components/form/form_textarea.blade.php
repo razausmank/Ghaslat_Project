@@ -21,5 +21,7 @@
 >
 @if( $attributes['value'] )
 {{ $attributes['value']  }}
+@elseIf (  old($attributes['name'] ))
+{{ old($attributes['name'] ) }}
 @endif</textarea>
 

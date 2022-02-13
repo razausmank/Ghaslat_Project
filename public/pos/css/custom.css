@@ -1,5 +1,5 @@
 
-.spinner_over_screen {
+.spinner_over_screen, .spinner_over_screen_1 , .spinner_over_screen_2 {
     position: relative;
     height:200px;
     width:200px;
@@ -15,6 +15,7 @@
     border-radius:100%;
     z-index: 2;
   }
+
 
   @-webkit-keyframes rotation {
     from {-webkit-transform: rotate(0deg);}
@@ -32,3 +33,5 @@
     from {transform: rotate(0deg);}
     to {transform: rotate(359deg);}
   }
+
+.

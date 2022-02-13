@@ -24,4 +24,15 @@ class Helper
         }
         return $randomString;
     }
+
+    public static function customResponse($code, $message, $data, $isSuccess, $count = null) {
+        $payload = [
+            'code' => $code,
+            'message' => $message,
+            'count'  => $count,
+            'data' => $data,
+            'success' => $isSuccess,
+        ];
+        return response($payload, $code);
+    }
 }

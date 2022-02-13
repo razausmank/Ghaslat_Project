@@ -10,6 +10,12 @@ use Illuminate\Http\Request;
 
 class OrderController extends Controller
 {
+
+    // public function __construct()
+    // {
+    //     $this->middleware("can:Orders Listing")->only('index');
+    // }
+
     /**
      * Display a listing of the resource.
      *
@@ -17,7 +23,7 @@ class OrderController extends Controller
      */
     public function index()
     {
-        $orders = Order::all();
+        $orders = Order::latest()->get();
         return view('orders.index', compact('orders'));
     }
 
@@ -26,12 +32,12 @@ class OrderController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
-    {
-        $customers = Customer::all();
-        $products = Product::all();
-        return view('orders.create', compact('customers', 'products'));
-    }
+    // public function create()
+    // {
+    //     $customers = Customer::all();
+    //     $products = Product::all();
+    //     return view('orders.create', compact('customers', 'products'));
+    // }
 
     /**
      * Store a newly created resource in storage.

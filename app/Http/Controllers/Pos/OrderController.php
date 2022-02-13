@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\DB;
 
 class OrderController extends Controller
 {
+
     public function create()
     {
         $products = Product::where('is_active', 1)->get();
@@ -45,7 +46,7 @@ class OrderController extends Controller
                 ];
             }
 
-        if ($request->payment_received)
+        if ($request->payment_option != 'Pay Later')
         {
             $validated_attributes['payment_received'] = true ;
         }
@@ -61,25 +62,52 @@ class OrderController extends Controller
         }
 
         } catch (Exception $e) {
+            return $e ;
             return 'Sorry, Something went wrong';
             DB::rollBack();
         }
         DB::commit();
 
-        return 'Order Created Succesfully';
+        return  [ 'order_id' => $order->id , 'message' =>  'Order Created Succesfully'] ;
 
     }
 
-    public function getBasicPosData(){
-        $orders = Order::with('customer')->get() ;
+    public function getBasicPosData(Request $request){
+        if ( $request->filter == "new" ){
+            $orders = Order::where('status', 'New Order')->with('customer')->get() ;
+
+        }else if ($request->filter == "in_progress") {
+            $orders = Order::where('status', 'In Progress')->with('customer')->get() ;
+
+        }else if ($request->filter == "ready_for_delivery") {
+            $orders = Order::where('status', 'Waiting For Delivery')->with('customer')->get() ;
+
+        }else if ($request->filter == "ready_for_pickup") {
+            $orders = Order::where('status', 'Waiting For Pickup')->with('customer')->get() ;
+
+        }else {
+            $orders = Order::where('status', '!=', 'Cancelled')->where('status', '!=', 'Delivered')->with('customer')->get() ;
+        }
+
+        $new_orders_count = Order::where('status', 'New Order')->count() ;
+        $in_progress_orders_count =  Order::where('status', 'In Progress')->count()  ;
+        $waiting_for_delivery_orders_count = Order::where('status', 'Waiting For Delivery')->count() ;
+        $waiting_for_pickup_orders_count =  Order::where('status', 'Waiting For Pickup')->count()  ;
+        $all_orders_count = Order::where('status', '!=', 'Cancelled')->count() ;
+
         return [
             'orders' => $orders,
+            'new_orders_count' => $new_orders_count,
+            'in_progress_orders_count' => $in_progress_orders_count,
+            'waiting_for_delivery_orders_count' => $waiting_for_delivery_orders_count,
+            'waiting_for_pickup_orders_count' => $waiting_for_pickup_orders_count,
+            'all_orders_count' => $all_orders_count,
         ] ;
     }
 
     public function show( Order $order ) {
 
-        return $order->load('products', 'customer');
+        return $order->load('products', 'customer','order_logs');
     }
 
     public function orderUpdate ( Request $request )
@@ -98,5 +126,10 @@ class OrderController extends Controller
             Transaction::where('order_id', $order->id)->delete();
         }
         return "Order Successfully Updated" ;
+    }
+
+    public function searchOrder( Request $request ){
+        $order = Order::where('order_number', $request->order_number)->first() ;
+        return $order ? $order->load('products', 'customer', 'order_logs') : null ;
     }
 }

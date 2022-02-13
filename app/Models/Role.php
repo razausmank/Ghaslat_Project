@@ -12,7 +12,7 @@ class Role extends Model
 
     protected $guarded = [];
 
-    protected $touches = ['permissions', 'pagePermissions'];
+    // protected $touches = ['permissions', 'pagePermissions'];
 
 
     // A role can have many Permissions

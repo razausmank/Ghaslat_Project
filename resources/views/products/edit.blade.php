@@ -47,8 +47,22 @@
                     </label>
 
                 </div>
-                <span class="form-text text-muted">Some help text goes here</span>
-    </x-form.form_group>
+             </x-form.form_group>
+             <x-form.form_group label="Is Product/Package active?" error="is_active">
+                <div class="checkbox-inline">
+                    <label class="checkbox checkbox-primary">
+                        <input type="radio" name="is_active" value="1" {{ $product->is_active == "1" ? "checked" :  "" }} />
+                        <span></span>
+                        Yes
+                    </label>
+                    <label class="checkbox checkbox-primary">
+                        <input type="radio" name="is_active" value="0" {{ $product->is_active == "0" ? "checked" :  "" }} />
+                        <span></span>
+                        No
+                    </label>
+
+                </div>
+             </x-form.form_group>
 
         </x-form.form>
 

@@ -10,6 +10,11 @@ use Illuminate\Support\Facades\Route;
 
 class PageController extends Controller
 {
+    // public function __construct()
+    // {
+    //     $this->middleware('can:New Menu')->except('index');
+    //     $this->middleware('can:Menu Listing')->only('index');
+    // }
     public function index()
     {
         $pages = Page::all();

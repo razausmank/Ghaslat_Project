@@ -1,12 +1,12 @@
 <x-master title="Product Categories" :breadcrumbs="[ 'Product Categories' => 'productcategory.index']">
     <x-slot name="custom_sub_header">
 
-        <input data-switch="true" type="checkbox" checked="checked" data-on-text="List" data-handle-width="50" data-off-text="Tiles" data-on-color="success" data-off-color="primary"/>
+        <input data-switch="true" type="checkbox"  data-on-text="List" data-handle-width="50" data-off-text="Tiles" data-on-color="success" data-off-color="primary"/>
 
     </x-slot>
 
     <x-flash />
-    <div id="list_datatable_grid" class="switch_list">
+    <div id="list_datatable_grid" class="switch_list  d-none">
     <x-datatable.basic title="List of Product Categories" button_link="productcategory.create" button_text="New Product Category" table_id="product_categories_list_datatable" >
         <x-slot name="header">
             <th>Name</th>
@@ -28,7 +28,7 @@
                                 <i class="la la-edit"></i>
                             </a>
 
-                            <form action="{{ route('productcategory.destroy', $product_category) }}" method="POST">
+                            <form class="product_categories_delete_form" action="{{ route('productcategory.destroy', $product_category) }}" method="POST">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="btn btn-sm btn-clean btn-icon" title="Delete">
@@ -43,8 +43,9 @@
 
         </x-slot>
     </x-datatable.basic>
+
     </div>
-    <div  class="switch_tiles d-none">
+    <div  class="switch_tiles">
 
     <div class="card card-custom gutter-b ">
         <div class="card-header">
@@ -75,7 +76,31 @@
         </div>
     </div>
     </div>
+    <x-slot name="scripts">
+        <script>
+            $('.product_categories_delete_form').submit(function(event) {
+                console.log('in here ');
+                console.log(event);
+                event.preventDefault();
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: "You won't be able to revert this!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, delete it!'
+                    }).then((result) => {
+                        if (result.value) {
+                            console.log('result is confirmed');
+                            event.currentTarget.submit();
+                    }
+                }
+                    ) ;
+            });
+        </script>
 
+    </x-slot>
 
 
 

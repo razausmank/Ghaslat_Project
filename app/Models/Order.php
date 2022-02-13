@@ -13,6 +13,18 @@ class Order extends Model
 
     protected $appends = ['sub_total', 'discount_in_money', 'vat_in_money', 'total_price' ];
 
+    public const STATUSES = [
+        "New Order" => '80808F',
+        "In Progress" => '007bff',
+        "Delivered" => '28a745',
+        "Waiting For Pickup" => 'fd7e14',
+        "Waiting For Delivery" => 'ffc107',
+        "Cancelled" => 'F64E60'
+    ];
+
+    public function getStatusColor() {
+        return self::STATUSES[$this->status];
+    }
     public function products()
     {
         return $this->belongsToMany(Product::class)->withPivot('quantity', 'price')->withTimestamps();
@@ -26,6 +38,10 @@ class Order extends Model
     public function syncProducts($products)
     {
         return $this->products()->sync($products);
+    }
+
+    public function order_logs(){
+        return $this->hasMany(OrderLog::class)->with('updated_by');
     }
 
     public function getTotalPriceAttribute(){

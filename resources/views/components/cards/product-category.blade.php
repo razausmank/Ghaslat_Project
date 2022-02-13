@@ -52,7 +52,7 @@
             <!--end::Info-->
             <div class="row d-flex justify-content-end">
                 <a href="{{ route('productcategory.edit', $item->id) }}" class="btn  btn-sm btn-light-primary font-weight-bolder text-uppercase mr-4">  <i class="la la-edit"></i> Edit</a>
-                <form action="{{ route('productcategory.destroy', $item) }}" method="POST">
+                <form class="product_categories_delete_form" action="{{ route('productcategory.destroy', $item) }}" method="POST">
                     @csrf
                     @method('DELETE')
                     <button type="submit" class="btn  btn-sm btn-light-danger font-weight-bolder text-uppercase " title="Delete">

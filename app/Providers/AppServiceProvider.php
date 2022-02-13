@@ -5,6 +5,7 @@ namespace App\Providers;
 use App\Http\Controllers\CustomerController;
 use App\Models\Customer;
 use App\Models\Order;
+use App\Models\OrderLog;
 use App\Models\OrderProduct;
 use App\Models\Page;
 use App\Models\Permission;
@@ -51,6 +52,7 @@ class AppServiceProvider extends ServiceProvider
         Role::observe(ModelObserver::class);
         Permission::observe(ModelObserver::class);
         Order::observe(OrderObserver::class);
+        OrderLog::observe(ModelObserver::class);
         //partials._pages_menu
         View::composer('partials._pages_menu', function ($view) {
             $pages = Page::whereNull('parent_page_id')->with('sub_pages')->orderBy('sort_order', 'ASC')->get();

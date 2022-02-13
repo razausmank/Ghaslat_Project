@@ -12,6 +12,13 @@ use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
+
+    // public function __construct()
+    // {
+    //     $this->middleware('can:New Product')->except('index');
+    //     $this->middleware("can:Products List")->only('index');
+    // }
+
     public function index()
     {
         $products = Product::all();

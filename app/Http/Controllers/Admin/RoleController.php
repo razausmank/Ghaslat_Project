@@ -9,6 +9,11 @@ use Illuminate\Http\Request;
 
 class RoleController extends Controller
 {
+    // public function __construct()
+    // {
+    //     $this->middleware('can:New Role')->except('index');
+    //     $this->middleware('can:Role Listing')->only('index');
+    // }
     //list all the existing roles in the system
     public function index()
     {
@@ -58,9 +63,9 @@ class RoleController extends Controller
             'name' => request('name'),
             'label' => request('label')
         ]);
-
+        // dd(request('pages'));
         $role->syncPermissions(request('permissions'));
-        $role->syncPagePermissions(request('pages'));
+        $role->pagePermissions()->sync(request('pages'));
 
         return redirect(route('role.index'))->with('success', 'Role Updated Successfully');
     }

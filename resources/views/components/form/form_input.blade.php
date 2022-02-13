@@ -5,6 +5,10 @@
         name = "{{ $attributes['name']  }}"
     @endif
 
+    @if(old($attributes['name'] ) )
+        value ="{{ old($attributes['name'] ) }}"
+    @endif
+
     @if( $attributes['type'] )
         type = "{{ $attributes['type']  }}"
     @endif

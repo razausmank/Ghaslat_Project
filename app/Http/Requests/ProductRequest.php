@@ -29,7 +29,8 @@ class ProductRequest extends FormRequest
             'image' => ['nullable', 'image'],
             'price' => ['required', 'min:0'],
             'product_category_id' => ['required', 'exists:product_categories,id'],
-            'is_package' => 'required'
+            'is_package' => 'required',
+            'is_active' => 'nullable'
         ];
     }
 }

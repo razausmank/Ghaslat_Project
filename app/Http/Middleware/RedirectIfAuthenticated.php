@@ -21,11 +21,10 @@ class RedirectIfAuthenticated
     public function handle(Request $request, Closure $next, ...$guards)
     {
         $guards = empty($guards) ? [null] : $guards;
-        $role = Role::where('label', 'pos_user')->first();
 
         foreach ($guards as $guard) {
             if (Auth::guard($guard)->check()) {
-                if (auth()->user()->roles->contains('id', $role->id)) {
+                if (auth()->user()->pages()->contains('POS') && (count(auth()->user()->pages()) < 2  )) {
                     return redirect(RouteServiceProvider::POS);
 
                 }else {

@@ -204,8 +204,12 @@ div::-webkit-scrollbar-thumb {
 
 .nav-link {
     font-size: x-large;
-    color: white;
+    color: white !important;
     background-color: transparent;
+}
+.nav .nav-link.active {
+    color:#0cc579 !important;
+
 }
 
 .second {

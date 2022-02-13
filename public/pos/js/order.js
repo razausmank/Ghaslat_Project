@@ -1,15 +1,20 @@
 jQuery(document).ready(function () {
+
     loadOrders();
     setInterval(loadOrders, 1000 * 60 * 2);
 });
+var order_filter = 'all' ;
+$(document).on('click', '#order_screen_new_filter, #order_screen_in_progress_filter, #order_screen_ready_for_delivery_filter, #order_screen_ready_for_pickup_filter, #order_screen_all_filter', function(){
+    order_filter = $(this).attr('data-filter-value') ;
+    loadOrders();
 
-
+});
 $('body').on('click', '.order', function (e) {
 
-    $('.spinner_over_screen').show();
+    $('.spinner_over_screen_1').show();
     e.preventDefault();
     $('#order_print_via_order_modal').attr('href', $(this).attr('href'));
-
+    $('.order_modal_body_content').hide();
     $.ajax({
         url: $(this).attr('href'),
         type: "GET",
@@ -41,6 +46,18 @@ $('body').on('click', '.order', function (e) {
                 </tr>
                 `);
             }
+            $('#order_modal_order_history').empty();
+            for (i = 0; i < data.order_logs.length; i++) {
+                $('#order_modal_order_history').append(`
+                <tr >
+                    <td >${data.order_logs[i].status}</td>
+                    <td >${data.order_logs[i].payment_option}</td>
+                    <td >${data.order_logs[i].payment_received ? 'No' : 'Yes'}</td>
+                    <td > ${data.order_logs[i].updated_by.name}</td>
+                    <td > ${moment(data.order_logs[i].updated_at).format('DD MMMM YYYY')}</td>
+                </tr>
+                `);
+            }
 
             $('#modal_sub_total').text('AED ' + Number(data.sub_total, 2).toFixed(2));
 
@@ -52,11 +69,13 @@ $('body').on('click', '.order', function (e) {
             $('#modal_order_id').val(data.id);
         },
         complete: function () {
-            $('.spinner_over_screen').hide();
+            $('.spinner_over_screen_1').hide();
+             $('.order_modal_body_content').show();
         },
         error: function (xhr) {
             console.log(xhr);
-            $('.spinner_over_screen').hide();
+            $('.spinner_over_screen_1').hide();
+            $('.order_modal_body_content').show();
         }
     });
 });
@@ -108,8 +127,33 @@ function loadOrders() {
     statuses["Waiting For Pickup"] = 'fd7e14';
     statuses["Waiting For Delivery"] = 'ffc107';
     statuses["Cancelled"] = 'F64E60';
+
+
+    $('#order_screen_new_filter').removeClass('border-4');
+    $('#order_screen_in_progress_filter').removeClass('border-4');
+    $('#order_screen_ready_for_delivery_filter').removeClass('border-4');
+    $('#order_screen_ready_for_pickup_filter').removeClass('border-4');
+    $('#order_screen_all_filter').removeClass('border-4');
+
+    if ( order_filter == "new" ){
+        $('#order_screen_new_filter').addClass('border-4');
+
+    }else if (order_filter == "in_progress") {
+        $('#order_screen_in_progress_filter').addClass('border-4');
+
+    }else if (order_filter == "ready_for_delivery") {
+        $('#order_screen_ready_for_delivery_filter').addClass('border-4');
+
+    }else if (order_filter == "ready_for_pickup") {
+        $('#order_screen_ready_for_pickup_filter').addClass('border-4');
+
+    }else {
+        $('#order_screen_all_filter').addClass('border-4');
+
+    }
+
     $.ajax({
-        url: '/pos/order/get_basic_data',
+        url: `/pos/order/get_basic_data?filter=${order_filter}`,
         type: "GET",
         success: function (data) {
             $('#orders_tab_orders_list').empty();
@@ -132,6 +176,13 @@ function loadOrders() {
                 </div>
                 `);
             }
+
+            $('#new_orders_count').text(data.new_orders_count);
+            $('#in_progress_orders_count').text(data.in_progress_orders_count);
+            $('#waiting_for_delivery_orders_count').text(data.waiting_for_delivery_orders_count);
+            $('#waiting_for_pickup_orders_count').text(data.waiting_for_pickup_orders_count);
+            $('#all_orders_count').text(data.all_orders_count);
+
 
         },
         complete: function () {

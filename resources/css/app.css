@@ -61571,3 +61571,7 @@ body {
     .hidebuttons {
       display: none;
     }
+
+.bootstrap-switch-wrapper{ 
+  width: auto !important;
+}

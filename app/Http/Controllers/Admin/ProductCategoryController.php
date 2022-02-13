@@ -9,6 +9,12 @@ use Illuminate\Http\Request;
 
 class ProductCategoryController extends Controller
 {
+    // public function __construct()
+    // {
+    //     $this->middleware('can:New Category')->except('index');
+    //     $this->middleware("can:Category List")->only('index');
+    // }
+
     public function index()
     {
         $product_categories = ProductCategory::all();

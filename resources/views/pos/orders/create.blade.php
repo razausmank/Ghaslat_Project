@@ -16,6 +16,13 @@
     <link rel="stylesheet" href="{{ asset('pos/css/custom.css') }}" type="text/css">
     <meta name="csrf-token" content="{{ csrf_token() }}" />
 
+	<style type="text/css">
+		.my-3 a {
+			    border: 1px solid #eee !important;
+				box-shadow: 2px 2px rgb(0,0,0,0.1) !important;
+		}
+	</style>
+
 </head>
 
 <body style="height: 100%">
@@ -23,11 +30,8 @@
         <div class="col-12  m-0 p-0 top_header">
             <div class="row  m-0 p-0">
 
-                <div class="col-8  d-flex m-0 p-0">
-                    <div class="my-auto mx-4"><i aria-hidden="true" class="
-                        fas fa-align-justify" style="color: #fff; font-size:30px"></i></div>
-                    <ul class="nav nav-tabs ml-5" id="myTab" role="tablist"
-                        style="    border-bottom: 1px solid #0cc579">
+                <div class="col-8  d-flex justify-content-between m-0 p-0">
+                    <ul class="nav nav-tabs ml-5" id="myTab" role="tablist" style="    border-bottom: 1px solid #0cc579">
                         <li class="nav-item" role="presentation">
                             <button class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab"
                                 aria-controls="home" aria-selected="true">Product</button>
@@ -36,15 +40,20 @@
                             <button class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab"
                                 aria-controls="profile" aria-selected="false">Orders</button>
                         </li>
-
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="search-tab" data-toggle="tab" href="#search" role="tab"
+                                aria-controls="profile" aria-selected="false">Search</button>
+                        </li>
                     </ul>
-                </div>
-                <div class="col-4 d-flex justify-content-between m-0 p-0">
-                    <div class="my-auto mx-4"><i aria-hidden="true" class="
-                        fas fa-align-justify" style="color: #fff; font-size:30px"></i></div>
-                    <h1 class="m-0 my-auto text-white">Cart (<span id="no_of_items_in_cart">0</span>)</h1>
-                    <div class="my-auto mx-4"><i class=" fas fa-plus p-0" style="color: #fff;  font-size:30px"></i>
+                    <div>
+                    <a class="btn btn-secondary m-2 text-white submit_button border-2" id="admin_button" href="/admin/dashboard">Admin Panel</a>
+                    <button class="btn btn-secondary m-2 text-white submit_button border-2" id="new_order_button">New
+                        Order</button>
                     </div>
+                </div>
+                <div class="col-4 d-flex justify-content-center m-0 p-0">
+                    <h1 class="m-0 my-auto text-white">Cart (<span id="no_of_items_in_cart">0</span>)</h1>
+
                 </div>
             </div>
 
@@ -56,7 +65,7 @@
 
                         @foreach ($products as $product)
 
-                            <div class="col-3 my-3">
+                            <div class="col-2 my-3">
                                 <a class=" d-flex flex-column justify-content-center item border border-dark py-3">
                                     <div class="symbol symbol-150 symbol-lg-150 m-auto">
                                         <img alt="product_image" class=""
@@ -74,28 +83,289 @@
                     </div>
                 </div>
                 <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                    <div class="row  m-0 bg-white px-5 py-7">
+                        <div class="col-2 my-2">
+                            <a href="#" id="order_screen_new_filter" data-filter-value="new" style="border-color: #80808F !important"
+                                class=" d-flex flex-column justify-content-between border pt-3 pb-0 border-4">
+                                <div class="d-flex flex-column align-items-center my-5">
+                                    <span
+                                        class="font-weight-bolder text-dark h4 mb-2" id="new_orders_count">---</span>
+
+
+                                </div>
+                                <span
+                                    class="h6 text-center text-white m-0"  style="background-color: #80808F !important">New</span>
+
+                            </a>
+                        </div>
+                        <div class="col-2 my-2">
+                            <a href="#" id="order_screen_in_progress_filter" data-filter-value="in_progress"
+                                class=" d-flex flex-column justify-content-between border  pt-3 pb-0" style="border-color: #007bff !important">
+                                <div class="d-flex flex-column align-items-center my-5">
+                                    <span
+                                        class="font-weight-bolder text-dark h4 mb-2" id="in_progress_orders_count">---</span>
+
+
+                                </div>
+                                <span
+                                    class="h6 text-center text-white m-0" style="background-color: #007bff !important">In Progress</span>
+
+                            </a>
+                        </div>
+                        <div class="col-2 my-2">
+                            <a href="#" id="order_screen_ready_for_delivery_filter" data-filter-value="ready_for_delivery"
+                                class=" d-flex flex-column justify-content-between border  pt-3 pb-0" style="border-color: #ffc107 !important">
+                                <div class="d-flex flex-column align-items-center my-5">
+                                    <span
+                                        class="font-weight-bolder text-dark h4 mb-2" id="waiting_for_delivery_orders_count">---</span>
+
+
+                                </div>
+                                <span
+                                    class="h6 text-center text-white  m-0" style="background-color: #ffc107 !important">Ready For Delivery</span>
+
+                            </a>
+                        </div>
+                        <div class="col-2 my-2">
+                            <a href="#" id="order_screen_ready_for_pickup_filter" data-filter-value="ready_for_pickup"
+                                class=" d-flex flex-column justify-content-between border  pt-3 pb-0" style="border-color: #fd7e14 !important">
+                                <div class="d-flex flex-column align-items-center my-5">
+                                    <span
+                                        class="font-weight-bolder text-dark h4 mb-2" id="waiting_for_pickup_orders_count">---</span>
+
+
+                                </div>
+                                <span
+                                    class="h6 text-center text-white  m-0" style="background-color: #fd7e14 !important">Ready for Pick Up</span>
+
+                            </a>
+                        </div>
+                        <div class="col-2 my-2">
+                            <a href="#" id="order_screen_all_filter" data-filter-value="all"
+                                class=" d-flex flex-column justify-content-between border border-success pt-3 pb-0" >
+                                <div class="d-flex flex-column align-items-center my-5">
+                                    <span
+                                        class="font-weight-bolder text-dark h4 mb-2" id="all_orders_count">---</span>
+
+
+                                </div>
+                                <span
+                                    class="h6 text-center text-white bg-success m-0">All</span>
+
+                            </a>
+                        </div>
+                    </div>
+                    <hr class="border-2 border-dark"/>
+                    <div class="spinner_over_screen" style="display: none "></div>
+
                     <div class="row m-0 bg-white px-5 py-7" id="orders_tab_orders_list">
-                        <div class="spinner_over_screen" style="display: none "></div>
 
                         @foreach ($orders as $order)
 
-                            <div class="col-3 my-3">
+                            <div class="col-2 my-3">
                                 <a href="{{ route('pos.order.show', $order) }}" data-target="#orderModal"
                                     data-toggle="modal"
-                                    class=" d-flex flex-column justify-content-between order border border-success pt-3 pb-0">
+                                    class=" d-flex flex-column justify-content-between order border border-dark pt-3 pb-0">
                                     <div class="d-flex flex-column align-items-center my-5">
                                         <span
-                                            class="font-weight-bolder text-dark h4 mb-2">{{ Helper::generateRandomString(8) }}</span>
-                                        <span class="h5 text-muted"> AED 27.40 </span>
+                                            class="font-weight-bolder text-dark h4 mb-2">{{ $order->order_number }}</span>
+                                        <span class="h5 text-muted"> ---</span>
 
                                     </div>
                                     <span
-                                        class="h5 text-center text-white bg-success m-0">{{ $order->customer->name }}</span>
+                                        class="h5 text-center text-white bg-dark m-0">{{ $order->customer->name }}</span>
 
                                 </a>
                             </div>
 
                         @endforeach
+                    </div>
+                </div>
+                <div class="tab-pane fade  " id="search" role="tabpanel" aria-labelledby="search-tab">
+                    <div class="m-0 bg-white px-5 py-7" id="search_tab">
+                        <div>
+                            <form action="{{ route('pos.order.search') }}" method="POST" id="find_order_form">
+                                @csrf
+                                @method('POST')
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div class="text-dark h5 mb-0">Order Number</div>
+                                    <div class=" flex-fill mx-5">
+
+                                        <input class="form-control border-1 border-dark " name="order_number"
+                                            type="text" placeholder="Enter Order Number to search">
+
+                                    </div>
+                                    <button type="submit" class="btn submit_button text-white font-weight-bold"> <svg
+                                            xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                            fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                                            <path
+                                                d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
+                                        </svg> Search </button>
+                                </div>
+                            </form>
+                        </div>
+                        <hr class="border-2 border-dark" />
+                        <div class="spinner_over_screen_2" style="display: none "></div>
+                        <div id="order_search_details" class="row" style="display: none;">
+                            <div class="col-md-6" style="border-right: 2px black solid">
+                            <div class="row justify-content-center text-dark ">
+                                <div class="col-md-12">
+                                    <div class="d-flex justify-content-between pt-6">
+                                        <div class="d-flex flex-column ">
+                                            <span class="font-weight-bolder mb-2">Order Date</span>
+                                            <span class="opacity-70 pr-5" id="search_screen_order_date">Jan 07,
+                                                2020</span>
+                                        </div>
+                                        <div class="d-flex flex-column ">
+                                            <span class="font-weight-bolder mb-2">Order Number</span>
+                                            <span class="opacity-70 " id="search_screen_order_number">1200XHEQ</span>
+
+                                        </div>
+                                        <div class="d-flex flex-column ">
+                                            <span class="font-weight-bolder mb-2">Customer Name</span>
+                                            <span class="opacity-70 pl-5" id="search_screen_customer_name">Iris
+                                                Watson</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row justify-content-center px-8  px-md-0 text-dark">
+                                <div class="col-md-12">
+                                    <div class="d-flex justify-content-between pt-6">
+                                        <div class="d-flex flex-column ">
+                                            <span class="font-weight-bolder mb-2">Payment Type</span>
+                                            <select class="form-control py-0 border-1 border-dark" name='payment_type'
+                                                id="search_screen_payment_type">
+                                                <option value="Pay Later">Pay Later</option>
+                                                <option value="Pay By Cash">Pay By Cash</option>
+                                                <option value="Pay By Card">Pay By Card</option>
+                                            </select>
+                                        </div>
+                                        <div class="d-flex flex-column ">
+                                            <span class="font-weight-bolder mb-2">Order Status</span>
+                                            <select class="form-control py-0  border-1 border-dark" name="status"
+                                                id="search_screen_order_status">
+                                                <option value="New Order">New Order</option>
+                                                <option value="In Progress">In Progress</option>
+                                                <option value="Delivered">Delivered</option>
+                                                <option value="Waiting For Pickup">Waiting For Pickup</option>
+                                                <option value="Waiting For Delivery">Waiting For Delivery</option>
+                                                <option value="Cancelled">Cancelled</option>
+                                            </select>
+                                        </div>
+                                        <div class="d-flex flex-column ">
+                                            <span class="font-weight-bolder mb-2">Payment Received</span>
+                                            <select class="form-control py-0  border-1 border-dark"
+                                                name="payment_received" id="search_screen_payment_received">
+                                                <option value="1">Yes</option>
+                                                <option value="0">No</option>
+                                            </select>
+                                        </div>
+                                        <input type="text" hidden name="search_screen_order_id"
+                                            id="search_screen_order_id">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row justify-content-center py-8 px-8 py-md-10 px-md-0 text-dark">
+                                <div class="col-md-12">
+                                    <div class="table-responsive">
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+                                                    <th class="pl-0 font-weight-bold text-uppercase">Ordered
+                                                        Items</th>
+                                                    <th class="text-right font-weight-bold text-uppercase">
+                                                        Qty
+                                                    </th>
+                                                    <th class="text-right font-weight-bold text-uppercase">
+                                                        Unit
+                                                        Price</th>
+                                                    <th class="text-right pr-0 font-weight-bold text-uppercase">
+                                                        Amount</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="search_screen_items_list">
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row justify-content-center bg-gray-100  px-8  px-md-0 mx-0">
+                                <div class="col-md-12">
+                                    <div class="table-responsive">
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+                                                    <th class="font-weight-bold  text-uppercase">SUBTOTAL</th>
+                                                    <th class="font-weight-bold  text-uppercase">DISCOUNT
+                                                    </th>
+                                                    <th class="font-weight-bold  text-uppercase">VAT</th>
+                                                    <th class="font-weight-bold  text-uppercase text-right">
+                                                        TOTAL
+                                                        AMOUNT</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr class="font-weight-bolder">
+                                                    <td id='search_screen_sub_total'>AED 0.00</td>
+                                                    <td id='search_screen_discount_amount'>Success</td>
+                                                    <td id='search_screen_vat_amount'>Jan 07, 2020</td>
+                                                    <td id='search_screen_total_amount'
+                                                        class="text-primary font-size-h3 font-weight-boldest text-right">
+                                                        $789.00</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class=" d-flex justify-content-end mt-2">
+                                <div>
+                                    <a type="button" class="btn btn-primary font-weight-bold"
+                                        id="order_print_via_search_screen">Print Receipt</a>
+
+                                    <button type="button" id="search_update_order"
+                                        class="btn submit_button text-white font-weight-bold">Update
+                                        Order</button>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="row justify-content-center px-8 px-md-0 text-dark">
+                                <div class="col-md-12">
+                                    <div>
+                                        <h3 class="p-2 m-0 ">Order History</h1>
+                                    </div>
+                                    <hr class=" border-2 border-dark"/>
+                                    <table class="table table-striped table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th>Status</th>
+                                                <th >Payment Option</th>
+                                                <th>
+                                                    Payment Received
+                                                </th>
+                                                <th >
+                                                    Updated By
+                                                </th>
+                                                <th>Updated At</th>
+
+                                            </tr>
+                                        </thead>
+                                        <tbody id="search_screen_order_history">
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+                        <div id="no_order_found" style="display: none;">
+                            <div class="d-flex justify-content-center h3 text-dark py-7">Sorry this order number does not match any order </div>
+                        </div>
+
                     </div>
                 </div>
             </div>
@@ -108,7 +378,8 @@
                 <div class="form-group bg-white pl-4 py-4 pr-0 mb-2">
                     <div class="input-group">
                         <div class="input-group-prepend bg-transparent symbol symbol-circle pr-3">
-                            <img alt="product_image" class="" src="{{ asset('assets/media/users/blank.png') }}">
+                            <img alt="product_image" class=""
+                                src="{{ asset('assets/media/users/blank.png') }}">
                         </div>
                         <select name="customer_id" id="select2" placeholder="Select a Customer"
                             class="form-control select2-hidden-accessible" required>
@@ -116,20 +387,6 @@
                                 <option value="{{ $customer->id }}"> {{ $customer->name }}</option>
                             @endforeach
                         </select>
-                        <div class="input-group-append ">
-                            <span class="input-group-text bg-transparent    ">
-                                <label class="checkbox checkbox-inline checkbox-primary">
-                                    <button type="button" class="btn btn-link btn-sm p-0"><svg
-                                            xmlns="http://www.w3.org/2000/svg" width="30" height="30"
-                                            fill="currentColor" class="bi bi-dash-circle" viewBox="0 0 16 16">
-                                            <path
-                                                d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z">
-                                            </path>
-                                            <path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z"></path>
-                                        </svg></button>
-                                </label>
-                            </span>
-                        </div>
                     </div>
                 </div>
                 <div class="bg-white ">
@@ -181,12 +438,12 @@
 
 
                 </div>
-                <div class="d-flex justify-content-between align-items-center">
-                    <div class="form-control">
+                <div class="d-flex justify-content-end align-items-center">
+                    <!-- <div class="form-control">
                         <label class="checkbox checkbox-square">
                             <input type="checkbox" name="payment_received">
                             <span style="border: 1px solid"></span>Payment Received</label>
-                    </div>
+                    </div> -->
                     <select name="payment_option" class="payment_method_select p-3 m-3" required>
                         <option value="Pay Later">Pay Later</option>
                         <option value="Pay By Cash">Pay By Cash</option>
@@ -203,21 +460,15 @@
         </div>
     </div>
 
-
-
     <!-- Modal-->
     <div class="modal " id="product_adjustment" tabindex="-1" role="dialog" aria-labelledby="staticBackdrop"
         aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
             <div class="modal-content">
-                <div class="modal-header d-flex justify-content-between ">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <i aria-hidden="true" class="fas fa-times" style="color: #000; font-size:30px"></i>
-                    </button>
+                <div class="modal-header d-flex justify-content-center ">
+
                     <h5 class="modal-title" id="modal_product_title">Modal Title</h5>
-                    <button type="button" id="add_product_info" class="close" data-dismiss="modal" aria-label="Close">
-                        <i class="fas fa-plus p-0" style="color: #000;  font-size:30px"></i>
-                    </button>
+
                 </div>
                 <div class="modal-body py-0">
                     <div data-scroll="true" data-height="300">
@@ -227,7 +478,7 @@
                                 class="btn btn-lg submit_button px-12 mx-5"><i class="fas fa-minus p-0"
                                     style="color: #fff"></i></button>
 
-                            <input type="number" min="0" name="modal_product_quantity"
+                            <input type="number" min="0" disabled name="modal_product_quantity"
                                 class="modal_product_quantity form-control h1 text-center  m-0  mx-5">
 
                             <button type="button" id="modal_product_quantity_increase_button"
@@ -235,8 +486,14 @@
                                     style="color: #fff"></i></button>
                         </div>
                         <input type="number" name="modal_product_id" hidden>
-                        <div class="modal-footer d-flex justify-content-center ">
+                        <div class="modal-footer d-flex justify-content-between ">
+                            <button type="button" class="btn btn-lg btn-secondary" data-dismiss="modal"
+                                aria-label="Close">
+                                Cancel
+                            </button>
                             <h1 class="modal_product_value">AED 20.00</h1>
+                            <button type="button" id="add_product_info" class="btn btn-lg submit_button text-white "
+                                data-dismiss="modal" aria-label="Close">Ok</button>
                         </div>
                     </div>
                 </div>
@@ -244,25 +501,24 @@
         </div>
     </div>
 
-
-
     <!-- Calculator Modal-->
     <div class="modal" id="calculatormodal" data-backdrop="static" tabindex="-1" role="dialog"
         aria-labelledby="staticBackdrop" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header d-flex justify-content-between ">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <i aria-hidden="true" class="fas fa-times" style="color: #000; font-size:30px"></i>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" aria-label="Close">
+                        Cancel
                     </button>
                     <h5 class="modal-title">Add Discount</h5>
-                    <button type="button" id="add_discount_info" class="close" data-dismiss="modal" aria-label="Close">
-                        <i class="fas fa-plus p-0" style="color: #000;  font-size:30px"></i>
+                    <button type="button" id="add_discount_info" class="btn  text-white" data-dismiss="modal"
+                        aria-label="Close" style="background-color: #4caf50;">
+                        Ok
                     </button>
                 </div>
                 <div class="modal-body p-0">
                     <div class="d-flex justify-content-center px-3 pt-3">
-                        <input data-switch="true" type="checkbox" checked="checked" data-on-text="%"
+                        <input data-switch="true" type="checkbox"  data-on-text="%"
                             data-handle-width="50" data-off-text="AED" data-on-color="success"
                             data-off-color="primary" />
                     </div>
@@ -273,7 +529,7 @@
                     </div>
 
 
-                    <div class="row percent_row m-0">
+                    <div class="row percent_row   d-none m-0">
                         <div class="col-2 p-0">
                             <button type="button" class="percentage_buttons" value="5">
                                 5%
@@ -306,7 +562,7 @@
                         </div>
 
                     </div>
-                    <div class="row value_row d-none m-0">
+                    <div class="row value_row m-0">
                         <div class="col-2 p-0">
                             <button type="button" class="percentage_buttons" value="5">
                                 5
@@ -408,7 +664,7 @@
         </div>
     </div>
 
-    {{-- Order Modal --}}
+    <!-- Order Modal -->
     <div class="modal fade" id="orderModal" tabindex="-1" aria-labelledby="orderModal" aria-hidden="true"
         style="display: none;">
         <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
@@ -420,10 +676,11 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <div class="spinner_over_screen" style="display: none "></div>
-                    <div class="card-body p-0">
+                    <div class="spinner_over_screen_1" style="display: none "></div>
+                    <div class="card-body row order_modal_body_content p-0">
+                        <div class="col-md-6" style="border-right: 2px black solid">
                         <div class="row justify-content-center px-8  px-md-0">
-                            <div class="col-md-10">
+                            <div class="col-md-12">
                                 <div class="d-flex justify-content-between pt-6">
                                     <div class="d-flex flex-column ">
                                         <span class="font-weight-bolder mb-2">ORDER DATE</span>
@@ -442,7 +699,7 @@
                             </div>
                         </div>
                         <div class="row justify-content-center px-8  px-md-0">
-                            <div class="col-md-10">
+                            <div class="col-md-12">
                                 <div class="d-flex justify-content-between pt-6">
                                     <div class="d-flex flex-column ">
                                         <span class="font-weight-bolder mb-2">Payment Type</span>
@@ -476,7 +733,7 @@
                             </div>
                         </div>
                         <div class="row justify-content-center py-8 px-8 py-md-10 px-md-0">
-                            <div class="col-md-10">
+                            <div class="col-md-12">
                                 <div class="table-responsive">
                                     <table class="table">
                                         <thead>
@@ -501,7 +758,7 @@
                             </div>
                         </div>
                         <div class="row justify-content-center bg-gray-100  px-8  px-md-0 mx-0">
-                            <div class="col-md-10">
+                            <div class="col-md-12">
                                 <div class="table-responsive">
                                     <table class="table">
                                         <thead>
@@ -529,23 +786,59 @@
                                 </div>
                             </div>
                         </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="row justify-content-center px-8 px-md-0 text-dark">
+                            <div class="col-md-12">
+                                <div>
+                                    <h3 class="p-2 m-0 ">Order History</h1>
+                                </div>
+                                <hr class=" border-2 border-dark"/>
+                                <table class="table table-striped table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>Status</th>
+                                            <th >Payment Option</th>
+                                            <th>
+                                                Payment Received
+                                            </th>
+                                            <th >
+                                                Updated By
+                                            </th>
+                                            <th>Updated At</th>
 
+                                        </tr>
+                                    </thead>
+                                    <tbody id="order_modal_order_history">
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
                     </div>
 
                 </div>
-                <div class="modal-footer">
-                    <a type="button" class="btn btn-light-primary font-weight-bold"
-                        id="order_print_via_order_modal">Print Receipt</a>
-                    <button type="button" class="btn btn-light-primary font-weight-bold"
-                        data-dismiss="modal">Close</button>
-                    <button type="button" id="update_order" class="btn btn-primary font-weight-bold">Update
-                        Order</button>
+                <div class="modal-footer d-flex justify-content-between">
+                    <div>
+                        <button type="button" class="btn btn-secondary font-weight-bold"
+                            data-dismiss="modal">Close</button>
+                    </div>
+                    <div>
+                        <a type="button" class="btn btn-primary font-weight-bold"
+                            id="order_print_via_order_modal">Print Receipt</a>
+
+                        <button type="button" id="update_order"
+                            class="btn submit_button text-white font-weight-bold">Update
+                            Order</button>
+                    </div>
+
                 </div>
             </div>
         </div>
     </div>
 
-    {{-- print modal --}}
+    <!-- print modal -->
 
     <div class="modal fade " id="printModal" tabindex="-1" role="dialog" aria-labelledby="printModal"
         aria-hidden="true">
@@ -562,9 +855,13 @@
                         <span class="font-weight-bolder ">ORDER DATE</span>
                         <span id="print_modal_order_date">Jan 07, 2020</span>
                     </div>
-                    <div class="d-flex justify-content-between  flex-root">
+                    <div class="d-flex justify-content-between  flex-root mb-2">
                         <span class="font-weight-bolder ">Customer Name</span>
                         <span id="print_modal_customer_name">Iris Watson</span>
+                    </div>
+                    <div class="d-flex justify-content-between  flex-root">
+                        <span class="font-weight-bolder ">Order Number</span>
+                        <span id="print_modal_order_number">-----</span>
                     </div>
                     <hr />
                     <div>
@@ -682,6 +979,7 @@
     <script src="{{ asset('pos/js/calculator.js') }}"></script>
     <script src="{{ asset('pos/js/switch.js') }}"></script>
     <script src="{{ asset('pos/js/print_order.js') }}"></script>
+    <script src="{{ asset('pos/js/search.js') }}"></script>
 
 
 

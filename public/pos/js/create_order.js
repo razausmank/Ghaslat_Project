@@ -32,10 +32,9 @@ jQuery(document).ready(function () {
         });
     }
 
-
-
-
 });
+
+$('#new_order_button').on('click', clear_items);
 
 $('#modal_product_quantity_increase_button').on('click', function () {
     $('.modal_product_quantity').attr('value', parseInt($('.modal_product_quantity').val()) + 1);
@@ -48,7 +47,6 @@ $('#modal_product_quantity_decrease_button').on('click', function () {
 });
 
 $('#add_product_info').click(function () {
-
     product_id = parseInt($("input[name='modal_product_id']").val());
     product_quantity = parseInt($("input[name='modal_product_quantity']").val());
 
@@ -113,7 +111,6 @@ $(function () {
 });
 
 function add_item(element_clicked) {
-
     // check in bill-info if that item is already present
     if ($("#cart input[name='id[]']").filter(function (i, obj) {
         if (element_clicked.id == obj.value) {
@@ -160,7 +157,7 @@ function add_item(element_clicked) {
                 <div class="flex-fill align-self-center">
                     <h1 class="m-0 pl-2">${element_clicked.name}</h1>
                 </div>
-                <h4 id="product_price" class="align-self-center  m-0">Aed ${element_clicked.price}</h4>
+                <h4 id="product_price" class="align-self-center  m-0">AED ${element_clicked.price}</h4>
                 <input type="text" name="name[]" value="${element_clicked.name}" hidden>
                 <input type="number" name="id[]" value="${element_clicked.id}" hidden>
                 <input type="number" name="price[]" value="${element_clicked.price}" hidden>
@@ -172,7 +169,8 @@ function add_item(element_clicked) {
         $('#cart').append(element);
     }
     // <span class="badge badge-danger badge-pill  notify-badge p-2 ">9</span>
-
+    var cart = document.getElementById("cart");
+    cart.scrollTop = cart.scrollHeight;
 
 
 }
@@ -257,11 +255,11 @@ $("#order_form").submit(function (e) {
         data: form.serialize(), // serializes the form's elements.
         success: function (response) {
             console.log(response);
-            populatePrintDiV();
+            getDataForPrint('/pos/order/show/' + response.order_id, false , 'spinner_over_screen');
             Swal.fire({
                 icon: 'success',
                 title: "Thanks!",
-                text: response,
+                text: response.message,
                 confirmButtonColor: '#60BA62',
                 showCancelButton: true,
                 cancelButtonColor: '#d33',
@@ -312,6 +310,7 @@ $("#order_form").submit(function (e) {
 
 });
 
+// this method is obsolete now since its no longer being used.
 function populatePrintDiV() {
     $('#print_modal_order_date').text(moment().format('MMM D, YYYY'));
     $('#print_modal_customer_name').text($("#select2 option:selected").text());
@@ -350,15 +349,22 @@ function populatePrintDiV() {
 
 $('#order_print_via_order_modal').on('click', function (e) {
     e.preventDefault();
-    $('.spinner_over_screen').show();
+    $('.spinner_over_screen_1').show();
+    getDataForPrint($(this).attr('href'), true , 'spinner_over_screen_1') ;
+});
+
+
+function getDataForPrint( url = null , openPrintModal = true , spinner) {
+
     $.ajax({
-        url: $(this).attr('href'),
+        url: url,
         type: "GET",
         success: function (data) {
             console.log(data);
 
             $('#print_modal_order_date').text(moment(data.created_at).format('DD MMMM YYYY'));
             $('#print_modal_customer_name').text(data.customer.name);
+            $('#print_modal_order_number').text(data.order_number);
 
 
             subtotal = 0;
@@ -389,7 +395,7 @@ $('#order_print_via_order_modal').on('click', function (e) {
                 $('#print_modal_discount').empty();
                 $('#print_modal_discount').append(`
                 <span class=" ">Discount</span>
-                <span>${discount_in_money}</span>
+                <span>${discount_in_money + ' AED'}</span>
                 `);
             }
 
@@ -398,27 +404,32 @@ $('#order_print_via_order_modal').on('click', function (e) {
 
             total_amount = Number(subtotal) + Number(vat_in_money) - Number(discount_in_money);
 
-            $('#print_modal_subtotal').text(parseFloat(subtotal, 2).toFixed(2));
-            $('#print_modal_vat').text(parseFloat(vat_in_money, 2).toFixed(2));
+            $('#print_modal_subtotal').text(parseFloat(subtotal, 2).toFixed(2) + ' AED');
+            $('#print_modal_vat').text(parseFloat(vat_in_money, 2).toFixed(2) + ' AED');
 
-            $('#print_modal_total').text(parseFloat(total_amount, 2).toFixed(2));
+            $('#print_modal_total').text(parseFloat(total_amount, 2).toFixed(2) + ' AED');
 
-            printJS({
-                printable: 'printable_div',
-                type: 'html',
+            if ( openPrintModal )
+            {
+                printJS({
+                    printable: 'printable_div',
+                    type: 'html',
 
-                css: [asset_url + "assets/css/style.bundle.css",
-                asset_url + "pos/css/print.css"
-                ]
-            });
+                    css: [asset_url + "assets/css/style.bundle.css",
+                    asset_url + "pos/css/print.css"
+                    ]
+                });
+
+            }
 
         },
         complete: function () {
-            $('.spinner_over_screen').hide();
+            $(`.${spinner}`).hide();
         },
         error: function (xhr) {
             console.log(xhr);
-            $('.spinner_over_screen').hide();
+            $(`.${spinner}`).hide();
         }
     });
-});
+}
+

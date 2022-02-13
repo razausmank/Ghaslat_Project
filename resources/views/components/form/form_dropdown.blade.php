@@ -22,7 +22,10 @@
             <option value="{{ $item->id }}"
                 @isset($modeledit)
                     {{ $modeledit == $item->id  ? 'selected' : '' }}
-                @endisset >
+                @endisset 
+                @if(old($attributes['name']))
+                    {{ old($attributes['name']) == $item->id ? 'selected' : '' }}
+                @endif>
 
                 {{ $item->name }}
             </option>

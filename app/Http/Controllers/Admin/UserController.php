@@ -11,6 +11,13 @@ use Laravel\Fortify\Contracts\CreatesNewUsers;
 
 class UserController extends Controller
 {
+
+    // public function __construct()
+    // {
+    //     $this->middleware('can:New User')->except('index');
+    //     $this->middleware("can:User's Listing")->only('index');
+    // }
+
     // List all the users with a bunch of avaialble actions
     public function index()
     {

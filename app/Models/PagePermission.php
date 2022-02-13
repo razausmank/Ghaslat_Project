@@ -11,7 +11,7 @@ class PagePermission extends Model
 
     protected $guarded = [];
 
-    protected $touches = ['roles'];
+    // protected $touches = ['roles'];
 
 
     // A persmission can belong to many roles
